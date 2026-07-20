@@ -1,0 +1,6 @@
+{
+  "name": "2M Cosmetics",
+  "description": "Boutique e-commerce haut de gamme de produits cosmétiques de l'écosystème 2M. Paiement sécurisé et livraison à Dakar et régions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
