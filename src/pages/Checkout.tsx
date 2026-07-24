@@ -287,8 +287,12 @@ export default function Checkout() {
         jwtToken = sessionData.session?.access_token || '';
       }
 
-      // 2. Determine target endpoint from environment or fallback
-      const workerUrl = (import.meta as any).env.VITE_ORDERS_API_URL || 'https://orders-api.ks2msen221.workers.dev/api/orders';
+      // 2. Read worker URL strictly from environment variable
+      const workerUrl = (import.meta as any).env.VITE_ORDERS_API_URL;
+
+      if (!workerUrl || typeof workerUrl !== 'string' || workerUrl.trim() === '' || workerUrl.includes('placeholder')) {
+        throw new Error("Le service de commande est temporairement indisponible. Veuillez réessayer dans quelques instants ou nous contacter directement.");
+      }
 
       const payload = {
         items: cartItems.map(item => ({
@@ -302,149 +306,44 @@ export default function Checkout() {
 
       console.log('Sending order request to worker at:', workerUrl, 'with payload:', payload);
 
-      let successResponse: { order_id: string; status: string; total: number } | null = null;
-
-      // 3. Try real fetch to Cloudflare Worker
-      if (supabase && !isMocked && workerUrl && !workerUrl.includes('placeholder')) {
-        try {
-          const response = await fetch(workerUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${jwtToken}`
-            },
-            body: JSON.stringify(payload)
-          });
-
-          const result = await response.json();
-          if (response.ok && result.success) {
-            successResponse = {
-              order_id: result.order_id,
-              status: result.status,
-              total: result.total || totalAmount
-            };
-          } else {
-            throw new Error(result.error || 'Erreur retournée par le serveur de commande.');
-          }
-        } catch (fetchErr: any) {
-          console.warn("Real Cloudflare Worker call failed or not deployed yet, activating fallback simulation mode:", fetchErr);
-        }
+      let response: Response;
+      try {
+        response = await fetch(workerUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwtToken}`
+          },
+          body: JSON.stringify(payload)
+        });
+      } catch (fetchErr: any) {
+        console.error("Worker API network call failed:", fetchErr);
+        throw new Error("Le service de commande est temporairement indisponible. Veuillez réessayer dans quelques instants ou nous contacter directement.");
       }
 
-      // 4. Fallback simulation (For local preview / Mock accounts)
-      if (!successResponse) {
-        console.log('Running robust local database mock transaction simulation...');
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate network latency
-
-        const simulatedOrderId = 'ord_' + Math.random().toString(36).substring(2, 11);
-        const simulatedStatus = selectedPaymentMethodCode === 'cod' ? 'confirmed' : 'awaiting_verification';
-
-        // Update mock stocks in local mock database if required
-        if (isMocked) {
-          // Simulates decreasing stock in mock storage
-          const storedCatalog = localStorage.getItem('2m_cosmetics_mock_products');
-          if (storedCatalog) {
-            try {
-              const parsedProducts = JSON.parse(storedCatalog);
-              cartItems.forEach(item => {
-                const pIndex = parsedProducts.findIndex((p: any) => p.id === item.product_id);
-                if (pIndex > -1) {
-                  parsedProducts[pIndex].stock = Math.max(0, parsedProducts[pIndex].stock - item.quantity);
-                }
-              });
-              localStorage.setItem('2m_cosmetics_mock_products', JSON.stringify(parsedProducts));
-            } catch (catalogErr) {
-              console.error("Failed to update mock stock catalog:", catalogErr);
-            }
-          }
-
-          // Register order to local mock order history
-          const mockOrdersKey = `2m_cosmetics_mock_orders_${user.id}`;
-          const currentOrders = JSON.parse(localStorage.getItem(mockOrdersKey) || '[]');
-          const newMockOrderObj = {
-            id: simulatedOrderId,
-            created_at: new Date().toISOString(),
-            status: simulatedStatus,
-            payment_method_code: selectedPaymentMethodCode,
-            shipping_fee: shippingFee,
-            subtotal: subtotal,
-            total: totalAmount,
-            address: selectedAddress,
-            transaction_ref: transactionReference.trim() || null,
-            items: cartItems.map(item => ({
-              product_id: item.product_id,
-              quantity: item.quantity,
-              unit_price: item.product?.price || 0,
-              product: item.product
-            }))
-          };
-          localStorage.setItem(mockOrdersKey, JSON.stringify([newMockOrderObj, ...currentOrders]));
-        } else {
-          // If in real Supabase mode but worker fails, let's log order in the database manually to keep the DB in sync
-          // 1. Create order
-          const { data: realOrder, error: oErr } = await supabase
-            .from('orders')
-            .insert({
-              user_id: user.id,
-              address_id: selectedAddressId,
-              payment_method_code: selectedPaymentMethodCode,
-              shipping_fee: shippingFee,
-              subtotal: subtotal,
-              total: totalAmount,
-              status: simulatedStatus,
-              created_at: new Date().toISOString()
-            })
-            .select()
-            .single();
-
-          if (oErr) {
-            console.error("Failed to insert mock order in real DB:", oErr);
-            throw new Error(`Erreur SQL lors de l'insertion de l'en-tête de commande: ${oErr.message}`);
-          }
-
-          // 2. Create order items
-          const itemsToInsert = cartItems.map(item => ({
-            order_id: realOrder.id,
-            product_id: item.product_id,
-            quantity: item.quantity,
-            unit_price: item.product?.price || 0,
-            total_price: (item.product?.price || 0) * item.quantity,
-            created_at: new Date().toISOString()
-          }));
-
-          const { error: oiErr } = await supabase.from('order_items').insert(itemsToInsert);
-          if (oiErr) {
-            console.error("Failed to insert mock order items in real DB:", oiErr);
-            await supabase.from('orders').delete().eq('id', realOrder.id); // Rollback
-            throw new Error(`Erreur SQL lors de l'insertion des lignes d'articles: ${oiErr.message}`);
-          }
-
-          // 3. Decrement real stock
-          for (const item of cartItems) {
-            if (item.product) {
-              const newStock = Math.max(0, item.product.stock - item.quantity);
-              await supabase.from('products').update({ stock: newStock }).eq('id', item.product_id);
-            }
-          }
-        }
-
-        successResponse = {
-          order_id: simulatedOrderId,
-          status: simulatedStatus,
-          total: totalAmount
-        };
+      let result: any = null;
+      try {
+        result = await response.json();
+      } catch (jsonErr) {
+        console.error("Failed to parse worker response JSON:", jsonErr);
+        throw new Error("Le service de commande est temporairement indisponible. Veuillez réessayer dans quelques instants ou nous contacter directement.");
       }
 
-      // 5. Successful Completion Actions
-      // Clear the cart completely (DB & LocalState)
+      if (!response.ok || !result || !result.success) {
+        console.error("Worker returned failure response:", result);
+        throw new Error(result?.error || "Le service de commande est temporairement indisponible. Veuillez réessayer dans quelques instants ou nous contacter directement.");
+      }
+
+      // 3. Successful Completion Actions
+      // Clear the cart completely
       await clearCart();
 
-      // Navigate to confirmation with status, total and ID
+      // Navigate to confirmation with status, total and order ID returned by the server
       navigate('/commande/confirmation', { 
         state: { 
-          status: successResponse.status, 
-          orderId: successResponse.order_id,
-          total: successResponse.total,
+          status: result.status, 
+          orderId: result.order_id,
+          total: result.total,
           paymentMethod: selectedPaymentMethodCode
         } 
       });
