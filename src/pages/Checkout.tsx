@@ -32,7 +32,7 @@ interface ShippingZone {
 interface Address {
   id: string;
   user_id: string;
-  title: string;
+  label: string;
   full_address: string;
   phone: string;
   shipping_zone_id: string;
@@ -41,7 +41,7 @@ interface Address {
 interface PaymentMethod {
   id: string;
   code: 'cod' | 'wave' | 'om';
-  name: string;
+  label: string;
   qr_code_url: string | null;
   is_active: boolean;
 }
@@ -54,9 +54,9 @@ const MOCK_SHIPPING_ZONES: ShippingZone[] = [
 ];
 
 const MOCK_PAYMENT_METHODS: PaymentMethod[] = [
-  { id: 'pm_cod', code: 'cod', name: 'Paiement à la livraison', qr_code_url: null, is_active: true },
-  { id: 'pm_wave', code: 'wave', name: 'Wave Sénégal', qr_code_url: 'https://images.unsplash.com/photo-1601597111158-2fceff270190?w=400&q=80', is_active: true },
-  { id: 'pm_om', code: 'om', name: 'Orange Money Sénégal', qr_code_url: 'https://images.unsplash.com/photo-1563013544-824ae1d704d3?w=400&q=80', is_active: true }
+  { id: 'pm_cod', code: 'cod', label: 'Paiement à la livraison', qr_code_url: null, is_active: true },
+  { id: 'pm_wave', code: 'wave', label: 'Wave Sénégal', qr_code_url: 'https://images.unsplash.com/photo-1601597111158-2fceff270190?w=400&q=80', is_active: true },
+  { id: 'pm_om', code: 'om', label: 'Orange Money Sénégal', qr_code_url: 'https://images.unsplash.com/photo-1563013544-824ae1d704d3?w=400&q=80', is_active: true }
 ];
 
 export default function Checkout() {
@@ -110,7 +110,7 @@ export default function Checkout() {
             zonesData = data.map((z: any) => ({
               id: z.id,
               name: z.name,
-              fee: Number(z.fee ?? z.price ?? z.cost ?? 0)
+              fee: Number(z.fee_cents ?? 0)
             }));
           } else {
             zonesData = MOCK_SHIPPING_ZONES;
@@ -131,7 +131,13 @@ export default function Checkout() {
             .select('*')
             .eq('is_active', true);
           if (!pmErr && data && data.length > 0) {
-            pmData = data as PaymentMethod[];
+            pmData = data.map((p: any) => ({
+              id: p.id,
+              code: p.code,
+              label: p.label || p.name || p.code,
+              qr_code_url: p.qr_code_url,
+              is_active: p.is_active ?? true
+            }));
           } else {
             pmData = MOCK_PAYMENT_METHODS;
           }
@@ -161,7 +167,7 @@ export default function Checkout() {
             const defaultAddr: Address = {
               id: 'addr_default_1',
               user_id: user.id,
-              title: 'Adresse par défaut',
+              label: 'Adresse par défaut',
               full_address: profile?.address || 'Grand Dakar, près de la Mosquée',
               phone: profile?.phone || '+221 77 123 45 67',
               shipping_zone_id: 'zone_dakar_centre'
@@ -202,7 +208,7 @@ export default function Checkout() {
 
     try {
       const newAddressObj = {
-        title: newTitle.trim(),
+        label: newTitle.trim(),
         full_address: newFullAddress.trim(),
         phone: newPhone.trim(),
         shipping_zone_id: newZoneId
@@ -547,7 +553,7 @@ export default function Checkout() {
                       >
                         <div className="space-y-1">
                           <div className="flex items-center gap-1.5">
-                            <span className="font-serif italic font-bold text-xs text-black/80">{addr.title}</span>
+                            <span className="font-serif italic font-bold text-xs text-black/80">{addr.label}</span>
                             {isSelected && (
                               <span className="px-1.5 py-0.5 bg-[#9A8C73]/10 text-[#9A8C73] text-[8px] uppercase tracking-widest font-extrabold rounded">Sélectionné</span>
                             )}
@@ -593,7 +599,7 @@ export default function Checkout() {
                       <span className="text-[10px] uppercase tracking-widest text-[#9A8C73] font-bold block mb-1">
                         {pm.code === 'cod' ? 'Espèces' : pm.code === 'wave' ? 'Wave' : 'Orange Money'}
                       </span>
-                      <span className="font-serif italic font-bold text-xs text-black/80">{pm.name}</span>
+                      <span className="font-serif italic font-bold text-xs text-black/80">{pm.label}</span>
                       {isSelected && (
                         <div className="w-4 h-4 rounded-full bg-[#9A8C73] text-[#FAF9F6] flex items-center justify-center mt-3 scale-90">
                           <Check className="w-2.5 h-2.5" />
@@ -631,7 +637,7 @@ export default function Checkout() {
                       <span className="text-[9px] uppercase tracking-widest text-red-700 font-extrabold bg-red-50 px-2 py-0.5 border border-red-100 rounded">Méthode de Validation</span>
                       <h4 className="font-serif italic font-bold text-black text-sm">Transfert avant expédition</h4>
                       <p className="leading-relaxed text-[11px]">
-                        Scannez le QR Code ci-contre avec votre application mobile <strong>{selectedPaymentMethod.name}</strong> ou effectuez le transfert du montant exact de la commande :
+                        Scannez le QR Code ci-contre avec votre application mobile <strong>{selectedPaymentMethod.label}</strong> ou effectuez le transfert du montant exact de la commande :
                       </p>
                       <p className="font-mono text-xs font-bold text-black bg-white px-2.5 py-1 border border-black/5 inline-block rounded-sm mt-1">
                         Montant : {formatPrice(totalAmount)}

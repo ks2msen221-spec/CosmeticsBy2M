@@ -48,7 +48,7 @@ export default function AdminShippingZones() {
           const mapped: ShippingZone[] = data.map((z: any) => ({
             id: z.id,
             name: z.name || 'Zone sans nom',
-            fee: Number(z.fee ?? z.price ?? z.cost ?? 0),
+            fee: Number(z.fee_cents ?? 0),
             is_active: z.is_active ?? true,
             created_at: z.created_at
           }));
@@ -149,6 +149,13 @@ export default function AdminShippingZones() {
     try {
       const payload = {
         name: formName.trim(),
+        fee_cents: numericFee,
+        is_active: formIsActive
+      };
+
+      const zoneObj: ShippingZone = {
+        id: editingZone ? editingZone.id : '',
+        name: formName.trim(),
         fee: numericFee,
         is_active: formIsActive
       };
@@ -163,7 +170,7 @@ export default function AdminShippingZones() {
           if (error) throw error;
         }
 
-        const updated = zones.map(z => z.id === editingZone.id ? { ...z, ...payload } : z);
+        const updated = zones.map(z => z.id === editingZone.id ? { ...z, ...zoneObj } : z);
         setZones(updated);
         localStorage.setItem('2m_cosmetics_admin_shipping_zones', JSON.stringify(updated));
         setSuccessMessage(`La zone "${payload.name}" a été mise à jour.`);
@@ -182,8 +189,8 @@ export default function AdminShippingZones() {
         }
 
         const newZone: ShippingZone = {
-          id: createdId,
-          ...payload
+          ...zoneObj,
+          id: createdId
         };
 
         const updated = [...zones, newZone];

@@ -57,6 +57,29 @@ const getLocalProducts = (): Product[] => {
   }));
 };
 
+function mapProductFromDb(row: any): any {
+  if (!row) return row;
+  return {
+    ...row,
+    price: row.price_cents,
+    stock: row.stock_quantity,
+    images: row.image_urls,
+    expiration_date: row.expiry_date,
+    active: row.is_active
+  };
+}
+
+function mapProductToDb(product: any): any {
+  const { price, stock, images, expiration_date, active, brand, category, ...rest } = product;
+  const mapped: any = { ...rest };
+  if (price !== undefined) mapped.price_cents = price;
+  if (stock !== undefined) mapped.stock_quantity = stock;
+  if (images !== undefined) mapped.image_urls = images;
+  if (expiration_date !== undefined) mapped.expiry_date = expiration_date || null;
+  if (active !== undefined) mapped.is_active = active;
+  return mapped;
+}
+
 export const catalogService = {
   // 1. Fetch all main categories
   async getCategories(): Promise<Category[]> {
@@ -254,6 +277,8 @@ export const catalogService = {
       results = results.filter(p => p.active !== false && p.is_active !== false);
     }
 
+    results = results.map(mapProductFromDb);
+
     return results;
   },
 
@@ -283,7 +308,7 @@ export const catalogService = {
       console.error(`Supabase product slug "${slug}" query failed:`, error);
       throw error;
     }
-    return data as Product | null;
+    return data ? mapProductFromDb(data) : null;
   },
 
   // 9. Fetch reviews for a specific product
@@ -331,7 +356,7 @@ export const catalogService = {
       console.error("Supabase products by IDs query failed:", error);
       throw error;
     }
-    return data as Product[] || [];
+    return (data || []).map(mapProductFromDb);
   },
 
   // === WRITE OPERATIONS FOR ADMIN CONSOLE ===
@@ -486,21 +511,7 @@ export const catalogService = {
       return newProduct;
     }
 
-    const payload = {
-      name: product.name,
-      slug: product.slug,
-      price: product.price,
-      description: product.description,
-      ingredients: product.ingredients,
-      allergens: product.allergens,
-      stock: product.stock,
-      brand_id: product.brand_id,
-      category_id: product.category_id,
-      images: product.images,
-      active: product.active !== false,
-      is_active: product.active !== false,
-      expiration_date: product.expiration_date || null
-    };
+    const payload = mapProductToDb(product);
 
     const { data, error } = await supabase
       .from('products')
@@ -512,7 +523,7 @@ export const catalogService = {
       console.error("Supabase createProduct failed:", error);
       throw error;
     }
-    return data as Product;
+    return mapProductFromDb(data);
   },
 
   async updateProduct(id: string, updates: Partial<Product>): Promise<Product> {
@@ -525,9 +536,7 @@ export const catalogService = {
       return prods[index];
     }
 
-    const dbUpdates = { ...updates };
-    delete dbUpdates.brand;
-    delete dbUpdates.category;
+    const dbUpdates = mapProductToDb(updates);
 
     const { data, error } = await supabase
       .from('products')
@@ -540,7 +549,7 @@ export const catalogService = {
       console.error("Supabase updateProduct failed:", error);
       throw error;
     }
-    return data as Product;
+    return mapProductFromDb(data);
   },
 
   async deleteProduct(id: string): Promise<void> {
