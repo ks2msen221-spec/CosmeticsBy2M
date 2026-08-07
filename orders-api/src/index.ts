@@ -5,7 +5,6 @@ export interface Env {
   SUPABASE_SERVICE_ROLE_KEY: string;
 }
 
-// Helper to return JSON responses with standard CORS headers
 function jsonResponse(data: any, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -20,7 +19,6 @@ function jsonResponse(data: any, status = 200) {
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // 1. Handle CORS Preflight Options Request
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         status: 204,
@@ -33,42 +31,34 @@ export default {
       });
     }
 
-    // 2. Validate Endpoint Route and Method
     const url = new URL(request.url);
     if (request.method !== 'POST' || (url.pathname !== '/api/orders' && url.pathname !== '/orders')) {
       return jsonResponse({ error: 'Route non trouvée ou méthode non autorisée' }, 404);
     }
 
-    // 3. Verify Env Bindings
     if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
       return jsonResponse({ error: 'Configuration serveur incomplète (clés Supabase manquantes)' }, 500);
     }
 
-    // 4. Initialize Supabase client using Service Role to bypass Row-Level Security safely for admin actions
     const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false
-      }
+      auth: { persistSession: false, autoRefreshToken: false }
     });
 
-    // 5. Verify Supabase JWT token from Authorization header
     const authHeader = request.headers.get('Authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return jsonResponse({ error: 'Non autorisé : Token d\'authentification absent ou invalide' }, 401);
+      return jsonResponse({ error: "Non autorisé : Token d'authentification absent ou invalide" }, 401);
     }
 
     const token = authHeader.substring(7);
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
 
     if (authError || !user) {
-      return jsonResponse({ 
+      return jsonResponse({
         error: 'Non autorisé : Session expirée ou invalide. Veuillez vous reconnecter.',
-        details: authError?.message 
+        details: authError?.message
       }, 401);
     }
 
-    // 6. Parse and Validate Request Body
     let body: any;
     try {
       body = await request.json();
@@ -76,9 +66,8 @@ export default {
       return jsonResponse({ error: 'Format JSON invalide' }, 400);
     }
 
-    const { items, address_id, payment_method_code } = body;
+    const { items, address_id, payment_method_code, transaction_reference } = body;
 
-    // Validate Input Fields Presence and Types
     if (!items || !Array.isArray(items) || items.length === 0) {
       return jsonResponse({ error: 'La liste d\'articles ("items") est requise et ne doit pas être vide.' }, 400);
     }
@@ -102,7 +91,19 @@ export default {
     }
 
     try {
-      // 7. Verify and Retrieve Shipping Address
+      // 1. Résoudre le mode de paiement (code texte -> ligne réelle payment_methods, avec son id UUID)
+      const { data: paymentMethodData, error: paymentMethodError } = await supabase
+        .from('payment_methods')
+        .select('*')
+        .eq('code', payment_method_code)
+        .eq('is_active', true)
+        .single();
+
+      if (paymentMethodError || !paymentMethodData) {
+        return jsonResponse({ error: 'Ce moyen de paiement est indisponible ou inactif.' }, 400);
+      }
+
+      // 2. Vérifier l'adresse de livraison et son propriétaire
       const { data: addressData, error: addressError } = await supabase
         .from('addresses')
         .select('*')
@@ -110,38 +111,31 @@ export default {
         .single();
 
       if (addressError || !addressData) {
-        return jsonResponse({ 
-          error: 'Adresse de livraison introuvable ou invalide.', 
-          details: addressError?.message 
-        }, 400);
+        return jsonResponse({ error: 'Adresse de livraison introuvable ou invalide.', details: addressError?.message }, 400);
       }
 
-      // Security check: Make sure this address belongs to the authenticated user
       if (addressData.user_id !== user.id) {
         return jsonResponse({ error: 'Sécurité : Cette adresse ne correspond pas à votre compte utilisateur.' }, 403);
       }
 
-      // 8. Retrieve Shipping Zone and Delivery Fees
-      // We check for 'shipping_zone_id' or alternative database column naming
-      const zoneId = addressData.shipping_zone_id || addressData.zone_id;
+      const zoneId = addressData.shipping_zone_id;
       if (!zoneId) {
         return jsonResponse({ error: 'L\'adresse sélectionnée n\'est associée à aucune zone de livraison.' }, 400);
       }
 
+      // 3. Récupérer la zone de livraison et son tarif réel (fee_cents)
       const { data: zoneData, error: zoneError } = await supabase
         .from('shipping_zones')
         .select('*')
         .eq('id', zoneId)
+        .eq('is_active', true)
         .single();
 
       if (zoneError || !zoneData) {
-        return jsonResponse({ 
-          error: 'Zone de livraison introuvable ou inactive.', 
-          details: zoneError?.message 
-        }, 400);
+        return jsonResponse({ error: 'Zone de livraison introuvable ou inactive.', details: zoneError?.message }, 400);
       }
 
-      // 9. Fetch Live Product Details & Recalculate Prices
+      // 4. Récupérer les produits réels et leurs prix officiels (price_cents)
       const productIds = items.map((item: any) => item.product_id);
       const { data: dbProducts, error: productsError } = await supabase
         .from('products')
@@ -149,91 +143,75 @@ export default {
         .in('id', productIds);
 
       if (productsError || !dbProducts) {
-        return jsonResponse({ 
-          error: 'Erreur lors de la récupération des détails des soins depuis le catalogue.', 
-          details: productsError?.message 
-        }, 500);
+        return jsonResponse({ error: 'Erreur lors de la récupération des produits du catalogue.', details: productsError?.message }, 500);
       }
 
-      // Create a dictionary of database products for fast lookup
       const productMap = new Map<string, any>();
       for (const p of dbProducts) {
         productMap.set(p.id, p);
       }
 
-      // 10. Perform strict validation checks: existence, activation, and stock availability
-      let calculatedSubtotal = 0;
+      // 5. Validation stricte : existence, activation, stock, calcul du sous-total (en centimes/FCFA direct)
+      let calculatedSubtotalCents = 0;
 
       for (const item of items) {
         const dbProduct = productMap.get(item.product_id);
-        
+
         if (!dbProduct) {
-          return jsonResponse({ error: `Le soin demandé avec l'identifiant "${item.product_id}" n'existe pas dans notre catalogue.` }, 400);
+          return jsonResponse({ error: `Le produit avec l'identifiant "${item.product_id}" n'existe pas dans notre catalogue.` }, 400);
         }
 
-        // Check if product is deactivated/archived
-        const isActive = dbProduct.active !== false && dbProduct.is_active !== false;
-        if (!isActive) {
-          return jsonResponse({ error: `Le soin "${dbProduct.name}" est temporairement indisponible ou désactivé.` }, 400);
+        if (dbProduct.is_active === false) {
+          return jsonResponse({ error: `Le produit "${dbProduct.name}" est temporairement indisponible.` }, 400);
         }
 
-        // Check stock availability
-        if (dbProduct.stock < item.quantity) {
-          return jsonResponse({ 
-            error: `Stock insuffisant pour le soin "${dbProduct.name}". Stock restant : ${dbProduct.stock}, quantité demandée : ${item.quantity}.` 
+        if (dbProduct.stock_quantity < item.quantity) {
+          return jsonResponse({
+            error: `Stock insuffisant pour "${dbProduct.name}". Stock restant : ${dbProduct.stock_quantity}, quantité demandée : ${item.quantity}.`
           }, 400);
         }
 
-        // Recalculate subtotal using the official database price (ignoring any client inputs)
-        calculatedSubtotal += dbProduct.price * item.quantity;
+        calculatedSubtotalCents += dbProduct.price_cents * item.quantity;
       }
 
-      // 11. Calculate final shipping fee based on total amount (e.g. free delivery over 50,000 FCFA)
-      let shippingFee = Number(zoneData.fee ?? zoneData.price ?? zoneData.cost ?? 0);
-      if (calculatedSubtotal >= 50000) {
-        shippingFee = 0; // Free shipping threshold matched
+      // 6. Frais de livraison réels depuis la base (fee_cents = montant direct en FCFA)
+      let shippingFeeCents = Number(zoneData.fee_cents ?? 0);
+      if (calculatedSubtotalCents >= 50000) {
+        shippingFeeCents = 0; // Livraison gratuite au-delà de 50 000 FCFA
       }
 
-      const calculatedTotal = calculatedSubtotal + shippingFee;
+      const totalCents = calculatedSubtotalCents + shippingFeeCents;
 
-      // Determine order initial status based on the selected payment method
-      // 'cod' (Cash on Delivery) -> 'confirmed'
-      // 'wave' or 'om' (Orange Money) -> 'awaiting_verification' (requires manual admin approval)
       const orderStatus = payment_method_code === 'cod' ? 'confirmed' : 'awaiting_verification';
 
-      // 12. Create the Order Entry
+      // 7. Créer la commande avec les VRAIS noms de colonnes
       const { data: newOrder, error: orderInsertError } = await supabase
         .from('orders')
         .insert({
           user_id: user.id,
-          address_id: address_id,
-          payment_method_code: payment_method_code,
-          shipping_fee: shippingFee,
-          subtotal: calculatedSubtotal,
-          total: calculatedTotal,
-          status: orderStatus,
-          created_at: new Date().toISOString()
+          shipping_address_id: address_id,
+          shipping_zone_id: zoneId,
+          shipping_fee_cents: shippingFeeCents,
+          total_cents: totalCents,
+          payment_method_id: paymentMethodData.id,
+          payment_reference: transaction_reference || null,
+          status: orderStatus
         })
         .select()
         .single();
 
       if (orderInsertError || !newOrder) {
-        return jsonResponse({ 
-          error: 'Impossible d\'enregistrer la commande dans notre base de données.', 
-          details: orderInsertError?.message 
-        }, 500);
+        return jsonResponse({ error: 'Impossible d\'enregistrer la commande.', details: orderInsertError?.message }, 500);
       }
 
-      // 13. Create the Order Line Items (order_items)
+      // 8. Lignes de commande (order_items n'a pas de colonne total_price, uniquement unit_price_cents)
       const orderItemsToInsert = items.map((item: any) => {
         const dbProduct = productMap.get(item.product_id);
         return {
           order_id: newOrder.id,
           product_id: item.product_id,
           quantity: item.quantity,
-          unit_price: dbProduct.price,
-          total_price: dbProduct.price * item.quantity,
-          created_at: new Date().toISOString()
+          unit_price_cents: dbProduct.price_cents
         };
       });
 
@@ -242,22 +220,18 @@ export default {
         .insert(orderItemsToInsert);
 
       if (itemsInsertError) {
-        // Rollback created order to prevent orphaned records on partial failure
         await supabase.from('orders').delete().eq('id', newOrder.id);
-        return jsonResponse({ 
-          error: 'La commande n\'a pas pu être finalisée lors de l\'enregistrement des articles.', 
-          details: itemsInsertError?.message 
-        }, 500);
+        return jsonResponse({ error: 'La commande n\'a pas pu être finalisée lors de l\'enregistrement des articles.', details: itemsInsertError?.message }, 500);
       }
 
-      // 14. Decrement the inventory stock for the purchased items
+      // 9. Décrémenter le stock réel (stock_quantity)
       for (const item of items) {
         const dbProduct = productMap.get(item.product_id);
-        const updatedStock = dbProduct.stock - item.quantity;
-        
+        const updatedStock = dbProduct.stock_quantity - item.quantity;
+
         const { error: stockUpdateError } = await supabase
           .from('products')
-          .update({ stock: updatedStock })
+          .update({ stock_quantity: updatedStock })
           .eq('id', item.product_id);
 
         if (stockUpdateError) {
@@ -265,7 +239,7 @@ export default {
         }
       }
 
-      // 15. Clean up user's active cart items now that order is successfully completed
+      // 10. Vider le panier serveur de l'utilisateur
       const { error: cartCleanupError } = await supabase
         .from('cart_items')
         .delete()
@@ -275,21 +249,17 @@ export default {
         console.error('Warning: Active cart items clean up failed:', cartCleanupError.message);
       }
 
-      // 16. Return Success Response with Created Order Details
       return jsonResponse({
         success: true,
         order_id: newOrder.id,
         status: newOrder.status,
-        subtotal: calculatedSubtotal,
-        shipping_fee: shippingFee,
-        total: calculatedTotal
+        subtotal_cents: calculatedSubtotalCents,
+        shipping_fee_cents: shippingFeeCents,
+        total_cents: totalCents
       }, 201);
 
     } catch (err: any) {
-      return jsonResponse({ 
-        error: 'Une erreur interne est survenue lors de l\'enregistrement de votre commande.', 
-        details: err.message 
-      }, 500);
+      return jsonResponse({ error: 'Une erreur interne est survenue lors de l\'enregistrement de votre commande.', details: err.message }, 500);
     }
   }
 };

@@ -2,10 +2,6 @@ name = "orders-api"
 main = "src/index.ts"
 compatibility_date = "2024-05-29"
 
-# Bindings and configuration variables
-[vars]
-# SUPABASE_URL must be configured to match your Supabase project URL
-SUPABASE_URL = ""
-
-# Secrets (to be set securely via wrangler secret put or Cloudflare dashboard):
-# - SUPABASE_SERVICE_ROLE_KEY: The secret service_role key to bypass RLS and perform orders / stock management
+# SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY sont configurées exclusivement via
+# `wrangler secret put` ou le Cloudflare Dashboard > Settings > Variables and Secrets.
+# Ne jamais les écrire ici en clair, sous peine d'écraser la config au prochain deploy.
