@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import CategoryDetail from './pages/CategoryDetail';
 import BrandDetail from './pages/BrandDetail';
 import CatalogueDetail from './pages/CatalogueDetail';
+import Collections from './pages/Collections';
 import CataloguePrint from './pages/CataloguePrint';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
@@ -60,6 +61,7 @@ export default function App() {
               <Link to="/" className="hover:text-[#9A8C73] transition-colors">🏠 Accueil : `/`</Link>
               <Link to="/categorie/soins-visage" className="hover:text-[#9A8C73] transition-colors">📂 Catégorie : `/categorie/soins-visage`</Link>
               <Link to="/marque/m-botanics" className="hover:text-[#9A8C73] transition-colors">🏷️ Marque : `/marque/m-botanics`</Link>
+              <Link to="/collections" className="hover:text-[#9A8C73] transition-colors">📚 Index Collections : `/collections`</Link>
               <Link to="/catalogue/nouveautes" className="hover:text-[#9A8C73] transition-colors">✨ Catalogue : `/catalogue/nouveautes`</Link>
               <Link to="/catalogue/nouveautes/print" className="hover:text-[#9A8C73] transition-colors">🖨️ Catalogue Print : `/catalogue/nouveautes/print`</Link>
               <Link to="/produit/serum-hydratant" className="hover:text-[#9A8C73] transition-colors">🧴 Produit : `/produit/serum-hydratant`</Link>
@@ -92,6 +94,7 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="categorie/:slug" element={<CategoryDetail />} />
             <Route path="marque/:slug" element={<BrandDetail />} />
+            <Route path="collections" element={<Collections />} />
             <Route path="catalogue/:slug" element={<CatalogueDetail />} />
             <Route path="produit/:slug" element={<ProductDetail />} />
             <Route path="recherche" element={<Search />} />

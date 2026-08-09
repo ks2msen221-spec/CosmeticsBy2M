@@ -43,13 +43,14 @@ export default function Layout() {
           {/* Left Navigation */}
           <nav className="hidden md:flex gap-8 text-[11px] uppercase tracking-widest font-semibold">
             <Link to="/" className="hover:opacity-50 transition-opacity">Produits</Link>
-            <Link to="/catalogue/selection-botanique" className="hover:opacity-50 transition-opacity">Collections</Link>
+            <Link to="/collections" className="hover:opacity-50 transition-opacity">Collections</Link>
             <Link to="/blog" className="hover:opacity-50 transition-opacity">Le Blog</Link>
           </nav>
           
           {/* Mobile hamburger shortcut */}
-          <div className="md:hidden flex gap-4 text-[11px] uppercase tracking-widest font-semibold">
+          <div className="md:hidden flex gap-3 text-[10px] uppercase tracking-widest font-semibold">
             <Link to="/" className="hover:opacity-50 transition-opacity">Shop</Link>
+            <Link to="/collections" className="hover:opacity-50 transition-opacity">Collections</Link>
             <Link to="/blog" className="hover:opacity-50 transition-opacity">Blog</Link>
             <Link to="/admin" className="hover:opacity-50 transition-opacity text-amber-700 font-bold">Admin</Link>
           </div>
