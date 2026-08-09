@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, normalizePhoneToTechnicalEmail } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { 
   LogOut, 
@@ -16,7 +16,11 @@ import {
   X,
   Loader2,
   AlertCircle,
-  Save
+  Save,
+  Mail,
+  KeyRound,
+  Send,
+  CheckCircle2
 } from 'lucide-react';
 
 interface Address {
@@ -47,6 +51,221 @@ export default function Account() {
   const [fullName, setFullName] = useState(profile?.full_name || '');
   const [phone, setPhone] = useState(profile?.phone || '');
   const [address, setAddress] = useState(profile?.address || '');
+  
+  // Email & Verification States
+  const [email, setEmail] = useState(profile?.email || '');
+  const [sendingCodeLoading, setSendingCodeLoading] = useState(false);
+  const [emailSendError, setEmailSendError] = useState<string | null>(null);
+  const [emailSendSuccess, setEmailSendSuccess] = useState<string | null>(null);
+
+  const [showCodeInput, setShowCodeInput] = useState(false);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [verifyingCodeLoading, setVerifyingCodeLoading] = useState(false);
+  const [emailVerifyError, setEmailVerifyError] = useState<string | null>(null);
+  const [emailVerifySuccess, setEmailVerifySuccess] = useState<string | null>(null);
+
+  const [cooldownSeconds, setCooldownSeconds] = useState(0);
+
+  // Password Change States
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (profile?.email) {
+      setEmail(profile.email);
+    }
+  }, [profile?.email]);
+
+  useEffect(() => {
+    if (cooldownSeconds <= 0) return;
+    const timer = setInterval(() => {
+      setCooldownSeconds(prev => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [cooldownSeconds]);
+
+  // Email Verification Handlers
+  const handleSendVerificationCode = async () => {
+    if (!email || !email.trim()) {
+      setEmailSendError("Veuillez saisir une adresse email valide.");
+      return;
+    }
+    setEmailSendError(null);
+    setEmailSendSuccess(null);
+    setEmailVerifyError(null);
+    setEmailVerifySuccess(null);
+    setSendingCodeLoading(true);
+
+    try {
+      let token = '';
+      if (supabase) {
+        const { data } = await supabase.auth.getSession();
+        token = data.session?.access_token || '';
+      }
+
+      const apiUrl = (import.meta as any).env?.VITE_ORDERS_API_URL || '';
+      const res = await fetch(`${apiUrl}/api/email/send-code`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ email: email.trim() })
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        const errMsg = data.error || data.message || `Erreur (${res.status})`;
+        setEmailSendError(errMsg);
+        return;
+      }
+
+      setShowCodeInput(true);
+      setEmailSendSuccess("Un code de vérification à 6 chiffres a été envoyé à votre adresse email.");
+      setCooldownSeconds(60);
+    } catch (err: any) {
+      setEmailSendError(err.message || "Erreur lors de l'envoi du code.");
+    } finally {
+      setSendingCodeLoading(false);
+    }
+  };
+
+  const handleVerifyCode = async () => {
+    if (!verificationCode || verificationCode.trim().length !== 6) {
+      setEmailVerifyError("Veuillez saisir le code à 6 chiffres.");
+      return;
+    }
+    setEmailVerifyError(null);
+    setEmailVerifySuccess(null);
+    setVerifyingCodeLoading(true);
+
+    try {
+      let token = '';
+      if (supabase) {
+        const { data } = await supabase.auth.getSession();
+        token = data.session?.access_token || '';
+      }
+
+      const apiUrl = (import.meta as any).env?.VITE_ORDERS_API_URL || '';
+      const res = await fetch(`${apiUrl}/api/email/verify-code`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ code: verificationCode.trim() })
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        const errMsg = data.error || data.message || `Erreur (${res.status})`;
+        setEmailVerifyError(errMsg);
+        return;
+      }
+
+      setEmailVerifySuccess("Email vérifié avec succès");
+      setShowCodeInput(false);
+      setVerificationCode('');
+
+      // Reload profile
+      if (supabase && user) {
+        const { data: updatedProfile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        if (updatedProfile) {
+          await updateProfile(updatedProfile);
+        } else {
+          await updateProfile({ email: email.trim(), email_verified: true } as any);
+        }
+      } else {
+        await updateProfile({ email: email.trim(), email_verified: true } as any);
+      }
+    } catch (err: any) {
+      setEmailVerifyError(err.message || "Erreur lors de la vérification du code.");
+    } finally {
+      setVerifyingCodeLoading(false);
+    }
+  };
+
+  // Password Change Handler
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordError(null);
+    setPasswordSuccess(null);
+
+    if (!currentPassword) {
+      setPasswordError("Veuillez saisir votre mot de passe actuel.");
+      return;
+    }
+    if (newPassword.length < 6) {
+      setPasswordError("Le nouveau mot de passe doit contenir au moins 6 caractères.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordError("Les deux nouveaux mots de passe ne correspondent pas.");
+      return;
+    }
+
+    setPasswordLoading(true);
+
+    try {
+      const userPhone = profile?.phone || '';
+      if (!userPhone) {
+        setPasswordError("Numéro de téléphone introuvable sur votre profil.");
+        setPasswordLoading(false);
+        return;
+      }
+
+      const technicalEmail = normalizePhoneToTechnicalEmail(userPhone);
+
+      if (supabase && !isMocked) {
+        const { error: signInErr } = await supabase.auth.signInWithPassword({
+          email: technicalEmail,
+          password: currentPassword
+        });
+
+        if (signInErr) {
+          setPasswordError("Mot de passe actuel incorrect");
+          setPasswordLoading(false);
+          return;
+        }
+
+        const { error: updateErr } = await supabase.auth.updateUser({
+          password: newPassword
+        });
+
+        if (updateErr) {
+          setPasswordError(updateErr.message || "Erreur lors de la mise à jour du mot de passe.");
+          setPasswordLoading(false);
+          return;
+        }
+      } else {
+        if (currentPassword.length < 3) {
+          setPasswordError("Mot de passe actuel incorrect");
+          setPasswordLoading(false);
+          return;
+        }
+      }
+
+      setPasswordSuccess("Mot de passe mis à jour avec succès.");
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (err: any) {
+      setPasswordError(err.message || "Erreur lors de la mise à jour du mot de passe.");
+    } finally {
+      setPasswordLoading(false);
+    }
+  };
   
   const [loadingLocal, setLoadingLocal] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
@@ -260,11 +479,18 @@ export default function Account() {
     setSuccessMessage(null);
 
     try {
+      if (supabase && !isMocked && user) {
+        await supabase
+          .from('profiles')
+          .update({ email: email.trim() })
+          .eq('id', user.id);
+      }
       await updateProfile({
         full_name: fullName,
         phone: phone,
-        address: address
-      });
+        address: address,
+        email: email.trim()
+      } as any);
       setSuccessMessage('Votre profil dermatologique a été mis à jour avec succès.');
       setIsEditing(false);
     } catch (err: any) {
@@ -278,6 +504,7 @@ export default function Account() {
     setFullName(profile?.full_name || '');
     setPhone(profile?.phone || '');
     setAddress(profile?.address || '');
+    setEmail(profile?.email || '');
     setIsEditing(true);
     setLocalError(null);
     setSuccessMessage(null);
@@ -403,6 +630,48 @@ export default function Account() {
                   </div>
                 </div>
 
+                {/* Champ Email dans le formulaire */}
+                <div>
+                  <div className="flex justify-between items-center mb-1.5">
+                    <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold">
+                      Email
+                    </label>
+                    {(profile as any)?.email_verified ? (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-green-100 text-green-800 border border-green-200">
+                        Vérifié
+                      </span>
+                    ) : (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-200">
+                        Non vérifié
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="votre.email@exemple.com"
+                      className="flex-1 text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic"
+                    />
+                    {email.trim() !== '' && (
+                      <button
+                        type="button"
+                        onClick={handleSendVerificationCode}
+                        disabled={sendingCodeLoading}
+                        className="px-4 py-3 bg-[#9A8C73] text-white hover:bg-[#83755e] text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer rounded-sm shrink-0 flex items-center justify-center gap-1.5 disabled:opacity-50"
+                      >
+                        {sendingCodeLoading ? (
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        ) : (
+                          <Send className="w-3.5 h-3.5" />
+                        )}
+                        {sendingCodeLoading ? 'Envoi...' : 'Vérifier cet email'}
+                      </button>
+                    )}
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5">
                     Adresse complète de livraison
@@ -455,6 +724,27 @@ export default function Account() {
                       {profile?.phone || 'Non renseigné'}
                     </p>
                   </div>
+
+                  <div className="space-y-1.5 md:col-span-2 border-t border-black/5 pt-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[9px] uppercase tracking-widest text-black/40 font-bold flex items-center gap-1">
+                        <Mail className="w-3.5 h-3.5 text-[#9A8C73]" />
+                        Email
+                      </span>
+                      {(profile as any)?.email_verified ? (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-green-100 text-green-800 border border-green-200">
+                          Vérifié
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-200">
+                          Non vérifié
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm font-serif italic font-semibold text-black/80">
+                      {profile?.email || 'Non renseigné'}
+                    </p>
+                  </div>
                 </div>
 
                 <div className="space-y-1.5">
@@ -479,6 +769,175 @@ export default function Account() {
                 </div>
               </div>
             )}
+
+            {/* Email Verification Feedback & Code Input Encart */}
+            {emailSendError && (
+              <div className="mt-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs">
+                {emailSendError}
+              </div>
+            )}
+
+            {emailSendSuccess && (
+              <div className="mt-6 p-4 bg-green-50 border border-green-500/10 text-green-800 text-xs flex items-center gap-2">
+                <Check className="w-4 h-4 text-green-600 shrink-0" />
+                {emailSendSuccess}
+              </div>
+            )}
+
+            {emailVerifyError && (
+              <div className="mt-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs">
+                {emailVerifyError}
+              </div>
+            )}
+
+            {emailVerifySuccess && (
+              <div className="mt-6 p-4 bg-green-50 border border-green-500/10 text-green-800 text-xs flex items-center gap-2">
+                <Check className="w-4 h-4 text-green-600 shrink-0" />
+                {emailVerifySuccess}
+              </div>
+            )}
+
+            {showCodeInput && (
+              <div className="mt-6 p-5 bg-[#FAF9F6] border border-[#9A8C73]/30 rounded-sm space-y-4">
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-[#9A8C73]" />
+                  <span className="text-xs font-bold text-black/80">Code de vérification</span>
+                </div>
+                <p className="text-[11px] text-black/60 leading-relaxed">
+                  Saisissez le code à 6 chiffres envoyé à <strong className="font-semibold">{email}</strong>.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                  <input
+                    type="text"
+                    maxLength={6}
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value)}
+                    placeholder="123456"
+                    className="w-36 text-center font-mono text-base font-bold bg-white border border-black/10 p-2.5 outline-none focus:border-[#9A8C73] tracking-widest"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleVerifyCode}
+                    disabled={verifyingCodeLoading}
+                    className="px-5 py-2.5 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer rounded-sm flex items-center justify-center gap-1.5 disabled:opacity-50"
+                  >
+                    {verifyingCodeLoading ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                    )}
+                    {verifyingCodeLoading ? 'Validation...' : 'Valider le code'}
+                  </button>
+                </div>
+
+                <div className="pt-2 border-t border-black/5 flex items-center justify-between">
+                  {cooldownSeconds > 0 ? (
+                    <span className="text-[10px] text-black/40 font-mono">
+                      Renvoyer le code ({cooldownSeconds}s)
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleSendVerificationCode}
+                      disabled={sendingCodeLoading}
+                      className="text-[10px] uppercase tracking-wider text-[#9A8C73] hover:underline font-bold cursor-pointer"
+                    >
+                      Renvoyer le code
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* NEW SECTION: Changer le mot de passe */}
+          <div className="border border-black/5 bg-white p-8 md:p-10 shadow-sm relative mt-8">
+            <div className="pb-4 border-b border-black/5 mb-6">
+              <h2 className="text-2xl font-serif">Changer le mot de passe</h2>
+              <p className="text-xs text-black/50 mt-1">
+                Sécurisez votre compte 2M Cosmetics en modifiant votre mot de passe.
+              </p>
+            </div>
+
+            {passwordSuccess && (
+              <div className="mb-6 p-4 bg-green-50 border border-green-500/10 text-green-800 text-xs flex items-center gap-2">
+                <Check className="w-4 h-4 text-green-600 shrink-0" />
+                {passwordSuccess}
+              </div>
+            )}
+
+            {passwordError && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+                {passwordError}
+              </div>
+            )}
+
+            <form onSubmit={handleUpdatePassword} className="space-y-6">
+              <div>
+                <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="currentPassword">
+                  Mot de passe actuel
+                </label>
+                <input
+                  id="currentPassword"
+                  type="password"
+                  required
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="newPassword">
+                    Nouveau mot de passe
+                  </label>
+                  <input
+                    id="newPassword"
+                    type="password"
+                    required
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                  />
+                  <p className="text-[9px] text-black/40 mt-1">Minimum 6 caractères</p>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="confirmPassword">
+                    Confirmer le nouveau mot de passe
+                  </label>
+                  <input
+                    id="confirmPassword"
+                    type="password"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-black/5">
+                <button
+                  type="submit"
+                  disabled={passwordLoading}
+                  className="px-6 py-3 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+                >
+                  {passwordLoading ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <KeyRound className="w-3.5 h-3.5" />
+                  )}
+                  {passwordLoading ? 'Mise à jour...' : 'Mettre à jour le mot de passe'}
+                </button>
+              </div>
+            </form>
           </div>
 
           {/* SECOND CARD: Address Management */}
