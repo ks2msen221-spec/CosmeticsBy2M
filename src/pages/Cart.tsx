@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { supabase } from '../lib/supabase';
 import { 
   ShoppingBag, 
   Trash2, 
@@ -10,7 +11,8 @@ import {
   ShieldCheck, 
   Info, 
   Sparkles,
-  HelpCircle
+  HelpCircle,
+  AlertTriangle
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -18,6 +20,44 @@ export default function Cart() {
   const { cartItems, loading, subtotal, totalQuantity, updateQuantity, removeFromCart, clearCart } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  const [liveStocks, setLiveStocks] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    async function fetchLiveStocks() {
+      if (cartItems.length === 0) return;
+      const productIds = cartItems.map(item => item.product_id);
+      
+      try {
+        if (supabase) {
+          const { data, error } = await supabase
+            .from('products')
+            .select('id, stock_quantity')
+            .in('id', productIds);
+          
+          if (!error && data) {
+            const map: Record<string, number> = {};
+            data.forEach((p: any) => {
+              map[p.id] = p.stock_quantity ?? 0;
+            });
+            setLiveStocks(map);
+            return;
+          }
+        }
+        
+        // Fallback
+        const map: Record<string, number> = {};
+        cartItems.forEach(item => {
+          map[item.product_id] = item.product?.stock ?? 0;
+        });
+        setLiveStocks(map);
+      } catch (err) {
+        console.error("Error fetching live stocks for cart items:", err);
+      }
+    }
+
+    fetchLiveStocks();
+  }, [cartItems]);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-FR').format(price) + ' FCFA';
@@ -115,6 +155,9 @@ export default function Cart() {
                   const product = item.product;
                   const price = product?.price || 0;
                   const itemTotal = price * item.quantity;
+                  const availableStock = liveStocks[item.product_id] !== undefined
+                    ? liveStocks[item.product_id]
+                    : (product?.stock ?? 0);
 
                   return (
                     <motion.div 
@@ -168,10 +211,25 @@ export default function Cart() {
 
                           <div className="pt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-black/50 font-mono">
                             <span>Prix unitaire : {formatPrice(price)}</span>
-                            {product && product.stock < item.quantity && (
-                              <span className="text-red-600 font-bold">Stock max atteint ({product.stock})</span>
-                            )}
                           </div>
+
+                          {/* Stock limited warning banner under article */}
+                          {availableStock < item.quantity && (
+                            <div className="mt-3 p-3 bg-amber-50/90 border border-amber-200 rounded-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-[#7C4A03]">
+                              <div className="flex items-center gap-2 text-xs">
+                                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                                <span>
+                                  Stock limité : seulement <strong>{availableStock}</strong> disponible(s) (vous en avez <strong>{item.quantity}</strong> dans votre panier)
+                                </span>
+                              </div>
+                              <button
+                                onClick={() => updateQuantity(item.product_id, availableStock)}
+                                className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-[10px] font-bold uppercase tracking-wider rounded-sm transition-colors cursor-pointer self-start sm:self-auto shrink-0"
+                              >
+                                Ajuster à {availableStock}
+                              </button>
+                            </div>
+                          )}
                         </div>
 
                         {/* Quantity and Line Total actions */}
@@ -180,7 +238,7 @@ export default function Cart() {
                           <div className="flex items-center border border-black/10 rounded-sm bg-[#FAF9F6]">
                             <button 
                               onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
-                              className="px-2.5 py-1 text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none text-xs"
+                              className="px-2.5 py-1 text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none text-xs disabled:opacity-30 disabled:cursor-not-allowed"
                               disabled={item.quantity <= 1}
                             >
                               -
@@ -190,8 +248,8 @@ export default function Cart() {
                             </span>
                             <button 
                               onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
-                              className="px-2.5 py-1 text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none text-xs"
-                              disabled={product ? item.quantity >= product.stock : false}
+                              className="px-2.5 py-1 text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none text-xs disabled:opacity-30 disabled:cursor-not-allowed"
+                              disabled={item.quantity >= availableStock}
                             >
                               +
                             </button>

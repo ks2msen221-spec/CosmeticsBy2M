@@ -214,11 +214,27 @@ export default function ProductDetail() {
               </h1>
 
               {/* Price Tag */}
-              <div className="pt-2 border-b border-black/5 pb-4 flex justify-between items-baseline">
-                <span className="text-2xl font-mono font-bold text-[#1A1A1A]">
-                  {formatPrice(product.price)}
-                </span>
-                <span className="text-[10px] text-black/40 font-mono">TVA Incluse / Dakar</span>
+              <div className="pt-2 border-b border-black/5 pb-4">
+                <div className="flex justify-between items-baseline">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl font-mono font-bold text-[#1A1A1A]">
+                      {formatPrice(product.price)}
+                    </span>
+                    {product.stock <= 0 && (
+                      <span className="text-[10px] uppercase font-bold tracking-wider text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded">
+                        Rupture de stock
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-[10px] text-black/40 font-mono">TVA Incluse / Dakar</span>
+                </div>
+
+                {/* Low stock notice (<= 5 and > 0) */}
+                {product.stock > 0 && product.stock <= 5 && (
+                  <div className="mt-2 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200/80 px-2.5 py-1 rounded inline-block">
+                    Plus que {product.stock} en stock
+                  </div>
+                )}
               </div>
             </div>
 
@@ -233,7 +249,7 @@ export default function ProductDetail() {
                   </span>
                 ) : (
                   <span className="text-red-700 font-bold bg-red-50 px-2 py-0.5 border border-red-100 rounded text-[11px]">
-                    Rupture temporaire
+                    Rupture de stock
                   </span>
                 )}
               </div>
@@ -253,17 +269,31 @@ export default function ProductDetail() {
                   <div className="flex items-center border border-black/10 rounded-sm bg-[#FAF9F6] self-start sm:self-auto h-12 shadow-sm">
                     <button 
                       onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
-                      className="px-4 h-full text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none border-r border-black/5 flex items-center justify-center text-sm"
+                      className="px-4 h-full text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none border-r border-black/5 flex items-center justify-center text-sm disabled:opacity-30 disabled:cursor-not-allowed"
                       disabled={quantity <= 1}
                     >
                       -
                     </button>
-                    <span className="px-5 font-mono text-xs font-bold text-black min-w-[3rem] text-center">
-                      {quantity}
-                    </span>
+                    
+                    <input
+                      type="number"
+                      min={1}
+                      max={product.stock}
+                      value={quantity}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value, 10);
+                        if (isNaN(val) || val < 1) {
+                          setQuantity(1);
+                        } else {
+                          setQuantity(Math.min(product.stock, val));
+                        }
+                      }}
+                      className="w-14 text-center font-mono text-xs font-bold text-black bg-transparent outline-none border-none p-0"
+                    />
+
                     <button 
                       onClick={() => setQuantity(prev => Math.min(product.stock, prev + 1))}
-                      className="px-4 h-full text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none border-l border-black/5 flex items-center justify-center text-sm"
+                      className="px-4 h-full text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none border-l border-black/5 flex items-center justify-center text-sm disabled:opacity-30 disabled:cursor-not-allowed"
                       disabled={quantity >= product.stock}
                     >
                       +
@@ -272,7 +302,8 @@ export default function ProductDetail() {
                   
                   <button
                     onClick={handleAddToCart}
-                    className="flex-1 h-12 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm active:scale-[0.98]"
+                    disabled={product.stock <= 0}
+                    className="flex-1 h-12 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
                   >
                     <ShoppingBag className="w-4 h-4" />
                     Ajouter au Panier
@@ -292,8 +323,14 @@ export default function ProductDetail() {
                 )}
               </div>
             ) : (
-              <div className="py-4 px-4 border border-red-100 bg-red-50 text-red-800 text-[10px] uppercase tracking-widest font-extrabold text-center rounded-sm">
-                Produit temporairement indisponible
+              <div className="space-y-4 pt-2 border-t border-b border-black/5 pb-6">
+                <button
+                  disabled
+                  className="w-full h-12 bg-gray-200 text-gray-500 text-[10px] uppercase tracking-widest font-bold flex items-center justify-center gap-2 cursor-not-allowed rounded-sm"
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  Rupture de stock
+                </button>
               </div>
             )}
 

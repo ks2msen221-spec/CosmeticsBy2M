@@ -60,7 +60,7 @@ const MOCK_PAYMENT_METHODS: PaymentMethod[] = [
 ];
 
 export default function Checkout() {
-  const { cartItems, loading: cartLoading, subtotal, totalQuantity, clearCart } = useCart();
+  const { cartItems, loading: cartLoading, subtotal, totalQuantity, updateQuantity, clearCart } = useCart();
   const { user, profile, isMocked } = useAuth();
   const navigate = useNavigate();
 
@@ -86,6 +86,11 @@ export default function Checkout() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [addressError, setAddressError] = useState<string | null>(null);
+
+  // Stock mismatch modal alert state
+  const [stockMismatchAlert, setStockMismatchAlert] = useState<{
+    issues: { product_id: string; name: string; available: number; current: number }[];
+  } | null>(null);
 
   // Load everything on mount
   useEffect(() => {
@@ -267,6 +272,26 @@ export default function Checkout() {
     return new Intl.NumberFormat('fr-FR').format(price) + ' FCFA';
   };
 
+  // Adjust cart quantities and re-submit order
+  const handleAdjustAndContinue = async () => {
+    if (!stockMismatchAlert) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      for (const issue of stockMismatchAlert.issues) {
+        await updateQuantity(issue.product_id, issue.available);
+      }
+      setStockMismatchAlert(null);
+      setTimeout(() => {
+        handleSubmitOrder();
+      }, 150);
+    } catch (err: any) {
+      console.error("Failed to adjust quantities:", err);
+      setError("Impossible d'ajuster les quantités automatiquement. Veuillez vérifier votre panier.");
+      setSubmitting(false);
+    }
+  };
+
   // Submit Order to Cloudflare Worker
   const handleSubmitOrder = async () => {
     if (!user) return;
@@ -286,6 +311,58 @@ export default function Checkout() {
     setSubmitting(true);
 
     try {
+      // 0. Pre-checkout stock check against database
+      const productIds = cartItems.map(item => item.product_id);
+      const stockIssues: { product_id: string; name: string; available: number; current: number }[] = [];
+
+      if (supabase && !isMocked) {
+        const { data: dbProducts, error: dbErr } = await supabase
+          .from('products')
+          .select('id, name, stock_quantity')
+          .in('id', productIds);
+
+        if (!dbErr && dbProducts) {
+          cartItems.forEach(item => {
+            const p = dbProducts.find((pItem: any) => pItem.id === item.product_id);
+            const stock = p?.stock_quantity ?? item.product?.stock ?? 0;
+            if (item.quantity > stock) {
+              stockIssues.push({
+                product_id: item.product_id,
+                name: p?.name || item.product?.name || 'Soin',
+                available: stock,
+                current: item.quantity
+              });
+            }
+          });
+        }
+      } else {
+        // Fallback for local mock
+        const localProdsStr = localStorage.getItem('2m_cosmetics_products');
+        if (localProdsStr) {
+          try {
+            const localProds = JSON.parse(localProdsStr);
+            cartItems.forEach(item => {
+              const p = localProds.find((lp: any) => lp.id === item.product_id);
+              const stock = p?.stock ?? item.product?.stock ?? 0;
+              if (item.quantity > stock) {
+                stockIssues.push({
+                  product_id: item.product_id,
+                  name: item.product?.name || 'Soin',
+                  available: stock,
+                  current: item.quantity
+                });
+              }
+            });
+          } catch(e) {}
+        }
+      }
+
+      if (stockIssues.length > 0) {
+        setStockMismatchAlert({ issues: stockIssues });
+        setSubmitting(false);
+        return;
+      }
+
       // 1. Fetch real JWT Token from Supabase
       let jwtToken = 'mock-jwt-token';
       if (supabase && !isMocked) {
@@ -337,7 +414,16 @@ export default function Checkout() {
 
       if (!response.ok || !result || !result.success) {
         console.error("Worker returned failure response:", result);
-        throw new Error(result?.error || "Le service de commande est temporairement indisponible. Veuillez réessayer dans quelques instants ou nous contacter directement.");
+        let rawError = result?.error || "Le service de commande est temporairement indisponible. Veuillez réessayer dans quelques instants ou nous contacter directement.";
+        if (typeof rawError === 'string' && (
+          rawError.toLowerCase().includes('stock') ||
+          rawError.toLowerCase().includes('insufficient') ||
+          rawError.toLowerCase().includes('disponible') ||
+          rawError.toLowerCase().includes('quantit')
+        )) {
+          rawError = "Le stock de certains articles a évolué à l'instant. Veuillez vérifier et réajuster les quantités dans votre panier.";
+        }
+        throw new Error(rawError);
       }
 
       // 3. Successful Completion Actions
@@ -397,6 +483,46 @@ export default function Checkout() {
             Veuillez sélectionner votre adresse de livraison au Sénégal et votre mode de règlement. Les prix de nos formulations de prestige sont recalculés de manière sécurisée côté serveur.
           </p>
         </header>
+
+        {stockMismatchAlert && (
+          <div className="mb-8 p-6 bg-amber-50 border border-amber-300 text-amber-900 rounded-sm shadow-md max-w-4xl space-y-4">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-6 h-6 text-amber-600 shrink-0 mt-0.5" />
+              <div className="space-y-2">
+                <h4 className="font-serif italic font-bold text-base text-amber-950">
+                  Changement de disponibilité des stocks
+                </h4>
+                {stockMismatchAlert.issues.map((issue, idx) => (
+                  <p key={idx} className="text-xs text-amber-900 leading-relaxed font-sans">
+                    Le stock a changé entre-temps pour <strong className="font-semibold">{issue.name}</strong> : il n'en reste que <strong>{issue.available}</strong> disponible(s) (vous en avez {issue.current} dans votre panier).
+                  </p>
+                ))}
+                <p className="text-xs font-medium text-amber-800 pt-1">
+                  Voulez-vous ajuster automatiquement les quantités et continuer ?
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-3 pt-2">
+              <button
+                onClick={handleAdjustAndContinue}
+                disabled={submitting}
+                className="px-6 py-3 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] text-[10px] uppercase font-bold tracking-widest transition-all cursor-pointer shadow-sm rounded-sm disabled:opacity-50"
+              >
+                {submitting ? "Ajustement en cours..." : "Ajuster et continuer"}
+              </button>
+              <button
+                onClick={() => {
+                  setStockMismatchAlert(null);
+                  navigate('/panier');
+                }}
+                className="px-5 py-3 border border-amber-900/20 text-amber-900 text-[10px] uppercase font-bold tracking-widest hover:bg-amber-100 transition-all cursor-pointer rounded-sm"
+              >
+                Revenir au panier
+              </button>
+            </div>
+          </div>
+        )}
 
         {error && (
           <div className="mb-8 p-4 bg-red-50 border border-red-500/15 text-red-800 text-xs flex items-start gap-3 rounded-sm max-w-4xl">
