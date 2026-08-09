@@ -174,7 +174,7 @@ export default function Login() {
 
                 <div>
                   <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="signupEmail">
-                    Email (optionnel)
+                    Adresse email (optionnel)
                   </label>
                   <input
                     id="signupEmail"
