@@ -12,14 +12,22 @@ export interface UserProfile {
   created_at?: string;
 }
 
+export function normalizePhoneToTechnicalEmail(phone: string): string {
+  // Retire tous les caractères non numériques (espaces, tirets, +, parenthèses)
+  const digitsOnly = phone.replace(/\D/g, '');
+  // Si le numéro ne commence pas par l'indicatif Sénégal (221), on l'ajoute
+  const normalized = digitsOnly.startsWith('221') ? digitsOnly : `221${digitsOnly.replace(/^0+/, '')}`;
+  return `${normalized}@2mcosmetics.local`;
+}
+
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   profile: UserProfile | null;
   loading: boolean;
   error: string | null;
-  signUp: (email: string, password: string, fullName: string, phone?: string, address?: string) => Promise<void>;
-  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (fullName: string, phone: string, password: string, email?: string) => Promise<void>;
+  signIn: (phone: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   updateProfile: (updates: Partial<UserProfile>) => Promise<void>;
   isMocked: boolean;
@@ -126,30 +134,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signUp = async (email: string, password: string, fullName: string, phone?: string, address?: string) => {
+  const signUp = async (fullName: string, phone: string, password: string, realEmail?: string) => {
     setError(null);
     setLoading(true);
+
+    const technicalEmail = normalizePhoneToTechnicalEmail(phone);
 
     if (isMocked || !supabase) {
       // Simulate SignUp
       const mockId = 'usr_' + Math.random().toString(36).substr(2, 9);
       const mockUser = {
         id: mockId,
-        email,
+        email: technicalEmail,
         aud: 'authenticated',
         role: 'authenticated',
         created_at: new Date().toISOString(),
         app_metadata: {},
-        user_metadata: { full_name: fullName },
+        user_metadata: { full_name: fullName, phone },
       } as any as User;
 
       const mockProfile: UserProfile = {
         id: mockId,
-        email,
+        email: realEmail || technicalEmail,
         full_name: fullName,
-        phone: phone || null,
-        address: address || null,
-        role: email.toLowerCase().includes('admin') ? 'admin' : 'customer',
+        phone: phone,
+        address: null,
+        role: 'customer',
         created_at: new Date().toISOString()
       };
 
@@ -164,13 +174,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     try {
       const { data, error: signUpError } = await supabase.auth.signUp({
-        email,
+        email: technicalEmail,
         password,
         options: {
           data: {
             full_name: fullName,
-            phone: phone || '',
-            address: address || '',
+            phone: phone,
           }
         }
       });
@@ -178,22 +187,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (signUpError) throw signUpError;
 
       if (data.user) {
-        // Under our RLS and Schema, we insert a record in profiles if not done automatically by database triggers
-        const { error: profileErr } = await supabase
-          .from('profiles')
-          .insert([
-            {
-              id: data.user.id,
-              email: email,
-              full_name: fullName,
-              phone: phone || null,
-              address: address || null,
-              role: 'customer' // Secure: client-side always registers as customer.
-            }
-          ]);
-        
-        if (profileErr) {
-          console.log("Profile insert handled by trigger or skipped:", profileErr.message);
+        if (realEmail && realEmail.trim() !== '') {
+          const { error: profileUpdateErr } = await supabase
+            .from('profiles')
+            .update({ email: realEmail.trim() })
+            .eq('id', data.user.id);
+          
+          if (profileUpdateErr) {
+            console.log("Profile email update error:", profileUpdateErr.message);
+          }
         }
         
         setUser(data.user);
@@ -206,9 +208,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (phone: string, password: string) => {
     setError(null);
     setLoading(true);
+
+    const technicalEmail = normalizePhoneToTechnicalEmail(phone);
 
     if (isMocked || !supabase) {
       // Simulate SignIn
@@ -217,33 +221,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (storedProfileStr) {
         mockProfile = JSON.parse(storedProfileStr);
-        if (mockProfile.email !== email) {
-          // If a new email is trying to connect in mock mode
-          mockProfile = {
-            id: 'usr_' + Math.random().toString(36).substr(2, 9),
-            email,
-            full_name: 'Utilisateur de Test',
-            phone: '+221 77 000 00 00',
-            address: 'Dakar Plateau, Sénégal',
-            role: email.toLowerCase().includes('admin') ? 'admin' : 'customer',
-            created_at: new Date().toISOString()
-          };
-        }
       } else {
         mockProfile = {
           id: 'usr_' + Math.random().toString(36).substr(2, 9),
-          email,
+          email: technicalEmail,
           full_name: 'Utilisateur de Test',
-          phone: '+221 77 000 00 00',
+          phone: phone,
           address: 'Dakar Plateau, Sénégal',
-          role: email.toLowerCase().includes('admin') ? 'admin' : 'customer',
+          role: 'customer',
           created_at: new Date().toISOString()
         };
       }
 
       const mockUser = {
         id: mockProfile.id,
-        email,
+        email: technicalEmail,
         aud: 'authenticated',
         role: 'authenticated',
         created_at: new Date().toISOString(),
@@ -261,7 +253,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     try {
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
+        email: technicalEmail,
         password
       });
 

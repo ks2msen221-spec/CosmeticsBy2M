@@ -5,11 +5,10 @@ import { ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
   
   const [loadingLocal, setLoadingLocal] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
@@ -29,13 +28,13 @@ export default function Login() {
 
     try {
       if (isLogin) {
-        await signIn(email, password);
+        await signIn(phone, password);
         // Successful signin leads directly to redirection
         navigate(from, { replace: true });
       } else {
-        await signUp(email, password, fullName, phone, address);
+        await signUp(fullName, phone, password, email);
         setSignUpSuccess(true);
-        // Autoconnect on signup is simulated, let's navigate after a brief timeout for premium user experience
+        // Autoconnect on signup is simulated, let me navigate after a brief timeout for premium user experience
         setTimeout(() => {
           navigate('/compte');
         }, 2000);
@@ -101,103 +100,114 @@ export default function Login() {
 
         {!signUpSuccess && (
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Full Name (Sign Up only) */}
-            {!isLogin && (
-              <div>
-                <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="fullName">
-                  Nom Complet *
-                </label>
-                <input
-                  id="fullName"
-                  type="text"
-                  required
-                  placeholder="Ex: Fatima Sylla"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic"
-                />
-              </div>
+            {/* Connexion vs Inscription */}
+            {isLogin ? (
+              /* Formulaire de Connexion */
+              <>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="loginPhone">
+                    Numéro de téléphone *
+                  </label>
+                  <input
+                    id="loginPhone"
+                    type="tel"
+                    required
+                    placeholder="ex: 77 123 45 67"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-mono"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex justify-between items-center mb-1.5">
+                    <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold" htmlFor="loginPassword">
+                      Mot de passe *
+                    </label>
+                    <span className="text-[9px] text-[#9A8C73] cursor-not-allowed hover:underline">
+                      Mot de passe oublié ?
+                    </span>
+                  </div>
+                  <input
+                    id="loginPassword"
+                    type="password"
+                    required
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                  />
+                </div>
+              </>
+            ) : (
+              /* Formulaire d'Inscription */
+              <>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="signupFullName">
+                    Nom complet *
+                  </label>
+                  <input
+                    id="signupFullName"
+                    type="text"
+                    required
+                    placeholder="Ex: Fatima Sylla"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="signupPhone">
+                    Numéro de téléphone *
+                  </label>
+                  <input
+                    id="signupPhone"
+                    type="tel"
+                    required
+                    placeholder="ex: 77 123 45 67"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="signupEmail">
+                    Email (optionnel)
+                  </label>
+                  <input
+                    id="signupEmail"
+                    type="email"
+                    placeholder="votre.email@exemple.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic"
+                  />
+                  <p className="text-[9px] text-black/40 mt-1 leading-normal">
+                    Recommandé pour sécuriser et récupérer votre compte
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="signupPassword">
+                    Mot de passe *
+                  </label>
+                  <input
+                    id="signupPassword"
+                    type="password"
+                    required
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                  />
+                  <p className="text-[9px] text-black/40 mt-1 leading-normal">
+                    Minimum 6 caractères pour garantir la sécurité de votre compte 2M.
+                  </p>
+                </div>
+              </>
             )}
-
-            {/* Email */}
-            <div>
-              <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="email">
-                Adresse Email *
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                placeholder="votre.email@exemple.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic"
-              />
-            </div>
-
-            {/* Phone (Sign Up only) */}
-            {!isLogin && (
-              <div>
-                <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="phone">
-                  Téléphone Sénégal *
-                </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  required
-                  placeholder="Ex: +221 77 123 45 67"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-mono"
-                />
-              </div>
-            )}
-
-            {/* Address (Sign Up only) */}
-            {!isLogin && (
-              <div>
-                <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-1.5" htmlFor="address">
-                  Adresse de livraison à Dakar / Sénégal *
-                </label>
-                <textarea
-                  id="address"
-                  required
-                  rows={2}
-                  placeholder="Ex: Mermoz, Rue MZ 56, Villa 2M, Dakar"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic resize-none"
-                />
-              </div>
-            )}
-
-            {/* Password */}
-            <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold" htmlFor="password">
-                  Mot de passe *
-                </label>
-                {isLogin && (
-                  <span className="text-[9px] text-[#9A8C73] cursor-not-allowed hover:underline">
-                    Mot de passe oublié ?
-                  </span>
-                )}
-              </div>
-              <input
-                id="password"
-                type="password"
-                required
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
-              />
-              {!isLogin && (
-                <p className="text-[9px] text-black/40 mt-1 leading-normal">
-                  Minimum 6 caractères pour garantir la sécurité de votre compte 2M.
-                </p>
-              )}
-            </div>
 
             {/* Submit Button */}
             <button
