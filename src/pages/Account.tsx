@@ -107,8 +107,9 @@ export default function Account() {
         token = data.session?.access_token || '';
       }
 
-      const apiUrl = (import.meta as any).env?.VITE_ORDERS_API_URL || '';
-      const res = await fetch(`${apiUrl}/api/email/send-code`, {
+      const rawApiUrl = (import.meta as any).env?.VITE_ORDERS_API_URL || '';
+      const apiBaseUrl = rawApiUrl.replace(/\/api\/orders\/?$/, '').replace(/\/orders\/?$/, '');
+      const res = await fetch(`${apiBaseUrl}/api/email/send-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,8 +152,9 @@ export default function Account() {
         token = data.session?.access_token || '';
       }
 
-      const apiUrl = (import.meta as any).env?.VITE_ORDERS_API_URL || '';
-      const res = await fetch(`${apiUrl}/api/email/verify-code`, {
+      const rawApiUrl = (import.meta as any).env?.VITE_ORDERS_API_URL || '';
+      const apiBaseUrl = rawApiUrl.replace(/\/api\/orders\/?$/, '').replace(/\/orders\/?$/, '');
+      const res = await fetch(`${apiBaseUrl}/api/email/verify-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
