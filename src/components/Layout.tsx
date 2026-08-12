@@ -3,6 +3,8 @@ import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { ShoppingBag, Search, X, Check, ShieldCheck, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import WhatsAppFloatButton from './WhatsAppFloatButton';
+import { SocialIcons } from './SocialIcons';
 
 export default function Layout() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -33,8 +35,13 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-[#1A1A1A] font-sans flex flex-col selection:bg-[#9A8C73]/20 selection:text-[#1A1A1A]">
       {/* Top Banner */}
-      <div className="h-10 bg-[#1A1A1A] text-[#FAF9F6] flex items-center justify-center text-[10px] tracking-[0.2em] uppercase font-medium px-4 text-center">
-        Livraison gratuite dès 50.000 FCFA — Sécurité de paiement garantie
+      <div className="h-10 bg-[#1A1A1A] text-[#FAF9F6] flex items-center justify-between text-[10px] tracking-[0.2em] uppercase font-medium px-6 lg:px-12">
+        <div className="hidden md:flex items-center gap-3">
+          <SocialIcons iconClassName="w-3.5 h-3.5 text-[#FAF9F6]/80" containerClassName="flex items-center gap-2" />
+        </div>
+        <div className="mx-auto md:mx-0">
+          Livraison gratuite dès 50.000 FCFA — Sécurité de paiement garantie
+        </div>
       </div>
 
       {/* Navigation Header */}
@@ -148,16 +155,20 @@ export default function Layout() {
             </div>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <span className="text-[10px] uppercase tracking-widest text-black/40 font-bold">Suivez-nous</span>
-            <div className="h-[1px] w-12 bg-black/20"></div>
-            <span className="text-[11px] font-serif italic font-semibold">@2m_cosmetics</span>
+            <div className="hidden sm:block h-[1px] w-8 bg-black/20"></div>
+            <SocialIcons iconClassName="w-4 h-4" containerClassName="flex items-center gap-3" />
+            <span className="text-[11px] font-serif italic font-semibold text-black/60">@2m_cosmetics</span>
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 mt-8 pt-4 border-t border-black/5 text-center text-[9px] text-black/30 font-mono uppercase tracking-wider">
           © {new Date().getFullYear()} 2M Group — Tous droits réservés. 
         </div>
       </footer>
+
+      {/* Floating WhatsApp Button */}
+      <WhatsAppFloatButton />
     </div>
   );
 }
