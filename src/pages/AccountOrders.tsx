@@ -74,6 +74,7 @@ export default function AccountOrders() {
             .select(`
               *,
               address:addresses(*),
+              payment_method:payment_methods(code, name),
               order_items(
                 *,
                 product:products(*)
@@ -83,7 +84,24 @@ export default function AccountOrders() {
             .order('created_at', { ascending: false });
 
           if (!dbErr && data) {
-            fetchedOrders = data as unknown as Order[];
+            const normalizedOrders = (data as any[]).map((order: any) => {
+              const items = (order.order_items || []).map((item: any) => ({
+                ...item,
+                unit_price: item.unit_price_cents,
+                total_price: item.unit_price_cents * item.quantity
+              }));
+
+              return {
+                ...order,
+                total: order.total_cents,
+                shipping_fee: order.shipping_fee_cents,
+                subtotal: order.total_cents - order.shipping_fee_cents,
+                payment_method_code: order.payment_method?.code || order.payment_method_code,
+                order_items: items,
+                items: items
+              };
+            });
+            fetchedOrders = normalizedOrders as unknown as Order[];
           } else if (dbErr) {
             throw dbErr;
           }

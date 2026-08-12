@@ -252,6 +252,7 @@ export default function AdminOrders() {
           .select(`
             *,
             address:addresses(*),
+            payment_method:payment_methods(code, name),
             order_items(
               *,
               product:products(*)
@@ -262,8 +263,26 @@ export default function AdminOrders() {
         if (ordersErr) throw ordersErr;
 
         if (ordersData && ordersData.length > 0) {
+          const normalizedOrders = (ordersData as any[]).map((order: any) => {
+            const items = (order.order_items || []).map((item: any) => ({
+              ...item,
+              unit_price: item.unit_price_cents,
+              total_price: item.unit_price_cents * item.quantity
+            }));
+            
+            return {
+              ...order,
+              total: order.total_cents,
+              shipping_fee: order.shipping_fee_cents,
+              subtotal: order.total_cents - order.shipping_fee_cents,
+              payment_method_code: order.payment_method?.code || order.payment_method_code,
+              order_items: items,
+              items: items
+            };
+          });
+
           // Fetch corresponding profiles to display user information
-          const userIds = Array.from(new Set(ordersData.map((o: any) => o.user_id).filter(Boolean)));
+          const userIds = Array.from(new Set(normalizedOrders.map((o: any) => o.user_id).filter(Boolean)));
           
           let profileMap = new Map<string, any>();
           if (userIds.length > 0) {
@@ -280,7 +299,7 @@ export default function AdminOrders() {
           }
 
           // Combine raw orders, profiles and unified fallback arrays
-          const formattedOrders: Order[] = (ordersData as any[]).map((order) => {
+          const formattedOrders: Order[] = normalizedOrders.map((order) => {
             const mappedProfile = profileMap.get(order.user_id) || {
               full_name: 'Utilisateur de Dakar',
               email: 'client@2m-cosmetics.com',
@@ -289,8 +308,7 @@ export default function AdminOrders() {
 
             return {
               ...order,
-              profile: mappedProfile,
-              items: order.order_items || []
+              profile: mappedProfile
             };
           });
 
