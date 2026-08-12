@@ -252,7 +252,7 @@ export default function AdminOrders() {
           .select(`
             *,
             address:addresses(*),
-            payment_method:payment_methods(code, name),
+            payment_method:payment_methods(code, label),
             order_items(
               *,
               product:products(*)
