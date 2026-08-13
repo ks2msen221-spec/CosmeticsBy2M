@@ -63,9 +63,12 @@ export default function Layout() {
           </div>
 
           {/* Center Brand Identity */}
-          <Link to="/" className="flex flex-col items-center select-none group">
-            <h1 className="text-3xl font-serif tracking-tighter leading-none italic font-bold group-hover:text-[#9A8C73] transition-colors">2M</h1>
-            <span className="text-[9px] uppercase tracking-[0.4em] mt-1 font-semibold text-black/60">Cosmetics</span>
+          <Link to="/" className="flex items-center justify-center select-none group" title="2M Cosmetics — Accueil">
+            <img 
+              src="/logo-2m-cosmetics.png" 
+              alt="2M Cosmetics" 
+              className="h-10 sm:h-11 md:h-12 w-auto object-contain"
+            />
           </Link>
 
           {/* Right Navigation */}
@@ -138,7 +141,31 @@ export default function Layout() {
 
       {/* Footer Info Bar */}
       <footer className="border-t border-black/5 py-10 bg-white/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col gap-8">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-black/5">
+            {/* Brand Logo & Identity */}
+            <div className="flex items-center gap-4">
+              <Link to="/" className="inline-flex items-center justify-center hover:opacity-90 transition-opacity" title="Maison 2M Cosmetics">
+                <img 
+                  src="/logo-2m-cosmetics.png" 
+                  alt="2M Cosmetics" 
+                  className="h-11 md:h-12 w-auto object-contain"
+                />
+              </Link>
+              <div>
+                <span className="block text-xs font-bold uppercase tracking-widest text-[#1A1A1A]">Maison 2M Cosmetics</span>
+                <span className="block text-[11px] text-black/60 font-serif italic">Sublimer l'éclat naturel au Sénégal</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <span className="text-[10px] uppercase tracking-widest text-black/40 font-bold">Suivez-nous</span>
+              <div className="hidden sm:block h-[1px] w-8 bg-black/20"></div>
+              <SocialIcons iconClassName="w-4 h-4" containerClassName="flex items-center gap-3" />
+              <span className="text-[11px] font-serif italic font-semibold text-black/60">@2m_cosmetics</span>
+            </div>
+          </div>
+
           <div className="flex flex-wrap gap-12">
             <div className="flex flex-col">
               <span className="text-[10px] uppercase tracking-widest text-black/40 mb-1 font-bold">Paiements</span>
@@ -153,13 +180,6 @@ export default function Layout() {
               <span className="text-[10px] uppercase tracking-widest text-black/40 mb-1 font-bold">Engagement Qualité</span>
               <span className="text-[11px] font-medium">100% Produits Certifiés Bio</span>
             </div>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <span className="text-[10px] uppercase tracking-widest text-black/40 font-bold">Suivez-nous</span>
-            <div className="hidden sm:block h-[1px] w-8 bg-black/20"></div>
-            <SocialIcons iconClassName="w-4 h-4" containerClassName="flex items-center gap-3" />
-            <span className="text-[11px] font-serif italic font-semibold text-black/60">@2m_cosmetics</span>
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 mt-8 pt-4 border-t border-black/5 text-center text-[9px] text-black/30 font-mono uppercase tracking-wider">
