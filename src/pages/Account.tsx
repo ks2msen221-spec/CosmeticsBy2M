@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth, normalizePhoneToTechnicalEmail } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
+import { CONTACT_CONFIG } from '../config/contact';
 import { 
   LogOut, 
   User, 
@@ -333,8 +334,8 @@ export default function Account() {
               id: 'addr_default_1',
               user_id: user.id,
               title: 'Adresse par défaut',
-              full_address: profile?.address || 'Plateau Dakar, Sénégal',
-              phone: profile?.phone || '+221 77 123 45 67',
+              full_address: profile?.address || CONTACT_CONFIG.address,
+              phone: profile?.phone || CONTACT_CONFIG.phone,
               shipping_zone_id: 'zone_dakar_centre'
             };
             addrData = [defaultAddr];
@@ -1009,7 +1010,7 @@ export default function Account() {
                     <input
                       type="tel"
                       required
-                      placeholder="ex: +221 77 123 45 67"
+                      placeholder={`ex: ${CONTACT_CONFIG.phone}`}
                       value={addressFormPhone}
                       onChange={(e) => setAddressFormPhone(e.target.value)}
                       className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-mono"

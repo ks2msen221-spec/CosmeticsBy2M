@@ -15,6 +15,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { CONTACT_CONFIG } from '../config/contact';
 
 export default function Cart() {
   const { cartItems, loading, subtotal, totalQuantity, updateQuantity, removeFromCart, clearCart } = useCart();
@@ -359,7 +360,7 @@ export default function Cart() {
                 <div className="flex items-start gap-2.5 text-black/60 leading-relaxed text-[11px]">
                   <HelpCircle className="w-4 h-4 text-[#9A8C73] shrink-0 mt-0.5" />
                   <p>
-                    Nos pharmaciens-dermatologues sont disponibles à nos comptoirs à Dakar pour adapter chaque routine à votre épiderme. Appelez-nous au +221 77 123 45 67.
+                    Nos pharmaciens-dermatologues sont disponibles à nos comptoirs à Dakar pour adapter chaque routine à votre épiderme. Appelez-nous au <a href={`tel:${CONTACT_CONFIG.phoneRaw}`} className="font-semibold text-black hover:text-[#9A8C73] transition-colors">{CONTACT_CONFIG.phone}</a>.
                   </p>
                 </div>
               </div>

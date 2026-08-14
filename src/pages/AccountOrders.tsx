@@ -19,6 +19,7 @@ import {
   HelpCircle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { CONTACT_CONFIG } from '../config/contact';
 
 interface OrderItem {
   id: string;
@@ -124,7 +125,7 @@ export default function AccountOrders() {
                 address: {
                   title: 'Domicile Plateau',
                   full_address: 'Avenue Léopold Sédar Senghor, Plateau, Dakar',
-                  phone: '+221 77 123 45 67'
+                  phone: CONTACT_CONFIG.phone
                 },
                 order_items: [
                   {
@@ -467,10 +468,10 @@ export default function AccountOrders() {
             </p>
           </div>
           <a 
-            href="tel:+221771234567" 
+            href={`tel:${CONTACT_CONFIG.phoneRaw}`} 
             className="px-5 py-2.5 border border-black/15 text-black text-[10px] uppercase tracking-widest font-bold hover:bg-[#FAF9F6] transition-colors rounded-sm shrink-0 font-mono"
           >
-            +221 77 123 45 67
+            {CONTACT_CONFIG.phone}
           </a>
         </div>
 

@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import WhatsAppFloatButton from './WhatsAppFloatButton';
 import { SocialIcons } from './SocialIcons';
+import { CONTACT_CONFIG } from '../config/contact';
 
 export default function Layout() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -166,7 +167,19 @@ export default function Layout() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-12">
+          <div className="flex flex-wrap gap-8 sm:gap-12">
+            <div className="flex flex-col">
+              <span className="text-[10px] uppercase tracking-widest text-black/40 mb-1 font-bold">Boutique & Contact</span>
+              <span className="text-[11px] font-medium">{CONTACT_CONFIG.address}</span>
+              <div className="flex flex-col gap-0.5 mt-1 text-[11px]">
+                <a href={`tel:${CONTACT_CONFIG.phoneRaw}`} className="text-black/70 hover:text-[#9A8C73] transition-colors font-mono">
+                  {CONTACT_CONFIG.phone}
+                </a>
+                <a href={`mailto:${CONTACT_CONFIG.email}`} className="text-black/70 hover:text-[#9A8C73] transition-colors font-mono">
+                  {CONTACT_CONFIG.email}
+                </a>
+              </div>
+            </div>
             <div className="flex flex-col">
               <span className="text-[10px] uppercase tracking-widest text-black/40 mb-1 font-bold">Paiements</span>
               <span className="text-[11px] font-medium">Validation Sécurisée Manuelle</span>

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { User, Session } from '@supabase/supabase-js';
+import { CONTACT_CONFIG } from '../config/contact';
 
 export interface UserProfile {
   id: string;
@@ -227,7 +228,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           email: technicalEmail,
           full_name: 'Utilisateur de Test',
           phone: phone,
-          address: 'Dakar Plateau, Sénégal',
+          address: CONTACT_CONFIG.address,
           role: 'customer',
           created_at: new Date().toISOString()
         };

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { CONTACT_CONFIG } from '../config/contact';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
@@ -112,7 +113,7 @@ export default function Login() {
                     id="loginPhone"
                     type="tel"
                     required
-                    placeholder="ex: 77 123 45 67"
+                    placeholder={`ex: ${CONTACT_CONFIG.phone}`}
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-mono"
@@ -165,7 +166,7 @@ export default function Login() {
                     id="signupPhone"
                     type="tel"
                     required
-                    placeholder="ex: 77 123 45 67"
+                    placeholder={`ex: ${CONTACT_CONFIG.phone}`}
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-mono"

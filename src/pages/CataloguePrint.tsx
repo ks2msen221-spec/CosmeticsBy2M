@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { catalogService } from '../lib/catalogService';
 import { Catalogue, Product } from '../types/catalog';
 import { Printer, ArrowLeft, Shield } from 'lucide-react';
+import { CONTACT_CONFIG } from '../config/contact';
 
 export default function CataloguePrint() {
   const { slug } = useParams<{ slug: string }>();
@@ -111,7 +112,7 @@ export default function CataloguePrint() {
           <div>
             <h1 className="text-3xl font-serif italic tracking-wider font-extrabold">MAISON 2M COSMETICS</h1>
             <p className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold mt-1">Officiel — Sénégal</p>
-            <p className="text-[10px] text-black/50 mt-1 font-mono">Dakar, Point E, Rue de la Clinique • +221 77 123 45 67</p>
+            <p className="text-[10px] text-black/50 mt-1 font-mono">{CONTACT_CONFIG.address} • {CONTACT_CONFIG.phone} • {CONTACT_CONFIG.email}</p>
           </div>
           <div className="text-left sm:text-right font-mono">
             <span className="inline-block bg-black text-white text-[9px] uppercase tracking-widest font-extrabold px-2.5 py-1 mb-2">

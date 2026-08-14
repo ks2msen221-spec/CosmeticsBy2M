@@ -21,6 +21,7 @@ import {
   Tag
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { CONTACT_CONFIG } from '../config/contact';
 
 // Interfaces for our database/mock structures
 interface ShippingZone {
@@ -173,8 +174,8 @@ export default function Checkout() {
               id: 'addr_default_1',
               user_id: user.id,
               label: 'Adresse par défaut',
-              full_address: profile?.address || 'Grand Dakar, près de la Mosquée',
-              phone: profile?.phone || '+221 77 123 45 67',
+              full_address: profile?.address || CONTACT_CONFIG.address,
+              phone: profile?.phone || CONTACT_CONFIG.phone,
               shipping_zone_id: 'zone_dakar_centre'
             };
             addrData = [defaultAddr];
@@ -593,7 +594,7 @@ export default function Checkout() {
                       <input
                         type="tel"
                         required
-                        placeholder="ex: +221 77..."
+                        placeholder={`ex: ${CONTACT_CONFIG.phone}`}
                         value={newPhone}
                         onChange={(e) => setNewPhone(e.target.value)}
                         className="w-full text-xs bg-white border border-black/10 p-2.5 outline-none focus:border-[#9A8C73] transition-colors font-mono"
@@ -918,7 +919,7 @@ export default function Checkout() {
             <div className="border border-black/5 bg-white p-6 rounded-sm text-xs">
               <h4 className="font-serif italic font-bold text-black/80 border-b border-black/5 pb-2 mb-3">Service Clientèle Privée 2M</h4>
               <p className="text-black/60 leading-relaxed text-[11px]">
-                Pour toute question sur la compatibilité d'une formulation avec votre diagnostic épidermique, nos praticiens de Dakar vous répondent en direct de 8h à 19h au <strong className="text-black">+221 77 123 45 67</strong>.
+                Pour toute question sur la compatibilité d'une formulation avec votre diagnostic épidermique, nos praticiens de Dakar vous répondent en direct de 8h à 19h au <a href={`tel:${CONTACT_CONFIG.phoneRaw}`} className="font-semibold text-black hover:text-[#9A8C73] transition-colors">{CONTACT_CONFIG.phone}</a>.
               </p>
             </div>
 
