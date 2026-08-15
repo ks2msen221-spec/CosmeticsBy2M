@@ -14,10 +14,10 @@ export default function CategoryDetail() {
   const [loading, setLoading] = useState(true);
 
   usePageSEO(
-    category ? `${category.name} | Soins & Cosmétiques Dakar | Maison 2M` : "Catégorie de Soins | Maison 2M Cosmetics",
+    category ? `${category.name} | Soins & Cosmétiques Dakar | 2M Cosmetics` : "Catégorie de Soins | 2M Cosmetics Dakar",
     category 
-      ? `Découvrez notre collection ${category.name} à Dakar : ${category.description.slice(0, 140)}... Livraison rapide et paiement sécurisé.`
-      : "Parcourez nos gammes de soins cosmétiques haut de gamme adaptées aux peaux sénégalaises."
+      ? `Découvrez notre gamme ${category.name} à Dakar au Sénégal : ${category.description.slice(0, 120)}... Ingrédients clairs et livraison rapide.`
+      : "Parcourez nos catégories de cosmétiques naturels à Dakar au Sénégal."
   );
 
   useEffect(() => {
@@ -72,10 +72,10 @@ export default function CategoryDetail() {
           La gamme demandée a été réorganisée ou n'est plus disponible actuellement.
         </p>
         <Link 
-          to="/catalogue/nouveautes" 
+          to="/produits" 
           className="px-8 py-3.5 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all inline-block rounded-sm"
         >
-          Explorer tout le catalogue
+          Je découvre tous les produits
         </Link>
       </div>
     );
@@ -99,13 +99,13 @@ export default function CategoryDetail() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="max-w-3xl">
             <span className="text-[9px] uppercase tracking-[0.3em] text-brand-gold font-bold block mb-2">
-              Rituel Beauté & Soins Ciblés
+              Catégorie de Soins
             </span>
             <h1 className="text-4xl md:text-5xl font-serif italic mb-5 text-black/90">
               {category.name}
             </h1>
             <p className="text-sm text-black/65 leading-relaxed font-light">
-              {category.description || "Une gamme de soins d'exception pensée pour répondre avec douceur et exigence aux besoins de votre peau à Dakar."}
+              {category.description || "Une gamme de soins formulée avec des ingrédients simples et transparents, pensée pour votre peau à Dakar."}
             </p>
           </div>
         </div>
@@ -127,24 +127,24 @@ export default function CategoryDetail() {
                 <div>
                   <h4 className="text-[10px] uppercase tracking-wider font-extrabold text-black/80 mb-2">Disponibilité immédiate</h4>
                   <div className="text-xs text-emerald-800 bg-emerald-50 border border-emerald-100 p-2 rounded-sm font-medium">
-                    ✓ {products.filter(p => p.stock > 0).length} soin(s) en stock à Dakar
+                    ✓ {products.filter(p => p.stock > 0).length} produit(s) en stock à Dakar
                   </div>
                 </div>
 
                 <div className="pt-4 border-t border-black/5 space-y-2">
-                  <h4 className="text-[10px] uppercase tracking-wider font-extrabold text-black/80 mb-2">Les Promesses Maison 2M</h4>
+                  <h4 className="text-[10px] uppercase tracking-wider font-extrabold text-black/80 mb-2">Nos engagements</h4>
                   <ul className="space-y-2 text-xs text-black/70 font-light">
                     <li className="flex items-center gap-1.5">
                       <ShieldCheck className="w-3.5 h-3.5 text-brand-gold shrink-0" />
-                      <span>Tolérance dermatologique certifiée</span>
+                      <span>Formules transparentes et vérifiées</span>
                     </li>
                     <li className="flex items-center gap-1.5">
                       <HeartHandshake className="w-3.5 h-3.5 text-brand-gold shrink-0" />
-                      <span>Ingrédients botaniques nobles</span>
+                      <span>Ingrédients d'origine naturelle</span>
                     </li>
                     <li className="flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-brand-gold shrink-0" />
-                      <span>Fini soyeux sans trace blanche</span>
+                      <span>Adapté au climat ensoleillé</span>
                     </li>
                   </ul>
                 </div>
@@ -155,19 +155,19 @@ export default function CategoryDetail() {
           {/* Right Product Grid Column */}
           <div className="flex-1">
             <div className="flex justify-between items-center mb-8 text-[10px] uppercase tracking-widest text-black/50 font-bold pb-3 border-b border-black/5">
-              <span>{products.length} {products.length > 1 ? 'soins disponibles' : 'soin disponible'}</span>
-              <span>Classé par excellence formulatoire</span>
+              <span>{products.length} {products.length > 1 ? 'produits disponibles' : 'produit disponible'}</span>
+              <span>Stock vérifié à Dakar</span>
             </div>
 
             {products.length === 0 ? (
               <div className="border border-black/5 bg-white p-14 text-center shadow-sm rounded-sm">
                 <Sparkles className="w-8 h-8 text-brand-gold/60 mx-auto mb-4" />
-                <h3 className="font-serif italic text-xl mb-2 text-black/90">Nouvelle Collection en Préparation</h3>
+                <h3 className="font-serif italic text-xl mb-2 text-black/90">Nouveaux produits en préparation</h3>
                 <p className="text-xs text-black/60 max-w-sm mx-auto mb-6 font-light leading-relaxed">
-                  Nos expertes en cosmétologie sélectionnent de nouvelles pépites pour cette gamme. Découvrez en attendant nos soins complémentaires.
+                  Notre équipe sélectionne de nouvelles formules pour cette gamme. En attendant, parcourez notre catalogue complet.
                 </p>
-                <Link to="/catalogue/nouveautes" className="px-6 py-3 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors inline-block rounded-sm">
-                  Découvrir tous nos soins disponibles
+                <Link to="/produits" className="px-6 py-3 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors inline-block rounded-sm">
+                  Je découvre tous les produits
                 </Link>
               </div>
             ) : (

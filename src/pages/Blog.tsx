@@ -23,8 +23,8 @@ export default function Blog() {
   const [errorMessage, setErrorMessage] = useState('');
 
   usePageSEO(
-    "Conseils Beauté & Rituels Cosmétiques Dakar | Le Journal Maison 2M",
-    "Découvrez les articles, guides de soins et rituels dermo-cosmétiques rédigés pour vous par notre équipe à Dakar."
+    "Conseils & Guides Soins | 2M Cosmetics Dakar",
+    "Découvrez nos articles, guides pratiques et conseils d'utilisation rédigés par notre équipe à Dakar."
   );
 
   useEffect(() => {
@@ -88,14 +88,14 @@ export default function Blog() {
       <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
         <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-extrabold flex items-center justify-center gap-1.5">
           <Sparkles className="w-3.5 h-3.5 text-brand-gold" />
-          Le Journal de Soins Maison 2M
+          Le Journal 2M Cosmetics
         </span>
         <h1 className="text-4xl lg:text-5xl font-serif text-black/90 font-light leading-tight">
-          Conseils, Rituels &amp; Éclat au Quotidien
+          Conseils &amp; Guides Pratiques au Quotidien
         </h1>
         <div className="h-[2px] w-12 bg-brand-gold mx-auto"></div>
         <p className="text-xs text-black/60 font-light leading-relaxed max-w-lg mx-auto">
-          Retrouvez les conseils bienveillants et les routines de nos conseillères beauté de Dakar pour prendre soin de votre peau, la protéger du soleil et révéler toute sa beauté naturelle.
+          Retrouvez nos conseils et routines simples pour prendre soin de votre peau, comprendre les ingrédients et faire des choix adaptés sous le climat de Dakar.
         </p>
       </div>
 
@@ -178,7 +178,7 @@ export default function Blog() {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center font-serif text-sm italic text-black/20">
-                      Maison 2M
+                      2M Cosmetics
                     </div>
                   )}
 
@@ -216,20 +216,20 @@ export default function Blog() {
                     </h3>
 
                     <p className="text-xs text-black/60 font-light leading-relaxed">
-                      {post.excerpt || "Découvrez notre analyse et les rituels de soins recommandés par la direction de la Maison 2M."}
+                      {post.excerpt || "Découvrez nos explications claires et nos conseils d'utilisation pour vos soins du quotidien."}
                     </p>
                   </div>
 
                   <div className="border-t border-black/5 mt-6 pt-4 flex items-center justify-between">
                     <span className="text-[9px] uppercase tracking-widest text-brand-gold font-bold">
-                      Par l'Expert 2M
+                      Conseil 2M
                     </span>
 
                     <Link 
                       to={`/blog/${post.slug}`} 
                       className="text-[10px] uppercase tracking-widest font-extrabold text-brand-noir group-hover:text-brand-gold transition-colors inline-flex items-center gap-1"
                     >
-                      Lire l'article
+                      Je lis l'article
                       <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>

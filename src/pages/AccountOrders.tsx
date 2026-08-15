@@ -58,8 +58,8 @@ export default function AccountOrders() {
   const { user, isMocked } = useAuth();
 
   usePageSEO(
-    "Mes Commandes de Soins | Maison 2M Cosmetics Dakar",
-    "Suivez l'historique et l'acheminement de vos commandes de cosmétiques Maison 2M Cosmetics à Dakar et au Sénégal."
+    "Mes Commandes | 2M Cosmetics Dakar",
+    "Suivez l'historique et l'acheminement de vos commandes chez 2M Cosmetics à Dakar et au Sénégal."
   );
 
   const [orders, setOrders] = useState<Order[]>([]);
@@ -228,7 +228,7 @@ export default function AccountOrders() {
     return (
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24 flex flex-col items-center justify-center min-h-[50vh]">
         <Loader2 className="w-10 h-10 text-brand-taupe animate-spin mb-4" />
-        <span className="text-[10px] uppercase tracking-widest font-mono text-black/40">Génération de l'historique d'achats...</span>
+        <span className="text-[10px] uppercase tracking-widest font-mono text-black/40">Chargement de vos commandes...</span>
       </div>
     );
   }
@@ -253,11 +253,11 @@ export default function AccountOrders() {
       <div className="max-w-4xl mx-auto px-6 py-12">
         <header className="mb-10">
           <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold block mb-2">
-            Espace Privé Client 2M
+            Espace Client 2M
           </span>
           <h1 className="text-4xl font-serif italic text-black/90">Mes Commandes Récentes</h1>
           <p className="text-xs text-black/50 font-light mt-1.5">
-            Consultez les détails, les statuts d'expédition, et les validations de règlements de vos soins d'exception de Maison 2M Cosmetics.
+            Consultez les détails, le statut d'expédition et le paiement de vos commandes chez 2M Cosmetics.
           </p>
         </header>
 
@@ -273,13 +273,13 @@ export default function AccountOrders() {
             <span className="text-[10px] uppercase tracking-widest text-black/40 font-bold block mb-2">Historique vide</span>
             <h3 className="text-xl font-serif italic mb-4 text-black/80">Aucune commande enregistrée</h3>
             <p className="text-xs text-black/50 font-light leading-relaxed max-w-sm mx-auto mb-6">
-              Vous n'avez pas encore validé d'ordre dermatologique sur notre boutique de Dakar. Découvrez nos collections pour débuter votre parcours.
+              Vous n'avez pas encore passé de commande sur notre boutique en ligne. Découvrez nos produits pour faire votre premier choix.
             </p>
             <Link 
-              to="/" 
+              to="/produits" 
               className="inline-block px-8 py-3.5 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors rounded-sm"
             >
-              Découvrir les Soins
+              Je découvre les produits
             </Link>
           </div>
         ) : (
@@ -377,12 +377,12 @@ export default function AccountOrders() {
                               {order.payment_method_code !== 'cod' && (
                                 <div className="mt-2 p-2 bg-brand-cream border border-black/5 text-[10px] font-mono leading-relaxed text-black/50">
                                   <span>Vérification du transfert : </span>
-                                  <strong className="text-black/80 font-semibold block pt-0.5">En cours par notre pôle financier de Dakar.</strong>
+                                  <strong className="text-black/80 font-semibold block pt-0.5">En cours de vérification par notre équipe.</strong>
                                 </div>
                               )}
                               {order.payment_method_code === 'cod' && (
                                 <p className="text-[10px] text-black/40 leading-relaxed mt-1">
-                                  * Veuillez préparer l'appoint exact en espèces lors du passage du livreur 2M à Dakar.
+                                  * Veuillez préparer l'appoint exact en espèces lors du passage du livreur.
                                 </p>
                               )}
                             </div>
@@ -392,12 +392,12 @@ export default function AccountOrders() {
                           {/* 2. Items Ordered List */}
                           <div className="space-y-3">
                             <h4 className="text-[9px] uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
-                              Articles de l'ordre
+                              Articles de la commande
                             </h4>
 
                             <div className="divide-y divide-black/5 bg-white border border-black/5 rounded-sm px-4">
                               {lineItems.map((item: any) => {
-                                const prodName = item.product?.name || "Formulation Spécifique 2M";
+                                const prodName = item.product?.name || "Produit 2M Cosmetics";
                                 const prodImg = item.product?.images && item.product.images.length > 0 ? item.product.images[0] : null;
 
                                 return (
@@ -469,10 +469,10 @@ export default function AccountOrders() {
           <div className="space-y-1">
             <h4 className="font-serif italic font-bold text-black/80 flex items-center gap-1.5">
               <HelpCircle className="w-4 h-4 text-brand-gold" />
-              Une interrogation sur vos expéditions ?
+              Une question sur vos commandes ?
             </h4>
             <p className="text-black/50 leading-relaxed text-[11px]">
-              Toute modification d'adresse ou demande d'annulation est prise en charge par notre bureau d'herboristerie de Dakar Plateau.
+              Toute modification d'adresse ou question sur votre commande est prise en charge par notre équipe à Dakar.
             </p>
           </div>
           <a 

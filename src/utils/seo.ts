@@ -8,9 +8,9 @@ import { useEffect } from 'react';
 export function usePageSEO(title: string, description: string) {
   useEffect(() => {
     // Set document title
-    const fullTitle = title.includes('Maison 2M') || title.includes('2M Cosmetics')
+    const fullTitle = title.includes('2M Cosmetics')
       ? title
-      : `${title} | Maison 2M Cosmetics Dakar`;
+      : `${title} | 2M Cosmetics Dakar`;
     document.title = fullTitle;
 
     // Set or create meta description

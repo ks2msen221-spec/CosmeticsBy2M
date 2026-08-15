@@ -36,10 +36,10 @@ export default function ProductDetail() {
   const [addedFeedback, setAddedFeedback] = useState(false);
 
   usePageSEO(
-    product ? `${product.name} | Maison 2M Cosmetics Dakar` : "Soin d'Exception | Maison 2M Cosmetics",
+    product ? `${product.name} | 2M Cosmetics Dakar` : "Produit & Soin | 2M Cosmetics",
     product 
-      ? `${product.name} à Dakar : ${product.description.slice(0, 140)}... Livraison rapide à Dakar.`
-      : "Découvrez notre sélection de cosmétiques naturels et dermo-soins haut de gamme à Dakar chez Maison 2M Cosmetics."
+      ? `${product.name} à Dakar au Sénégal : ${product.description.slice(0, 120)}... Ingrédients clairs et livraison rapide.`
+      : "Découvrez nos cosmétiques naturels et transparents à Dakar au Sénégal chez 2M Cosmetics."
   );
 
   const handleAddToCart = async () => {
@@ -112,16 +112,16 @@ export default function ProductDetail() {
   if (!product) {
     return (
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24 text-center">
-        <span className="text-[10px] uppercase tracking-widest text-brand-gold font-bold block mb-4">Soin Introuvable</span>
-        <h1 className="text-3xl font-serif italic mb-4">Ce soin n'est plus répertorié</h1>
+        <span className="text-[10px] uppercase tracking-widest text-brand-gold font-bold block mb-4">Produit Introuvable</span>
+        <h1 className="text-3xl font-serif italic mb-4">Ce produit n'est plus répertorié</h1>
         <p className="text-xs text-black/60 max-w-md mx-auto mb-8 font-light">
           Le produit demandé est actuellement indisponible ou a été déplacé dans nos collections.
         </p>
         <Link 
-          to="/catalogue/nouveautes" 
+          to="/produits" 
           className="px-8 py-3.5 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all inline-block rounded-sm"
         >
-          Découvrir tous nos soins
+          Je découvre tous les produits
         </Link>
       </div>
     );
@@ -166,7 +166,7 @@ export default function ProductDetail() {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <span className="font-serif italic text-black/20 text-xs">Maison 2M Cosmetics</span>
+                <span className="font-serif italic text-black/20 text-xs">2M Cosmetics</span>
               )}
 
               {product.stock <= 0 && (
@@ -203,14 +203,14 @@ export default function ProductDetail() {
               <div className="p-3 bg-white border border-black/5 rounded-sm flex items-start gap-2.5">
                 <ShieldCheck className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-black/80 block">100% Authentique</span>
-                  <span className="text-[10px] text-black/55 font-light">Testé sous contrôle dermatologique</span>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-black/80 block">Formule Claire</span>
+                  <span className="text-[10px] text-black/55 font-light">Ingrédients vérifiés et détaillés</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Premium Product Specifications */}
+          {/* Right Column: Product Specifications */}
           <div className="space-y-8 bg-white border border-black/5 p-8 md:p-10 shadow-sm relative rounded-sm">
             <div className="absolute top-0 left-0 right-0 h-1 bg-brand-gold"></div>
 
@@ -222,10 +222,10 @@ export default function ProductDetail() {
                     to={`/marque/${product.brand.slug}`}
                     className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold hover:underline transition-colors"
                   >
-                    Maison {product.brand.name}
+                    {product.brand.name}
                   </Link>
                 ) : (
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold">Maison 2M Cosmetics</span>
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold">2M Cosmetics</span>
                 )}
 
                 {averageRating && (
@@ -272,7 +272,7 @@ export default function ProductDetail() {
                 <span className="font-semibold">Disponibilité :</span>
                 {product.stock > 0 ? (
                   <span className="text-emerald-800 font-bold bg-emerald-50 px-2.5 py-0.5 border border-emerald-200 rounded text-[11px]">
-                    En stock à Dakar ({product.stock} unités prêtes à être livrées)
+                    En stock à Dakar ({product.stock} {product.stock > 1 ? 'unités prêtes à être livrées' : 'unité prête à être livrée'})
                   </span>
                 ) : (
                   <span className="text-red-700 font-bold bg-red-50 px-2 py-0.5 border border-red-100 rounded text-[11px]">
@@ -284,7 +284,7 @@ export default function ProductDetail() {
               <div className="flex items-center gap-2 text-black/80">
                 <HeartHandshake className="w-4 h-4 text-brand-gold" />
                 <span className="font-semibold">Paiement :</span>
-                <span className="text-black/65 text-[11px]">Espèces à la livraison, Wave ou Orange Money en toute sécurité.</span>
+                <span className="text-black/65 text-[11px]">Espèces à la livraison, Wave ou Orange Money en toute simplicité.</span>
               </div>
             </div>
 
@@ -336,7 +336,7 @@ export default function ProductDetail() {
                     className="flex-1 h-12 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 rounded-sm"
                   >
                     <ShoppingBag className="w-4 h-4" />
-                    Ajouter à mon rituel de soins
+                    J'ajoute au panier
                   </button>
                 </div>
 
@@ -348,7 +348,7 @@ export default function ProductDetail() {
                     className="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center gap-2.5 rounded-sm"
                   >
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Le soin a bien été ajouté à votre panier ({quantity} {quantity > 1 ? 'flacons' : 'flacon'}).</span>
+                    <span>Le produit a bien été ajouté à votre panier ({quantity} {quantity > 1 ? 'articles' : 'article'}).</span>
                   </motion.div>
                 )}
               </div>
@@ -364,13 +364,13 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Beauty Advisor Ritual Tip */}
+            {/* Beauty Advisor Tip */}
             <div className="p-4 bg-brand-cream border border-brand-gold/20 text-brand-noir text-xs flex gap-3 rounded-sm">
               <Sparkles className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
               <div>
-                <strong className="block text-[10px] uppercase tracking-wider font-extrabold mb-1 text-brand-gold">Le Conseil de votre Conseillère Beauté</strong>
+                <strong className="block text-[10px] uppercase tracking-wider font-extrabold mb-1 text-brand-gold">Conseil d'utilisation</strong>
                 <p className="text-[11px] text-black/70 leading-relaxed font-light">
-                  Pour décupler les bienfaits de cette formule, appliquez-la sur peau propre et légèrement tiède. Massez délicatement du bout des doigts par mouvements circulaires ascendants.
+                  Pour une absorption optimale, appliquez ce soin sur une peau propre et légèrement humide. Faites pénétrer délicatement par massages doux du bout des doigts.
                 </p>
               </div>
             </div>
@@ -382,14 +382,14 @@ export default function ProductDetail() {
                   onClick={() => setActiveTab('desc')}
                   className={`pb-2.5 px-2 cursor-pointer transition-colors relative ${activeTab === 'desc' ? 'text-black font-extrabold' : 'text-black/40 hover:text-black'}`}
                 >
-                  Description & Bénéfices
+                  Description
                   {activeTab === 'desc' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-gold"></div>}
                 </button>
                 <button
                   onClick={() => setActiveTab('ing')}
                   className={`pb-2.5 px-4 cursor-pointer transition-colors relative ${activeTab === 'ing' ? 'text-black font-extrabold' : 'text-black/40 hover:text-black'}`}
                 >
-                  Ingrédients & Botanique
+                  Ingrédients
                   {activeTab === 'ing' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-gold"></div>}
                 </button>
                 <button
@@ -408,16 +408,16 @@ export default function ProductDetail() {
                 )}
                 {activeTab === 'ing' && (
                   <div className="space-y-3">
-                    <p className="font-serif italic text-black/85 leading-relaxed">{product.ingredients || 'Formule pure, sans ingrédients controversés.'}</p>
+                    <p className="font-serif italic text-black/85 leading-relaxed">{product.ingredients || 'Composition claire et détaillée.'}</p>
                     <span className="text-[9px] uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5 pt-1">
                       <Leaf className="w-3.5 h-3.5" />
-                      Extraits végétaux rigoureusement sourcés
+                      Extraits végétaux d'origine naturelle
                     </span>
                   </div>
                 )}
                 {activeTab === 'allergens' && (
                   <div className="space-y-3">
-                    <p className="text-black/80 font-light leading-relaxed">{product.allergens || 'Sans parfum artificiel ni agent irritant. Convient parfaitement aux peaux sensibles ou exposées au climat dakarois.'}</p>
+                    <p className="text-black/80 font-light leading-relaxed">{product.allergens || 'Sans parfum synthétique ni agent irritant. Convient aux peaux exposées au climat dakarois.'}</p>
                     <span className="text-[9px] uppercase tracking-widest text-black/40 font-bold flex items-center gap-1.5">
                       <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
                       Usage cosmétique externe. Conserver à l'abri de la lumière directe et de la forte chaleur.
@@ -433,13 +433,13 @@ export default function ProductDetail() {
         {/* Customer Reviews Section */}
         <div className="mt-20 border-t border-black/5 pt-16">
           <div className="max-w-3xl">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-brand-gold font-bold block mb-2">Témoignages & Avis</span>
-            <h2 className="text-2xl font-serif italic mb-2 text-black/90">L'avis de notre communauté à Dakar</h2>
-            <p className="text-xs text-black/60 mb-10 font-light">Découvrez les retours authentiques de clientes et clients ayant adopté ce soin dans leur routine quotidienne.</p>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-brand-gold font-bold block mb-2">Avis clients</span>
+            <h2 className="text-2xl font-serif italic mb-2 text-black/90">Retours d'expérience à Dakar</h2>
+            <p className="text-xs text-black/60 mb-10 font-light">Découvrez les retours de personnes ayant intégré ce produit dans leur routine quotidienne.</p>
 
             {reviews.length === 0 ? (
               <div className="border border-dashed border-black/10 bg-white p-8 text-center text-xs italic text-black/50 rounded-sm">
-                Ce soin n'a pas encore recueilli d'avis. Partagez votre expérience avec nous après votre première commande !
+                Ce produit n'a pas encore recueilli d'avis. Partagez votre retour d'expérience après votre commande !
               </div>
             ) : (
               <div className="space-y-6">

@@ -14,10 +14,10 @@ export default function CatalogueDetail() {
   const [loading, setLoading] = useState(true);
 
   usePageSEO(
-    catalogue ? `${catalogue.name} | Collection Maison 2M Dakar` : "Catalogue de Soins | Maison 2M Cosmetics",
+    catalogue ? `${catalogue.name} | 2M Cosmetics Dakar` : "Collection de Soins | 2M Cosmetics Dakar",
     catalogue 
-      ? `Découvrez la collection ${catalogue.name} chez Maison 2M Cosmetics à Dakar : ${catalogue.description?.slice(0, 140)}... Livraison rapide et commande facilitée.`
-      : "Parcourez nos rituels et catalogues de soins cosmétiques à Dakar."
+      ? `Découvrez la sélection ${catalogue.name} chez 2M Cosmetics à Dakar au Sénégal : ${catalogue.description?.slice(0, 120)}... Ingrédients clairs et livraison rapide.`
+      : "Parcourez nos collections et sélections de cosmétiques à Dakar au Sénégal."
   );
 
   useEffect(() => {
@@ -64,13 +64,13 @@ export default function CatalogueDetail() {
         <span className="text-[10px] uppercase tracking-widest text-brand-gold font-bold block mb-4">Collection Introuvable</span>
         <h1 className="text-3xl font-serif italic mb-4">Cette collection n'est plus répertoriée</h1>
         <p className="text-xs text-black/60 max-w-md mx-auto mb-8 font-light">
-          Le rituel ou catalogue sélectionné a expiré ou a été modifié.
+          La sélection demandée a été déplacée ou n'est plus disponible.
         </p>
         <Link 
           to="/collections" 
           className="px-8 py-3.5 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all inline-block rounded-sm"
         >
-          Voir toutes nos collections
+          Je découvre toutes nos collections
         </Link>
       </div>
     );
@@ -99,13 +99,13 @@ export default function CatalogueDetail() {
           <div className="max-w-2xl">
             <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold flex items-center gap-1.5 mb-2">
               <BookOpen className="w-4 h-4 text-brand-gold" />
-              Rituel & Édition Spéciale
+              Sélection thématique
             </span>
             <h1 className="text-4xl md:text-5xl font-serif italic mb-5 text-black/90">
               {catalogue.name}
             </h1>
             <p className="text-sm text-black/65 leading-relaxed font-light">
-              {catalogue.description || "Une harmonie de soins sélectionnés pour magnifier et préserver l'éclat de votre peau avec douceur et efficacité."}
+              {catalogue.description || "Une sélection de soins choisis pour prendre soin de votre peau au quotidien avec simplicité et efficacité."}
             </p>
           </div>
 
@@ -115,7 +115,7 @@ export default function CatalogueDetail() {
               className="px-6 py-3.5 border border-black/15 text-[10px] uppercase tracking-widest font-bold hover:bg-brand-noir hover:text-brand-cream transition-all flex items-center gap-2.5 shadow-xs bg-white rounded-sm"
             >
               <Printer className="w-4 h-4 text-brand-gold" />
-              Consulter la Version Imprimable
+              Consulter la version imprimable
             </Link>
           </div>
         </div>
@@ -124,19 +124,19 @@ export default function CatalogueDetail() {
       {/* Catalogue Products Grid */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
         <div className="flex justify-between items-center mb-8 text-[10px] uppercase tracking-widest text-black/50 font-bold pb-3 border-b border-black/5">
-          <span>{products.length} {products.length > 1 ? 'soins répertoriés' : 'soin répertorié'}</span>
+          <span>{products.length} {products.length > 1 ? 'produits disponibles' : 'produit disponible'}</span>
           <span>Disponible à Dakar</span>
         </div>
 
         {products.length === 0 ? (
           <div className="border border-black/5 bg-white p-14 text-center shadow-sm max-w-xl mx-auto rounded-sm">
             <Sparkles className="w-8 h-8 text-brand-gold/60 mx-auto mb-4" />
-            <h3 className="font-serif italic text-xl mb-2 text-black/90">Sélection en cours d'actualisation</h3>
+            <h3 className="font-serif italic text-xl mb-2 text-black/90">Sélection en cours de mise à jour</h3>
             <p className="text-xs text-black/60 max-w-sm mx-auto mb-6 font-light leading-relaxed">
-              Nous ajoutons actuellement les derniers soins certifiés à cette collection. Explorez nos autres gammes en attendant.
+              Nous ajoutons actuellement de nouveaux produits à cette collection. Explorez nos autres gammes en attendant.
             </p>
-            <Link to="/catalogue/nouveautes" className="px-6 py-3 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors inline-block rounded-sm">
-              Découvrir les soins disponibles
+            <Link to="/produits" className="px-6 py-3 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors inline-block rounded-sm">
+              Je découvre tous les produits
             </Link>
           </div>
         ) : (

@@ -8,6 +8,7 @@ import CatalogueDetail from './pages/CatalogueDetail';
 import Collections from './pages/Collections';
 import CataloguePrint from './pages/CataloguePrint';
 import ProductDetail from './pages/ProductDetail';
+import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import CheckoutConfirmation from './pages/CheckoutConfirmation';
@@ -43,6 +44,8 @@ export default function App() {
             <Route path="categorie/:slug" element={<CategoryDetail />} />
             <Route path="marque/:slug" element={<BrandDetail />} />
             <Route path="collections" element={<Collections />} />
+            <Route path="produits" element={<Products />} />
+            <Route path="catalogue" element={<Navigate to="/produits" replace />} />
             <Route path="catalogue/:slug" element={<CatalogueDetail />} />
             <Route path="produit/:slug" element={<ProductDetail />} />
             <Route path="recherche" element={<Search />} />

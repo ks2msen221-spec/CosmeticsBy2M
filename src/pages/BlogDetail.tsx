@@ -33,8 +33,8 @@ export default function BlogDetail() {
   const [errorMessage, setErrorMessage] = useState('');
 
   usePageSEO(
-    post ? `${post.title} | Conseils Maison 2M Dakar` : "Conseil Beauté | Maison 2M Cosmetics Dakar",
-    post ? (post.excerpt || `Découvrez nos rituels et conseils de soins pour ${post.title} à Dakar.`) : "Conseils dermo-cosmétiques et rituels de beauté à Dakar par Maison 2M Cosmetics."
+    post ? `${post.title} | Conseils 2M Cosmetics Dakar` : "Conseils Soins | 2M Cosmetics Dakar",
+    post ? (post.excerpt || `Découvrez nos conseils d'utilisation et explications pour ${post.title} à Dakar.`) : "Conseils pratiques et informations sur les produits de soins 2M Cosmetics à Dakar."
   );
 
   useEffect(() => {
@@ -128,7 +128,7 @@ export default function BlogDetail() {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center bg-brand-cream" id="blog-detail-loading">
         <div className="w-10 h-10 border-2 border-brand-gold border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-[10px] uppercase tracking-widest text-black/40 font-mono">Chargement du diagnostic de peau...</p>
+        <p className="text-[10px] uppercase tracking-widest text-black/40 font-mono">Chargement de l'article...</p>
       </div>
     );
   }
@@ -144,7 +144,7 @@ export default function BlogDetail() {
           className="inline-flex items-center gap-2 px-8 py-3 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all rounded-xs"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          Retourner à la Gazette
+          Retourner aux conseils
         </Link>
       </div>
     );
@@ -156,14 +156,14 @@ export default function BlogDetail() {
         <BookOpen className="w-16 h-16 text-brand-taupe/30 mx-auto mb-6" />
         <h2 className="text-3xl font-serif italic text-black/80 mb-3">Conseil introuvable</h2>
         <p className="text-xs text-black/50 font-light leading-relaxed mb-8 max-w-sm mx-auto">
-          L'article que vous cherchez n'existe pas ou a été basculé en mode brouillon par la rédaction de la Maison 2M.
+          L'article que vous cherchez n'existe pas ou n'est plus disponible.
         </p>
         <Link 
           to="/blog" 
           className="inline-flex items-center gap-2 px-8 py-3 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all rounded-xs"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          Retourner à la Gazette
+          Retourner aux conseils
         </Link>
       </div>
     );
@@ -179,13 +179,13 @@ export default function BlogDetail() {
           className="flex items-center gap-2 text-black/55 hover:text-brand-gold transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Retour à la Gazette
+          Retour aux conseils
         </Link>
 
         <div className="hidden sm:flex items-center gap-2 text-black/30">
           <Link to="/" className="hover:text-black">Accueil</Link>
           <ChevronRight className="w-3 h-3" />
-          <Link to="/blog" className="hover:text-black">Gazette</Link>
+          <Link to="/blog" className="hover:text-black">Conseils</Link>
           <ChevronRight className="w-3 h-3" />
           <span className="text-black/60 truncate max-w-[150px]">{post.title}</span>
         </div>
@@ -250,10 +250,10 @@ export default function BlogDetail() {
                   Rédigé par
                 </h5>
                 <p className="font-serif italic text-sm text-black/80 font-bold mt-0.5">
-                  Dr. Aminata Diop
+                  L'équipe 2M Cosmetics
                 </p>
                 <p className="text-[10px] text-black/40 font-light font-mono">
-                  Chef de Science Cutanée
+                  Conseil & Soins Dakar
                 </p>
               </div>
             </div>
@@ -330,32 +330,32 @@ export default function BlogDetail() {
 
         </div>
 
-        {/* Dynamic Gazette Footer (Newsletter or simple advice prompt) */}
+        {/* Dynamic Gazette Footer */}
         <footer className="mt-16 pt-12 border-t border-black/5 text-center max-w-xl mx-auto space-y-4">
           <h4 className="font-serif italic text-xl text-black/80">
-            Vous souhaitez un diagnostic dermatologique personnalisé ?
+            Une question sur le choix de vos produits ?
           </h4>
           <p className="text-xs text-black/50 font-light leading-relaxed">
-            Prenez rendez-vous avec l'un de nos praticiens dakarois à la Maison 2M ou explorez notre catalogue complet de formules adaptées à votre barrière cutanée.
+            Notre équipe à Dakar vous conseille pour sélectionner les produits les plus adaptés à vos besoins.
           </p>
           <div className="pt-2 flex flex-col sm:flex-row justify-center gap-3">
             <Link 
-              to="/recherche" 
+              to="/produits" 
               className="inline-block px-6 py-2.5 bg-brand-noir hover:bg-brand-gold text-white hover:text-brand-noir rounded-sm text-[10px] font-mono tracking-widest uppercase font-bold transition-all shadow-xs"
             >
-              Découvrir nos soins
+              Je découvre les produits
             </Link>
             <Link 
               to="/blog" 
               className="inline-block px-6 py-2.5 border border-black/10 hover:bg-brand-cream text-black/70 rounded-sm text-[10px] font-mono tracking-widest uppercase font-bold transition-all"
             >
-              Voir d'autres conseils
+              Je lis d'autres conseils
             </Link>
           </div>
         </footer>
       </article>
 
-      {/* Recommended Next Readings (Seeded/other articles) */}
+      {/* Recommended Next Readings */}
       {recommendations.length > 0 && (
         <section className="bg-brand-cream border-t border-black/5 py-16 text-left">
           <div className="max-w-4xl mx-auto px-6 lg:px-12">
@@ -371,16 +371,16 @@ export default function BlogDetail() {
                   className="bg-white border border-black/5 hover:border-black/15 rounded-sm p-6 block group transition-all duration-300 shadow-2xs"
                 >
                   <span className="text-[9px] uppercase tracking-widest font-mono text-brand-gold font-bold block mb-2">
-                    {rec.category || 'Gazette'}
+                    {rec.category || 'Conseils'}
                   </span>
                   <h5 className="font-serif italic text-lg text-black/80 group-hover:text-brand-gold transition-colors leading-snug mb-2">
                     {rec.title}
                   </h5>
                   <p className="text-xs text-black/50 font-light line-clamp-2 leading-relaxed mb-4">
-                    {rec.excerpt || "Lire les conseils de notre expert de la Maison 2M."}
+                    {rec.excerpt || "Lire les conseils de l'équipe 2M Cosmetics."}
                   </p>
                   <span className="text-[10px] font-mono font-bold text-black/70 group-hover:text-black transition-colors inline-flex items-center gap-1">
-                    Lire la suite <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    Je lis la suite <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </Link>
               ))}

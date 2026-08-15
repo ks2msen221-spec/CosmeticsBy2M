@@ -58,7 +58,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             to={`/produit/${product.slug}`}
             className="bg-brand-cream text-brand-noir text-[10px] uppercase tracking-widest font-bold px-6 py-3 shadow-xl hover:bg-brand-noir hover:text-brand-cream transition-all flex items-center gap-1.5"
           >
-            Découvrir le soin
+            Je découvre le produit
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -69,7 +69,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="space-y-1.5 mb-4">
           <div className="flex justify-between items-start gap-2">
             <span className="text-[9px] uppercase tracking-widest text-brand-taupe font-bold">
-              {product.brand?.name || 'Maison 2M'}
+              {product.brand?.name || '2M Cosmetics'}
             </span>
             {product.category && (
               <span className="text-[9px] text-black/40 italic font-serif">
@@ -92,7 +92,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             to={`/produit/${product.slug}`}
             className="text-[10px] uppercase tracking-widest font-bold text-brand-noir group-hover:text-brand-gold transition-colors flex items-center gap-1"
           >
-            Voir
+            Je découvre
           </Link>
         </div>
       </div>

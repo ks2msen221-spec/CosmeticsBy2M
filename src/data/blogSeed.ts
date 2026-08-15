@@ -3,102 +3,97 @@ import { BlogPost } from '../types/blog';
 export const SEED_BLOG_POSTS: BlogPost[] = [
   {
     id: 'blog_1',
-    title: "L'art du double nettoyage",
+    title: "Comprendre le double nettoyage",
     slug: "art-double-nettoyage",
-    excerpt: "Pourquoi le simple nettoyage ne suffit plus et comment l'association d'une huile démaquillante et d'un gel doux transforme la clarté de votre visage...",
+    excerpt: "Pourquoi un nettoyage en deux temps aide à éliminer les résidus gras et aqueux sans agresser la barrière cutanée...",
     cover_image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80",
     status: "published",
-    category: "Rituels de Soins",
+    category: "Conseils Soins",
     reading_time: "4 min",
-    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
-    content: `# L'art du double nettoyage : secret d'une peau rayonnante
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    content: `# Comprendre le double nettoyage : les bases d'une peau propre
 
-Dans l'univers de la cosmétique moderne, s'il est un rituel qui fait l'unanimité auprès des dermatologues et facialistes du monde entier, c'est bien le **double nettoyage**. Né des rituels de beauté traditionnels asiatiques, cette méthode en deux étapes est le fondement indispensable de toute routine de soins efficace.
+Le **double nettoyage** est une méthode simple qui repose sur un principe chimique éprouvé : dissoudre d'abord les corps gras, puis nettoyer les impuretés aqueuses.
 
-Découvrez pourquoi le nettoyage simple ne suffit plus, et comment cette habitude quotidienne peut radicalement transformer l'éclat et la texture de votre peau.
-
----
-
-## Pourquoi un seul nettoyage ne suffit pas ?
-
-Tout au long de la journée, notre visage accumule deux types d'impuretés distincts :
-
-1. **Les impuretés lipophiles (grasses) :** le sébum produit par la peau, le maquillage (souvent waterproof), les filtres solaires (très résistants à l'eau) et les particules de pollution grasse.
-2. **Les impuretés hydrophiles (aqueuses) :** la sueur, la poussière et les cellules mortes.
-
-Selon le principe chimique fondamental selon lequel *le semblable dissout le semblable*, un nettoyant moussant classique à base d'eau est incapable de dissoudre correctement le maquillage tenace, le sébum incrusté et les écrans solaires protecteurs. De même, une huile seule ne lavera pas la poussière ou la transpiration.
+Voici comment cette étape quotidienne permet de nettoyer la peau en douceur et de préparer l'application de vos soins.
 
 ---
 
-## Le protocole en 2 étapes de la Maison 2M
+## Pourquoi un seul nettoyage ne suffit pas toujours ?
+
+Tout au long de la journée, le visage accumule deux types d'impuretés :
+
+1. **Les impuretés grasses (lipophiles) :** le sébum produit par la peau, le maquillage et les filtres solaires SPF (conçus pour résister à l'eau).
+2. **Les impuretés aqueuses (hydrophiles) :** la sueur, la poussière et les cellules mortes.
+
+Une huile végétale ou un baume dissout le gras et les filtres solaires sans frotter. Un nettoyant doux à l'eau vient ensuite éliminer la poussière et les impuretés restantes.
+
+---
+
+## La méthode en 2 étapes recommandée par 2M Cosmetics
 
 ### Étape 1 : Le nettoyant huileux (Dissoudre)
-Sur visage sec, appliquez une pompe d'huile démaquillante ou un baume fondant. Massez délicatement du bout des doigts, y compris sur les yeux fermés.
+Sur peau sèche, appliquez une petite quantité d'huile végétale ou de baume démaquillant. Massez délicatement du bout des doigts sur l'ensemble du visage.
 
-- **Action :** L'huile va littéralement aimanter et dissoudre l'excès de sébum, le maquillage même waterproof et les filtres solaires SPF.
-- **Le geste 2M :** Émulsionnez ensuite en ajoutant un peu d'eau tiède. L'huile se transforme en lait fluide facile à rincer.
+- **Rôle :** L'huile dissout l'excès de sébum, le maquillage et les filtres solaires.
+- **Application :** Ajoutez ensuite un peu d'eau tiède pour émulsionner avant de rincer.
 
 ### Étape 2 : Le nettoyant aqueux (Nettoyer)
-Sur visage humidifié, appliquez une noisette de gel nettoyant doux ou de mousse nettoyante botanique sans sulfate. Massez en mouvements circulaires puis rincez abondamment à l'eau fraîche.
+Sur peau humide, appliquez une noisette de gel nettoyant doux sans sulfate. Massez en mouvements circulaires puis rincez à l'eau claire.
 
-- **Action :** Elle élimine les résidus de sueur, de poussière, de cellules mortes et termine de purifier les pores en profondeur sans altérer la barrière cutanée.
-
----
-
-> "Le double nettoyage n'agresse pas la peau, bien au contraire. En dissolvant d'abord le gras avec une huile douce, on s'évite de frotter excessivement le visage avec des tensioactifs trop décapants."
-> — *Directrice Scientifique, Maison 2M*
+- **Rôle :** Il élimine la sueur et la poussière sans décaper la barrière cutanée.
 
 ---
 
-## Les bienfaits visibles après 14 jours
+## Ce que vous observez après quelques jours
 
-En adoptant ce rituel chaque soir, vous constaterez rapidement de profonds changements :
+En intégrant cette étape chaque soir :
 
-* **Pores resserrés :** Moins d'accumulation de sébum signifie moins de points noirs et de comédons.
-* **Teint lumineux :** Une peau parfaitement libérée des toxines reflète mieux la lumière naturelle.
-* **Efficacité démultipliée des soins :** Vos sérums (Vitamine C, Acide Hyaluronique) et crèmes pénètrent beaucoup mieux sur une peau saine et propre.
+* **Pores moins obstrués :** Moins d'accumulation de sébum et d'impuretés.
+* **Peau nette et confortable :** Pas de sensation de tiraillement après le nettoyage.
+* **Meilleure absorption des soins :** Vos sérums et crèmes hydratantes s'appliquent sur une peau propre.
 `
   },
   {
     id: 'blog_2',
     title: "L'importance du SPF à Dakar",
     slug: "importance-spf-dakar",
-    excerpt: "Mythes et réalités sur la mélanine : pourquoi toutes les peaux ont besoin d'un écran protecteur quotidien contre les UVA et UVB sous le soleil dakarois...",
+    excerpt: "Pourquoi toutes les peaux ont besoin d'une protection quotidienne contre les UVA et UVB sous le climat dakarois...",
     cover_image: "https://images.unsplash.com/photo-1608248597481-496100c80836?w=800&q=80",
     status: "published",
-    category: "Dermatologie",
+    category: "Protection Solaire",
     reading_time: "5 min",
-    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(), // 10 days ago
-    content: `# L'importance cruciale de la protection solaire quotidienne à Dakar
+    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    content: `# La protection solaire quotidienne à Dakar : ce qu'il faut savoir
 
-Sous le ciel radieux du Sénégal, le soleil brille généreusement presque toute l'année. Si cette lumière fait la beauté de notre côte dakaroise, elle cache un ennemi invisible pour notre peau : les rayonnements ultraviolets (UVA et UVB).
+À Dakar et sur toute la côte sénégalaise, l'indice UV reste élevé pendant une grande partie de l'année. Les rayons ultraviolets (UVA et UVB) agissent au quotidien sur la peau, même par temps voilé.
 
-Une idée reçue persistante voudrait que les peaux riches en mélanine (peaux noires et métissées) soient naturellement immunisées contre les méfaits du soleil. Faisons le point sur la science cutanée et les bons réflexes à adopter.
-
----
-
-## Le mythe de la mélanine protectrice
-
-La mélanine est effectivement un pigment extraordinaire. Elle agit comme un bouclier naturel en absorbant une partie des rayons UVB, offrant aux peaux sombres un indice de protection naturelle estimé entre SPF 10 et SPF 15.
-
-Cependant, **ce bouclier est loin d'être infaillible** :
-
-* **Les UVA ne sont pas arrêtés :** Représentant 95% des UV qui touchent la Terre, les UVA pénètrent en profondeur jusqu'au derme. Ils causent le vieillissement prématuré de la peau, la destruction du collagène, et l'apparition de taches pigmentaires tenaces.
-* **L'hyperpigmentation réactionnelle :** Pour se défendre contre les rayons solaires, la peau noire produit encore plus de mélanine de manière anarchique. C'est ce phénomène qui aggrave l'hyperpigmentation et rend les taches d'acné sombres et difficiles à estomper.
+Voici les faits scientifiques sur le rôle de la mélanine et les conseils pour protéger efficacement votre peau.
 
 ---
 
-## Les 3 règles d'or pour protéger sa peau à Dakar
+## Le rôle de la mélanine et ses limites
 
-1. **Choisissez un SPF 50 à large spectre :** Optez pour un fluide solaire qui protège à la fois contre les UVB (coups de soleil) et les UVA (vieillissement cutané, taches).
-2. **Recherchez des textures invisibles :** Pour éviter l'effet "masque blanc" ou grisâtre, Maison 2M recommande des émulsions gel-crème fluides ou des textures sèches spécialement formulées pour s'absorber sans laisser de résidus graisseux.
-3. **Appliquez au bon moment :** Le solaire doit être la toute dernière étape de votre routine de soin matinale, juste après votre crème hydratante et avant tout maquillage. Réappliquez toutes les 2 à 3 heures en cas d'exposition prolongée (plage de Ngor, promenade sur la Corniche).
+La mélanine absorbe naturellement une fraction des rayons UVB, offrant aux peaux noires et métissées un niveau de protection estimé entre SPF 10 et SPF 15.
+
+Cependant, **cette protection naturelle reste partielle** :
+
+* **Les UVA pénètrent en profondeur :** Représentant la majorité des rayons UV, les UVA atteignent le derme, dégradent les fibres de collagène et favorisent l'apparition des taches pigmentaires.
+* **L'hyperpigmentation réactionnelle :** En réponse au soleil, la peau produit de la mélanine de manière ciblée, ce qui accentue les taches d'hyperpigmentation et les marques d'acné.
 
 ---
 
-## Notre sélection d'ingrédients complémentaires
+## 3 conseils simples pour protéger sa peau à Dakar
 
-Pour maximiser l'effet de votre écran solaire, associez-le à des antioxydants puissants comme la **Vitamine C** dans votre routine du matin. Ensemble, ils forment un rempart redoutable contre les radicaux libres générés par le soleil et la pollution urbaine d Dakar.
+1. **Utilisez un indice SPF 50 large spectre :** Privilégiez une formule qui protège à la fois contre les UVB et les UVA.
+2. **Choisissez des textures fluides et sans traces blanches :** Pour un confort au quotidien, optez pour des émulsions légères qui ne laissent pas de film gras.
+3. **Appliquez en fin de routine :** Le soin solaire s'applique après votre crème hydratante, avant de sortir ou de vous maquiller. Renouvelez en cas d'exposition prolongée en extérieur.
+
+---
+
+## En résumé
+
+Une protection solaire quotidienne est le geste le plus efficace pour préserver l'élasticité de votre peau et limiter les taches pigmentaires sous le climat de Dakar.
 `
   }
 ];

@@ -17,8 +17,8 @@ import { usePageSEO } from '../utils/seo';
 
 export default function CheckoutConfirmation() {
   usePageSEO(
-    "Confirmation de Commande | Maison 2M Cosmetics Dakar",
-    "Votre commande chez Maison 2M Cosmetics a bien été enregistrée. Suivez l'état de votre commande et la livraison à Dakar."
+    "Confirmation de Commande | 2M Cosmetics Dakar",
+    "Votre commande chez 2M Cosmetics a bien été enregistrée. Suivez l'état de votre commande et la livraison à Dakar."
   );
 
   const location = useLocation();
@@ -60,7 +60,7 @@ export default function CheckoutConfirmation() {
             )}
 
             <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold block mb-2">
-              Maison 2M Cosmetics Dakar
+              2M Cosmetics Dakar
             </span>
 
             <h1 className="text-3xl md:text-4xl font-serif italic text-black/90 mb-4">
@@ -80,8 +80,8 @@ export default function CheckoutConfirmation() {
                 </strong>
               )}
               {isConfirmed 
-                ? "Notre équipe dakarise prépare vos soins avec la plus grande délicatesse. Notre coursier prendra contact avec vous par téléphone avant la livraison à votre adresse."
-                : "Nous procédons à la vérification de la transaction avec l'opérateur mobile. Dès confirmation, nous préparerons immédiatement votre colis pour une expédition rapide."
+                ? "Notre équipe prépare vos produits avec soin. Notre livreur prendra contact avec vous par téléphone avant la livraison."
+                : "Nous procédons à la vérification de la transaction avec l'opérateur. Dès confirmation, nous préparons immédiatement votre commande pour son expédition."
               }
             </p>
           </div>
@@ -128,21 +128,21 @@ export default function CheckoutConfirmation() {
               className="w-full sm:w-auto text-center px-8 py-3.5 bg-brand-noir text-brand-cream text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-all flex items-center justify-center gap-2 rounded-sm shadow-sm"
             >
               <ClipboardList className="w-3.5 h-3.5" />
-              Suivre mes commandes
+              Je consulte mes commandes
             </Link>
 
             <Link 
-              to="/catalogue/nouveautes" 
+              to="/produits" 
               className="w-full sm:w-auto text-center px-8 py-3.5 border border-black/15 text-black text-[10px] uppercase tracking-widest font-bold hover:bg-black/5 transition-all flex items-center justify-center gap-2 rounded-sm"
             >
               <ShoppingBag className="w-3.5 h-3.5 text-brand-gold" />
-              Continuer mes découvertes
+              Je continue mes achats
             </Link>
           </div>
 
           <div className="mt-8 pt-6 border-t border-black/5 flex items-center gap-3 text-black/40 text-[9px] font-mono justify-center">
             <ShieldCheck className="w-4 h-4 text-brand-gold" />
-            <span>Maison 2M Cosmetics Dakar • Service Clientèle Dédié</span>
+            <span>2M Cosmetics Dakar • Service Client</span>
           </div>
 
         </motion.div>

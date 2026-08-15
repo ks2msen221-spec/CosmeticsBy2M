@@ -69,8 +69,8 @@ export default function Checkout() {
   const navigate = useNavigate();
 
   usePageSEO(
-    "Finaliser ma Commande | Maison 2M Cosmetics Dakar",
-    "Finalisez votre commande de cosmétiques en toute sécurité avec Maison 2M Cosmetics. Livraison à domicile à Dakar et partout au Sénégal."
+    "Finaliser ma Commande | 2M Cosmetics Dakar",
+    "Finalisez votre commande de cosmétiques en toute sécurité avec 2M Cosmetics. Livraison à domicile à Dakar et au Sénégal."
   );
 
   // State arrays loaded from DB or fallback
@@ -463,7 +463,7 @@ export default function Checkout() {
     return (
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24 flex flex-col items-center justify-center min-h-[50vh]">
         <Loader2 className="w-10 h-10 text-brand-gold animate-spin mb-4" />
-        <span className="text-[10px] uppercase tracking-widest font-mono text-black/40">Préparation de votre dossier dermatologique...</span>
+        <span className="text-[10px] uppercase tracking-widest font-mono text-black/40">Chargement des options de livraison...</span>
       </div>
     );
   }
@@ -489,7 +489,7 @@ export default function Checkout() {
           </span>
           <h1 className="text-4xl font-serif italic text-black/90">Finaliser Votre Commande</h1>
           <p className="text-xs text-black/60 font-light mt-2 max-w-xl leading-relaxed">
-            Renseignez votre adresse de livraison et choisissez votre mode de paiement favori (Wave, Orange Money ou à la livraison). Nous expédions rapidement partout au Sénégal.
+            Renseignez votre adresse de livraison et choisissez votre mode de paiement (Wave, Orange Money ou à la livraison). Nous expédions rapidement à Dakar et dans tout le Sénégal.
           </p>
         </header>
 
@@ -712,7 +712,7 @@ export default function Checkout() {
             <div className="border border-black/5 bg-white p-6 md:p-8 shadow-sm rounded-sm">
               <h3 className="text-sm uppercase tracking-wider text-black font-extrabold pb-4 border-b border-black/5 mb-6 flex items-center gap-2">
                 <CreditCard className="w-4 h-4 text-brand-gold" />
-                2. Mode de Règlement Sécurisé
+                2. Mode de Paiement
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
@@ -753,7 +753,7 @@ export default function Checkout() {
                   className="bg-brand-cream p-6 border border-black/5 rounded-sm space-y-6"
                 >
                   <div className="flex flex-col sm:flex-row gap-6 items-center">
-                    {/* Simulated QR Code Card */}
+                    {/* QR Code Card */}
                     <div className="w-36 h-36 bg-white border border-black/10 p-2 shrink-0 flex flex-col items-center justify-center relative shadow-sm">
                       {selectedPaymentMethod.qr_code_url ? (
                         <img 
@@ -769,10 +769,10 @@ export default function Checkout() {
                     </div>
 
                     <div className="space-y-2 text-xs text-black/70 font-light">
-                      <span className="text-[9px] uppercase tracking-widest text-red-700 font-extrabold bg-red-50 px-2 py-0.5 border border-red-100 rounded">Méthode de Validation</span>
+                      <span className="text-[9px] uppercase tracking-widest text-emerald-800 font-extrabold bg-emerald-50 px-2 py-0.5 border border-emerald-100 rounded">Paiement Mobile</span>
                       <h4 className="font-serif italic font-bold text-black text-sm">Transfert avant expédition</h4>
                       <p className="leading-relaxed text-[11px]">
-                        Scannez le QR Code ci-contre avec votre application mobile <strong>{selectedPaymentMethod.label}</strong> ou effectuez le transfert du montant exact de la commande :
+                        Scannez le code QR ci-contre avec votre application <strong>{selectedPaymentMethod.label}</strong> ou effectuez le transfert du montant exact de la commande :
                       </p>
                       <p className="font-mono text-xs font-bold text-black bg-white px-2.5 py-1 border border-black/5 inline-block rounded-sm mt-1">
                         Montant : {formatPrice(totalAmount)}
@@ -783,18 +783,18 @@ export default function Checkout() {
                   {/* Transaction Reference Input */}
                   <div className="pt-4 border-t border-black/5">
                     <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-2">
-                      Saisir la Référence de Transaction (Transmis au Worker)
+                      Référence de transaction
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="ex: Ref. T240723.1528.C90412 ou ID de transfert"
+                      placeholder="ex: ID de transaction Wave ou Orange Money"
                       value={transactionReference}
                       onChange={(e) => setTransactionReference(e.target.value)}
                       className="w-full text-xs font-mono bg-white border border-black/10 p-3 outline-none focus:border-brand-gold transition-colors uppercase placeholder:normal-case"
                     />
                     <p className="text-[10px] text-black/40 font-light leading-relaxed mt-1.5">
-                      * Notre équipe administrative comparera cette référence avec les relevés des opérateurs de Dakar avant de passer votre commande de <span className="font-semibold text-black/60">"awaiting_verification"</span> à <span className="font-semibold text-black/60">"confirmed"</span>.
+                      * Notre équipe vérifie cette référence avant la préparation et l'expédition de votre commande.
                     </p>
                   </div>
                 </motion.div>
@@ -805,7 +805,7 @@ export default function Checkout() {
             <div className="flex items-center gap-3 text-black/40 font-mono text-[9px] px-2">
               <ShieldCheck className="w-5 h-5 text-brand-taupe shrink-0" />
               <span>
-                Protocole SSL crypté de bout en bout • Vos coordonnées sont cryptées en base de données de manière étanche sous la charte de confidentialité de 2M Sénégal.
+                Paiement et données sécurisés • Vos coordonnées sont strictement confidentielles.
               </span>
             </div>
 
@@ -855,12 +855,12 @@ export default function Checkout() {
               {/* Cost calculations */}
               <div className="space-y-4 font-sans text-xs border-t border-black/5 pt-4">
                 <div className="flex justify-between items-center text-black/60">
-                  <span>Sous-total ({totalQuantity} unités) :</span>
+                  <span>Sous-total ({totalQuantity} {totalQuantity > 1 ? 'unités' : 'unité'}) :</span>
                   <span className="font-mono font-bold text-black/80">{formatPrice(subtotal)}</span>
                 </div>
 
                 <div className="flex justify-between items-center text-black/60">
-                  <span>Frais d'expédition :</span>
+                  <span>Frais de livraison :</span>
                   {subtotal >= 50000 ? (
                     <span className="text-green-700 font-bold uppercase text-[9px] bg-green-50 px-1.5 py-0.5 rounded border border-green-100">Offert</span>
                   ) : selectedZone ? (
@@ -872,7 +872,7 @@ export default function Checkout() {
 
                 <div className="pt-4 border-t border-black/5 space-y-1.5">
                   <div className="flex justify-between items-baseline">
-                    <span className="text-sm font-semibold text-black/80">Montant total de l'ordre :</span>
+                    <span className="text-sm font-semibold text-black/80">Total de la commande :</span>
                     <span className="text-xl font-mono font-bold text-black">
                       {formatPrice(totalAmount)}
                     </span>
@@ -910,14 +910,14 @@ export default function Checkout() {
                       Validation en cours...
                     </>
                   ) : selectedPaymentMethodCode === 'cod' ? (
-                    'Confirmer la Commande'
+                    'Je confirme ma commande'
                   ) : (
-                    'J\'ai payé'
+                    'J\'ai effectué le paiement'
                   )}
                 </button>
 
                 <p className="text-[9px] text-center text-black/40 font-light mt-3 leading-tight max-w-[280px] mx-auto">
-                  En cliquant, vous acceptez la charte dermatologique de Maison 2M Cosmetics.
+                  En validant, vous confirmez l'exactitude de vos informations de livraison.
                 </p>
               </div>
 
@@ -925,9 +925,9 @@ export default function Checkout() {
 
             {/* Dakar Pharmacy Callout */}
             <div className="border border-black/5 bg-white p-6 rounded-sm text-xs">
-              <h4 className="font-serif italic font-bold text-black/80 border-b border-black/5 pb-2 mb-3">Service Clientèle Privée 2M</h4>
+              <h4 className="font-serif italic font-bold text-black/80 border-b border-black/5 pb-2 mb-3">Service client 2M Cosmetics</h4>
               <p className="text-black/60 leading-relaxed text-[11px]">
-                Pour toute question sur la compatibilité d'une formulation avec votre diagnostic épidermique, nos praticiens de Dakar vous répondent en direct de 8h à 19h au <a href={`tel:${CONTACT_CONFIG.phoneRaw}`} className="font-semibold text-black hover:text-brand-gold transition-colors">{CONTACT_CONFIG.phone}</a>.
+                Une question sur votre commande ou sur un soin ? Notre équipe à Dakar vous répond de 8h à 19h au <a href={`tel:${CONTACT_CONFIG.phoneRaw}`} className="font-semibold text-black hover:text-brand-gold transition-colors">{CONTACT_CONFIG.phone}</a>.
               </p>
             </div>
 

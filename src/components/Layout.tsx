@@ -18,7 +18,7 @@ export default function Layout() {
 
   useEffect(() => {
     if (location.state?.unauthorized) {
-      setUnauthorizedMessage("Accès restreint : Vous devez être connecté avec un compte administrateur de la Maison 2M Cosmetics pour accéder à la console d'administration.");
+      setUnauthorizedMessage("Accès restreint : Vous devez être connecté avec un compte administrateur 2M Cosmetics pour accéder à la console d'administration.");
       // Clear location state to avoid banner re-triggering upon reload/navigation
       navigate(location.pathname, { replace: true, state: {} });
     }
@@ -41,10 +41,10 @@ export default function Layout() {
           <SocialIcons iconClassName="w-3.5 h-3.5 text-brand-cream/80" containerClassName="flex items-center gap-2" />
         </div>
         <div className="mx-auto md:mx-0 text-center text-brand-cream/95">
-          Livraison offerte dès 50.000 FCFA à Dakar — Paiement serein à la livraison ou via Wave / OM
+          Livraison offerte dès 50 000 FCFA à Dakar — Paiement à la livraison ou via Wave / OM
         </div>
         <div className="hidden lg:flex items-center gap-2 text-brand-gold text-[9px] font-semibold">
-          Conseillère en ligne
+          Conseil en ligne
         </div>
       </div>
 
@@ -53,24 +53,24 @@ export default function Layout() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex items-center justify-between">
           {/* Left Navigation */}
           <nav className="hidden md:flex gap-8 text-[11px] uppercase tracking-widest font-semibold items-center">
-            <Link to="/catalogue/nouveautes" className="hover:text-brand-gold transition-colors">Tous nos Soins</Link>
-            <Link to="/collections" className="hover:text-brand-gold transition-colors">Rituels & Collections</Link>
-            <Link to="/blog" className="hover:text-brand-gold transition-colors">Gazette Beauté</Link>
+            <Link to="/produits" className="hover:text-brand-gold transition-colors">Tous nos produits</Link>
+            <Link to="/collections" className="hover:text-brand-gold transition-colors">Nos Collections</Link>
+            <Link to="/blog" className="hover:text-brand-gold transition-colors">Nos conseils bien-être</Link>
           </nav>
           
           {/* Mobile hamburger shortcut */}
           <div className="md:hidden flex gap-3 text-[10px] uppercase tracking-widest font-semibold items-center">
-            <Link to="/catalogue/nouveautes" className="hover:text-brand-gold transition-colors">Soins</Link>
-            <Link to="/collections" className="hover:text-brand-gold transition-colors">Rituels</Link>
+            <Link to="/produits" className="hover:text-brand-gold transition-colors">Produits</Link>
+            <Link to="/collections" className="hover:text-brand-gold transition-colors">Collections</Link>
             <Link to="/blog" className="hover:text-brand-gold transition-colors">Conseils</Link>
             <Link to="/admin" className="hover:opacity-50 transition-opacity text-amber-700 font-bold">Admin</Link>
           </div>
 
           {/* Center Brand Identity */}
-          <Link to="/" className="flex items-center justify-center select-none group" title="Maison 2M Cosmetics — Accueil">
+          <Link to="/" className="flex items-center justify-center select-none group" title="2M Cosmetics — Accueil">
             <img 
               src="/logo-2m-cosmetics.png" 
-              alt="Maison 2M Cosmetics Dakar" 
+              alt="2M Cosmetics Dakar" 
               className="h-10 sm:h-11 md:h-12 w-auto object-contain"
             />
           </Link>
@@ -92,7 +92,7 @@ export default function Layout() {
             <button 
               onClick={() => setIsSearchVisible(!isSearchVisible)} 
               className="hover:text-brand-gold transition-colors flex items-center gap-1.5 cursor-pointer"
-              title="Rechercher un soin"
+              title="Rechercher un produit"
             >
               <Search className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Recherche</span>
@@ -111,7 +111,7 @@ export default function Layout() {
               <Search className="w-4 h-4 text-black/40" />
               <input 
                 type="text"
-                placeholder="Rechercher un soin, un ingrédient (Moringa, Baobab, SPF...)"
+                placeholder="Rechercher un produit, un ingrédient (Moringa, Baobab, SPF...)"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full text-sm font-serif italic outline-none bg-transparent placeholder-black/40 py-1 focus:border-b focus:border-brand-gold"
@@ -150,16 +150,16 @@ export default function Layout() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-black/5">
             {/* Brand Logo & Identity */}
             <div className="flex items-center gap-4">
-              <Link to="/" className="inline-flex items-center justify-center hover:opacity-90 transition-opacity" title="Maison 2M Cosmetics Dakar">
+              <Link to="/" className="inline-flex items-center justify-center hover:opacity-90 transition-opacity" title="2M Cosmetics Dakar">
                 <img 
                   src="/logo-2m-cosmetics.png" 
-                  alt="Maison 2M Cosmetics" 
+                  alt="2M Cosmetics" 
                   className="h-11 md:h-12 w-auto object-contain"
                 />
               </Link>
               <div>
-                <span className="block text-xs font-bold uppercase tracking-widest text-brand-noir">Maison 2M Cosmetics</span>
-                <span className="block text-sm text-black/60 font-script italic">Sublimer votre éclat naturel au Sénégal</span>
+                <span className="block text-xs font-bold uppercase tracking-widest text-brand-noir">2M Cosmetics</span>
+                <span className="block text-sm text-black/60 font-script italic">Cosmétiques naturels et transparents au Sénégal</span>
               </div>
             </div>
 
@@ -173,7 +173,7 @@ export default function Layout() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase tracking-widest text-brand-gold mb-2 font-bold">Notre Maison à Dakar</span>
+              <span className="text-[10px] uppercase tracking-widest text-brand-gold mb-2 font-bold">Notre Boutique à Dakar</span>
               <span className="text-xs text-black/80 font-medium leading-relaxed">{CONTACT_CONFIG.address}</span>
               <div className="flex flex-col gap-1 mt-2 text-xs">
                 <a href={`tel:${CONTACT_CONFIG.phoneRaw}`} className="text-black/70 hover:text-brand-gold transition-colors font-mono">
@@ -204,25 +204,25 @@ export default function Layout() {
               <span className="text-[10px] uppercase tracking-widest text-brand-gold mb-2 font-bold">Paiement & Livraison</span>
               <span className="text-xs text-black/80 font-medium">Livraison en 24h à 48h sur Dakar</span>
               <p className="text-xs text-black/60 font-light mt-1">
-                Réglez en toute quiétude à la réception de votre colis, ou instantanément par Wave / Orange Money.
+                Paiement en espèces à la réception de votre colis, ou par Wave / Orange Money.
               </p>
             </div>
 
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase tracking-widest text-brand-gold mb-2 font-bold">Charte d'Excellence</span>
-              <span className="text-xs text-black/80 font-medium">Formules Douces & Authentiques</span>
+              <span className="text-[10px] uppercase tracking-widest text-brand-gold mb-2 font-bold">Transparence</span>
+              <span className="text-xs text-black/80 font-medium">Ingrédients Clairs & Vérifiés</span>
               <p className="text-xs text-black/60 font-light mt-1">
-                Sélection exigeante d'ingrédients nobles du terroir ouest-africain et tolérance clinique prouvée.
+                Des formulations simples avec des ingrédients d'origine naturelle, sans composants superflus.
               </p>
             </div>
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 mt-10 pt-6 border-t border-black/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-black/40 uppercase tracking-wider">
-          <div>© {new Date().getFullYear()} Maison 2M Cosmetics — L'Élégance Botanique à Dakar.</div>
+          <div>© {new Date().getFullYear()} 2M Cosmetics — Cosmétiques naturels à Dakar.</div>
           <div className="flex gap-6 lowercase font-mono">
-            <Link to="/catalogue/nouveautes" className="hover:text-black">soins</Link>
+            <Link to="/produits" className="hover:text-black">produits</Link>
             <Link to="/collections" className="hover:text-black">collections</Link>
-            <Link to="/blog" className="hover:text-black">gazette</Link>
+            <Link to="/blog" className="hover:text-black">conseils</Link>
           </div>
         </div>
       </footer>

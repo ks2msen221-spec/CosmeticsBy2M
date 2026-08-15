@@ -19,8 +19,8 @@ export default function Collections() {
   const [loading, setLoading] = useState(true);
 
   usePageSEO(
-    "Collections Thématiques & Rituels | Maison 2M Cosmetics Dakar",
-    "Explorez nos sélections de soins botaniques et rituels dermo-cosmétiques pensés pour le climat sénégalais par Maison 2M Cosmetics à Dakar."
+    "Nos Collections & Sélections | 2M Cosmetics Dakar",
+    "Découvrez nos sélections de soins cosmétiques naturels pensées pour le climat de Dakar au Sénégal par 2M Cosmetics. Des produits clairs et bien pensés."
   );
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export default function Collections() {
             <Home className="w-3 h-3" /> Accueil
           </Link>
           <ChevronRight className="w-3 h-3" />
-          <span className="text-black/80">Collections Thématiques</span>
+          <span className="text-black/80">Nos Collections</span>
         </div>
       </div>
 
@@ -89,13 +89,13 @@ export default function Collections() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center max-w-3xl">
           <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold flex items-center justify-center gap-2 mb-3">
             <Sparkles className="w-4 h-4 text-brand-gold" />
-            Éditions Ciblées & Rituels d'Exception
+            Sélections thématiques
           </span>
           <h1 className="text-4xl md:text-5xl font-serif italic text-black/90 mb-5">
-            Nos Rituels & Sélections Signatures
+            Nos Collections &amp; Sélections de Soins
           </h1>
           <p className="text-sm text-black/65 leading-relaxed font-light">
-            Découvrez nos collections éditées avec soin par notre équipe de Dakar. Des rituels harmonieux pensés pour sublimer votre peau au quotidien, protéger votre éclat et respecter votre équilibre naturel.
+            Découvrez nos sélections de produits regroupées par besoins. Des associations simples formulées avec des ingrédients d'origine naturelle pour vous guider facilement au quotidien à Dakar.
           </p>
         </div>
       </div>
@@ -113,16 +113,16 @@ export default function Collections() {
           <div className="border border-black/5 bg-white p-14 text-center shadow-xs max-w-md mx-auto rounded-sm">
             <BookOpen className="w-10 h-10 text-brand-gold/40 mx-auto mb-4" />
             <h3 className="font-serif italic text-xl mb-2 text-black/90">
-              Collections en cours de curation
+              Collections en cours de préparation
             </h3>
             <p className="text-xs text-black/60 font-light leading-relaxed mb-6">
-              Nos spécialistes préparent de nouvelles harmonies de soins. En attendant, parcourez notre catalogue général.
+              Notre équipe prépare de nouvelles sélections de soins. En attendant, parcourez l'ensemble de notre catalogue.
             </p>
             <Link 
-              to="/catalogue/nouveautes" 
+              to="/produits" 
               className="px-6 py-3 bg-brand-noir hover:bg-brand-gold text-white text-[10px] uppercase tracking-widest font-bold transition-colors inline-block rounded-sm hover:text-brand-noir"
             >
-              Découvrir tous nos soins
+              Je découvre tous les produits
             </Link>
           </div>
         ) : (
@@ -146,12 +146,12 @@ export default function Collections() {
                     <div className="flex flex-col items-center gap-2 p-6 text-center">
                       <BookOpen className="w-12 h-12 text-brand-gold/40 group-hover:text-brand-gold transition-colors" />
                       <span className="text-[10px] uppercase tracking-widest text-black/40 font-mono">
-                        Maison 2M Cosmetics
+                        2M Cosmetics
                       </span>
                     </div>
                   )}
                   <div className="absolute top-4 right-4 bg-brand-noir/80 backdrop-blur-xs text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full opacity-90 group-hover:bg-brand-gold group-hover:text-brand-noir transition-colors">
-                    Explorer le rituel
+                    Je découvre la sélection
                   </div>
                 </div>
 
@@ -159,18 +159,18 @@ export default function Collections() {
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <span className="text-[10px] uppercase tracking-[0.2em] text-brand-gold font-bold block mb-1">
-                      Rituel Signature
+                      Sélection thématique
                     </span>
                     <h2 className="text-2xl font-serif italic text-black/90 group-hover:text-brand-gold transition-colors">
                       {cat.name}
                     </h2>
                     <p className="text-xs text-black/65 font-light mt-2.5 line-clamp-3 leading-relaxed">
-                      {cat.description || "Sélection exclusive de formulations cosmétiques élaborées pour magnifier votre peau sous le soleil de Dakar."}
+                      {cat.description || "Sélection de cosmétiques naturels et transparents pour prendre soin de votre peau au quotidien à Dakar."}
                     </p>
                   </div>
 
                   <div className="pt-4 border-t border-black/5 flex items-center justify-between text-[10px] uppercase tracking-widest font-bold text-black/80 group-hover:text-brand-gold transition-colors">
-                    <span>Découvrir les soins du rituel</span>
+                    <span>Je découvre les produits</span>
                     <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>

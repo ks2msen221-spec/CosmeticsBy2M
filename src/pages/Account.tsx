@@ -51,8 +51,8 @@ export default function Account() {
   const { user, profile, signOut, updateProfile, isMocked } = useAuth();
 
   usePageSEO(
-    "Mon Espace Privé | Maison 2M Cosmetics Dakar",
-    "Gérez vos informations personnelles, carnets d'adresses et préférences de soins cosmétiques chez Maison 2M Cosmetics Dakar."
+    "Mon Compte | 2M Cosmetics Dakar",
+    "Gérez vos informations personnelles, carnets d'adresses et commandes chez 2M Cosmetics Dakar."
   );
 
   const [isEditing, setIsEditing] = useState(false);
@@ -501,7 +501,7 @@ export default function Account() {
         address: address,
         email: email.trim()
       } as any);
-      setSuccessMessage('Votre profil dermatologique a été mis à jour avec succès.');
+      setSuccessMessage('Vos informations ont été mises à jour avec succès.');
       setIsEditing(false);
     } catch (err: any) {
       setLocalError(err.message || 'Une erreur est survenue.');
@@ -528,7 +528,7 @@ export default function Account() {
         <div className="space-y-6">
           <div className="border border-black/5 bg-white p-8 shadow-sm rounded-sm">
             <span className="text-[10px] uppercase tracking-[0.2em] text-brand-gold font-bold block mb-2">
-              Statut du Client 2M
+              Statut du Compte
             </span>
             
             <div className="flex items-center gap-4 py-4 border-b border-black/5">
@@ -537,7 +537,7 @@ export default function Account() {
               </div>
               <div>
                 <h3 className="font-serif italic text-lg leading-snug">
-                  {profile?.full_name || 'Membre 2M'}
+                  {profile?.full_name || 'Client 2M'}
                 </h3>
                 <p className="text-xs text-black/50 font-mono truncate max-w-[180px]">{user?.email}</p>
               </div>
@@ -549,7 +549,7 @@ export default function Account() {
                 <span className="text-black/50">Rôle de Sécurité</span>
                 <span className="flex items-center gap-1 font-mono uppercase font-bold text-[10px] text-brand-gold">
                   <Shield className="w-3 h-3" />
-                  {profile?.role === 'admin' ? 'Administrateur' : 'Client Privilégié'}
+                  {profile?.role === 'admin' ? 'Administrateur' : 'Client'}
                 </span>
               </div>
               <p className="text-[10px] text-black/40 leading-tight">
@@ -562,7 +562,7 @@ export default function Account() {
                 to="/compte/commandes" 
                 className="w-full py-3 bg-brand-noir text-brand-cream text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors flex items-center justify-center gap-2 rounded-sm"
               >
-                Suivi de mes commandes
+                Je consulte mes commandes
                 <ArrowRight className="w-3 h-3" />
               </Link>
 

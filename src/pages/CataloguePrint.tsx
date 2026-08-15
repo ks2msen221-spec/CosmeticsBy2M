@@ -13,8 +13,8 @@ export default function CataloguePrint() {
   const [loading, setLoading] = useState(true);
 
   usePageSEO(
-    catalogue ? `Catalogue Imprimable : ${catalogue.name} | Maison 2M Cosmetics Dakar` : "Catalogue Imprimable | Maison 2M Cosmetics Dakar",
-    "Version imprimable haute résolution du catalogue de soins et cosmétiques Maison 2M Cosmetics Dakar."
+    catalogue ? `Catalogue Imprimable : ${catalogue.name} | 2M Cosmetics Dakar` : "Catalogue Imprimable | 2M Cosmetics Dakar",
+    "Version imprimable du catalogue de produits et soins 2M Cosmetics Dakar."
   );
 
   useEffect(() => {
@@ -116,13 +116,13 @@ export default function CataloguePrint() {
         {/* Corporate Header Block */}
         <header className="border-b-2 border-black pb-6 mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
           <div>
-            <h1 className="text-3xl font-serif italic tracking-wider font-extrabold">MAISON 2M COSMETICS</h1>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold mt-1">Officiel — Sénégal</p>
+            <h1 className="text-3xl font-serif italic tracking-wider font-extrabold">2M COSMETICS</h1>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold mt-1">Dakar — Sénégal</p>
             <p className="text-[10px] text-black/50 mt-1 font-mono">{CONTACT_CONFIG.address} • {CONTACT_CONFIG.phone} • {CONTACT_CONFIG.email}</p>
           </div>
           <div className="text-left sm:text-right font-mono">
             <span className="inline-block bg-black text-white text-[9px] uppercase tracking-widest font-extrabold px-2.5 py-1 mb-2">
-              B2B & Tarifs publics
+              Tarifs publics
             </span>
             <p className="text-xs font-bold uppercase tracking-wider text-black/80">Collection : {catalogue.name}</p>
             <p className="text-[10px] text-black/40">Généré le {new Date().toLocaleDateString('fr-FR')} à {new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})}</p>
@@ -133,7 +133,7 @@ export default function CataloguePrint() {
         <div className="mb-10">
           <h2 className="text-xl font-serif italic mb-2 text-black/90">Fiche de Référence Produit — {catalogue.name}</h2>
           <p className="text-xs text-black/60 leading-relaxed max-w-3xl">
-            {catalogue.description || "Sélection exclusive de formulations d'exception. Ce document sert de grille tarifaire officielle et de fiche technique d'inventaire pour nos clients privilèges et partenaires dermatologiques au Sénégal."}
+            {catalogue.description || "Sélection de produits cosmétiques naturels. Ce document sert de grille tarifaire et de fiche technique d'information pour nos clients et partenaires à Dakar et au Sénégal."}
           </p>
         </div>
 
@@ -145,7 +145,7 @@ export default function CataloguePrint() {
         ) : (
           <div className="space-y-8">
             <h3 className="text-xs uppercase tracking-widest font-bold border-b pb-2 text-brand-gold">
-              Nomenclature des Soins Disponibles ({products.length})
+              Liste des Produits Disponibles ({products.length})
             </h3>
 
             {/* List Table Layout for pristine formatting */}
@@ -157,7 +157,7 @@ export default function CataloguePrint() {
                       <span className="font-mono text-[10px] text-black/40 block">N° {idx + 1} • ID: {product.id}</span>
                       <h4 className="text-base font-serif italic font-bold text-black/90">{product.name}</h4>
                       <p className="text-[10px] uppercase tracking-wider font-extrabold text-brand-gold">
-                        {product.brand?.name || 'Maison 2M'}
+                        {product.brand?.name || '2M Cosmetics'}
                       </p>
                     </div>
                     <div className="text-right">
@@ -194,9 +194,9 @@ export default function CataloguePrint() {
         <footer className="mt-16 pt-8 border-t border-black/10 text-center text-[9px] text-black/40 font-mono space-y-2">
           <div className="flex items-center justify-center gap-1 text-black/50">
             <Shield className="w-3.5 h-3.5 text-brand-taupe" />
-            <span>Document de consultation officiel de Maison 2M Cosmetics. RLS & Authentification cryptée Supabase.</span>
+            <span>Document de consultation 2M Cosmetics Dakar.</span>
           </div>
-          <p>© {new Date().getFullYear()} Maison 2M Cosmetics Sénégal. Tous droits de reproduction réservés.</p>
+          <p>© {new Date().getFullYear()} 2M Cosmetics Dakar, Sénégal. Tous droits réservés.</p>
         </footer>
 
       </div>

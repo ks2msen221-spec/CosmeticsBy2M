@@ -14,10 +14,10 @@ export default function BrandDetail() {
   const [loading, setLoading] = useState(true);
 
   usePageSEO(
-    brand ? `${brand.name} | Cosmétiques & Soins Partenaires Dakar` : "Marque Partenaire | Maison 2M Cosmetics",
+    brand ? `${brand.name} | Soins & Cosmétiques Dakar | 2M Cosmetics` : "Marque Partenaire | 2M Cosmetics Dakar",
     brand 
-      ? `Découvrez la signature ${brand.name} chez Maison 2M Cosmetics Dakar : ${brand.bio?.slice(0, 140)}... Soins garantis authentiques avec livraison à domicile.`
-      : "Découvrez les marques d'exception sélectionnées par Maison 2M Cosmetics à Dakar."
+      ? `Découvrez les cosmétiques ${brand.name} chez 2M Cosmetics à Dakar au Sénégal : ${brand.bio?.slice(0, 120)}... Ingrédients clairs et livraison rapide.`
+      : "Découvrez les marques sélectionnées par 2M Cosmetics à Dakar au Sénégal."
   );
 
   useEffect(() => {
@@ -62,16 +62,16 @@ export default function BrandDetail() {
   if (!brand) {
     return (
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24 text-center">
-        <span className="text-[10px] uppercase tracking-widest text-brand-gold font-bold block mb-4">Maison Non Répertoriée</span>
+        <span className="text-[10px] uppercase tracking-widest text-brand-gold font-bold block mb-4">Marque Non Répertoriée</span>
         <h1 className="text-3xl font-serif italic mb-4">Cette marque est introuvable</h1>
         <p className="text-xs text-black/60 max-w-md mx-auto mb-8 font-light">
           Cette marque n'est pas ou plus répertoriée dans notre catalogue de cosmétiques à Dakar.
         </p>
         <Link 
-          to="/collections" 
+          to="/produits" 
           className="px-8 py-3.5 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all inline-block rounded-sm"
         >
-          Découvrir nos marques et collections
+          Je découvre tous les produits
         </Link>
       </div>
     );
@@ -103,22 +103,22 @@ export default function BrandDetail() {
             <div className="lg:col-span-2 space-y-5">
               <span className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold flex items-center gap-2">
                 <Award className="w-4 h-4 text-brand-gold" />
-                Maison Partenaire d'Excellence
+                Marque Partenaire
               </span>
               <h1 className="text-4xl md:text-5xl font-serif italic text-black/90">
                 {brand.name}
               </h1>
               <div className="h-[1px] w-20 bg-brand-gold/40"></div>
               <p className="text-sm text-black/70 leading-relaxed font-light">
-                {brand.bio || "Une signature cosmétique exigeante qui allie la richesse botanique et la rigueur scientifique pour sublimer chaque carnation."}
+                {brand.bio || "Une marque de cosmétiques qui privilégie la simplicité des formulations et le respect de la peau au quotidien."}
               </p>
 
               <div className="flex flex-wrap gap-4 pt-2 text-xs text-black/60 font-light">
                 <span className="flex items-center gap-1.5 bg-brand-cream border border-black/5 px-3 py-1.5 rounded-sm">
-                  <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" /> 100% Formules Authentifiées
+                  <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" /> Formules authentifiées
                 </span>
                 <span className="flex items-center gap-1.5 bg-brand-cream border border-black/5 px-3 py-1.5 rounded-sm">
-                  <HeartHandshake className="w-3.5 h-3.5 text-brand-gold" /> Partenariat Officiel Dakar
+                  <HeartHandshake className="w-3.5 h-3.5 text-brand-gold" /> Disponible à Dakar
                 </span>
               </div>
             </div>
@@ -146,19 +146,19 @@ export default function BrandDetail() {
       {/* Brand Products Content Grid */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
         <div className="flex justify-between items-center mb-8 text-[10px] uppercase tracking-widest text-black/50 font-bold pb-3 border-b border-black/5">
-          <span>{products.length} {products.length > 1 ? 'soins disponibles' : 'soin disponible'}</span>
+          <span>{products.length} {products.length > 1 ? 'produits disponibles' : 'produit disponible'}</span>
           <span>Disponible à Dakar</span>
         </div>
 
         {products.length === 0 ? (
           <div className="border border-black/5 bg-white p-14 text-center shadow-sm max-w-2xl mx-auto rounded-sm">
             <Sparkles className="w-8 h-8 text-brand-gold/60 mx-auto mb-4" />
-            <h3 className="font-serif italic text-xl mb-2 text-black/90">Nouveautés en cours d'approvisionnement</h3>
+            <h3 className="font-serif italic text-xl mb-2 text-black/90">Produits en cours de réapprovisionnement</h3>
             <p className="text-xs text-black/60 max-w-sm mx-auto mb-6 font-light leading-relaxed">
-              Les soins de la maison {brand.name} sont en cours de réapprovisionnement dans nos stocks dakarois.
+              Les produits de la marque {brand.name} sont en cours de réapprovisionnement dans nos stocks à Dakar.
             </p>
-            <Link to="/catalogue/nouveautes" className="px-6 py-3 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors inline-block rounded-sm">
-              Découvrir les soins disponibles
+            <Link to="/produits" className="px-6 py-3 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors inline-block rounded-sm">
+              Je découvre tous les produits
             </Link>
           </div>
         ) : (

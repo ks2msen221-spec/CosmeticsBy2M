@@ -13,8 +13,8 @@ export default function Login() {
   const [email, setEmail] = useState('');
   
   usePageSEO(
-    isLogin ? "Connexion à votre Espace Client | Maison 2M Cosmetics Dakar" : "Créer un Compte Client | Maison 2M Cosmetics Dakar",
-    "Accédez à votre espace client Maison 2M Cosmetics à Dakar pour suivre vos commandes et bénéficier d'une expérience beauté personnalisée."
+    isLogin ? "Connexion | 2M Cosmetics Dakar" : "Créer un Compte | 2M Cosmetics Dakar",
+    "Accédez à votre compte 2M Cosmetics à Dakar pour suivre vos commandes et gérer vos adresses de livraison."
   );
 
   const [loadingLocal, setLoadingLocal] = useState(false);
@@ -70,7 +70,7 @@ export default function Login() {
         {/* Brand identity */}
         <div className="text-center mb-8">
           <div className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold mb-2">
-            Maison 2M Cosmetics
+            2M Cosmetics
           </div>
           <h2 className="text-3xl font-serif italic">
             {isLogin ? 'Connexion' : 'Créer un Compte'}
@@ -226,7 +226,7 @@ export default function Login() {
                 <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
               ) : (
                 <>
-                  {isLogin ? 'Se Connecter' : 'Rejoindre le club 2M'}
+                  {isLogin ? 'Je me connecte' : 'Je crée mon compte'}
                   <ArrowRight className="w-3.5 h-3.5" />
                 </>
               )}

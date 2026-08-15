@@ -11,8 +11,8 @@ export default function Search() {
   const query = searchParams.get('q') || '';
 
   usePageSEO(
-    query ? `Recherche : "${query}" | Maison 2M Cosmetics Dakar` : "Rechercher un Soin | Maison 2M Cosmetics Dakar",
-    "Trouvez les soins, sérums et rituels botaniques adaptés à votre peau chez Maison 2M Cosmetics à Dakar."
+    query ? `Recherche : "${query}" | 2M Cosmetics Dakar` : "Recherche Produits | 2M Cosmetics Dakar",
+    "Trouvez les produits et soins adaptés à vos besoins chez 2M Cosmetics à Dakar."
   );
   
   const [products, setProducts] = useState<Product[]>([]);
@@ -70,7 +70,7 @@ export default function Search() {
             {query.trim() ? (
               <>Recherche pour : <span className="text-brand-gold">“{query}”</span></>
             ) : (
-              "Explorez nos Formulations"
+              "Explorez nos Produits"
             )}
           </h1>
           
@@ -103,9 +103,9 @@ export default function Search() {
         ) : !query.trim() ? (
           <div className="bg-white border border-black/5 p-12 text-center max-w-xl mx-auto shadow-sm">
             <SearchIcon className="w-8 h-8 text-brand-taupe/40 mx-auto mb-4" />
-            <h3 className="font-serif italic text-lg mb-2">Rechercher une formulation</h3>
+            <h3 className="font-serif italic text-lg mb-2">Rechercher un produit</h3>
             <p className="text-xs text-black/50 leading-relaxed mb-6">
-              Saisissez le nom d'un produit, d'un actif botanique (Moringa, Baobab, etc.) ou une problématique de peau pour découvrir nos soins adaptés.
+              Saisissez le nom d'un produit, d'un ingrédient (Moringa, Baobab, etc.) ou une catégorie pour trouver les soins adaptés.
             </p>
           </div>
         ) : products.length === 0 ? (
@@ -113,20 +113,20 @@ export default function Search() {
             <AlertCircle className="w-8 h-8 text-amber-500/70 mx-auto mb-4" />
             <h3 className="font-serif italic text-lg mb-2">Aucun résultat trouvé</h3>
             <p className="text-xs text-black/50 leading-relaxed mb-6">
-              Nous n'avons pas trouvé de soin correspondant à <span className="font-bold">“{query}”</span> dans nos comptoirs. Essayez d'élargir votre recherche ou d'utiliser l'une de nos suggestions ci-dessus.
+              Nous n'avons pas trouvé de produit correspondant à <span className="font-bold">“{query}”</span>. Essayez d'élargir votre recherche ou d'utiliser l'une de nos suggestions ci-dessus.
             </p>
             <div className="h-[1px] w-12 bg-black/10 mx-auto mb-6"></div>
             <Link 
-              to="/" 
-              className="inline-block px-8 py-3 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all cursor-pointer"
+              to="/produits" 
+              className="inline-block px-8 py-3 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all cursor-pointer rounded-sm"
             >
-              Retourner à l'accueil
+              Je découvre tous les produits
             </Link>
           </div>
         ) : (
           <div>
             <div className="flex justify-between items-center mb-8 text-[10px] uppercase tracking-widest text-black/40 font-bold pb-2 border-b border-black/5">
-              <span>{products.length} {products.length > 1 ? 'soins trouvés' : 'soin trouvé'}</span>
+              <span>{products.length} {products.length > 1 ? 'produits trouvés' : 'produit trouvé'}</span>
               <span>Dakar</span>
             </div>
 
