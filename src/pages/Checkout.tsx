@@ -311,12 +311,8 @@ export default function Checkout() {
       return;
     }
 
-    // Validation for Orange Money / Wave reference
-    if (selectedPaymentMethodCode !== 'cod' && !transactionReference.trim()) {
-      setError(`Veuillez renseigner la référence de transaction de votre paiement ${selectedPaymentMethodCode === 'wave' ? 'Wave' : 'Orange Money'}.`);
-      return;
-    }
-
+    // Submit Order to Cloudflare Worker or Mock
+    // Note: Transaction reference is purely optional for Wave and Orange Money. If left blank, the order is created with status "awaiting_verification" (à valider).
     setSubmitting(true);
 
     try {
@@ -780,22 +776,29 @@ export default function Checkout() {
                     </div>
                   </div>
 
-                  {/* Transaction Reference Input */}
+                  {/* Transaction Reference Input (Optionnel) */}
                   <div className="pt-4 border-t border-black/5">
-                    <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold mb-2">
-                      Référence de transaction
-                    </label>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold">
+                        Référence de transaction
+                      </label>
+                      <span className="text-[9px] uppercase tracking-wider text-black/40 font-mono font-medium">
+                        Facultatif
+                      </span>
+                    </div>
                     <input
                       type="text"
-                      required
-                      placeholder="ex: ID de transaction Wave ou Orange Money"
+                      placeholder="ex: ID de transaction Wave ou Orange Money (facultatif)"
                       value={transactionReference}
                       onChange={(e) => setTransactionReference(e.target.value)}
-                      className="w-full text-xs font-mono bg-white border border-black/10 p-3 outline-none focus:border-brand-gold transition-colors uppercase placeholder:normal-case"
+                      className="w-full text-xs font-mono bg-white border border-black/10 p-3 outline-none focus:border-brand-gold transition-colors uppercase placeholder:normal-case rounded-sm"
                     />
-                    <p className="text-[10px] text-black/40 font-light leading-relaxed mt-1.5">
-                      * Notre équipe vérifie cette référence avant la préparation et l'expédition de votre commande.
-                    </p>
+                    <div className="mt-2.5 p-3 bg-brand-cream/80 border border-brand-gold/20 rounded-sm text-[11px] text-black/75 font-sans leading-relaxed flex items-start gap-2">
+                      <span className="text-brand-gold font-bold text-xs mt-0.5">•</span>
+                      <p>
+                        <strong>Vous n'avez pas la référence sous la main ?</strong> Pas de souci, notre équipe vous contactera par WhatsApp ou par téléphone pour confirmer le paiement.
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
               )}
