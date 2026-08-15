@@ -9,14 +9,20 @@ export function WhatsAppIcon({ className = "w-6 h-6" }: { className?: string }) 
   );
 }
 
-export default function WhatsAppFloatButton() {
+interface WhatsAppFloatButtonProps {
+  hidden?: boolean;
+}
+
+export default function WhatsAppFloatButton({ hidden = false }: WhatsAppFloatButtonProps) {
+  if (hidden) return null;
+
   return (
     <a
       href={CONTACT_CONFIG.whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Discuter avec nous sur WhatsApp"
-      className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 group flex items-center gap-2 bg-[#25D366] text-white p-3.5 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#25D366]/40"
+      className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 group flex items-center gap-2 bg-[#25D366] text-white p-3.5 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#25D366]/40"
       title="Contactez-nous sur WhatsApp"
     >
       <WhatsAppIcon className="w-6 h-6 sm:w-7 sm:h-7 fill-current" />
