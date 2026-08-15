@@ -24,10 +24,10 @@ export default function ProductCard({ product }: ProductCardProps) {
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="group bg-white border border-black/5 hover:border-[#9A8C73]/40 transition-all flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md relative"
+      className="group bg-white border border-black/5 hover:border-brand-taupe/40 transition-all flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md relative"
     >
       {/* Visual Image container */}
-      <div className="aspect-[4/5] bg-[#FAF9F6] relative overflow-hidden flex items-center justify-center">
+      <div className="aspect-[4/5] bg-brand-cream relative overflow-hidden flex items-center justify-center">
         {product.images && product.images.length > 0 ? (
           <img
             src={product.images[0]}
@@ -56,7 +56,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10">
           <Link
             to={`/produit/${product.slug}`}
-            className="bg-[#FAF9F6] text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold px-6 py-3 shadow-xl hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all flex items-center gap-1.5"
+            className="bg-brand-cream text-brand-noir text-[10px] uppercase tracking-widest font-bold px-6 py-3 shadow-xl hover:bg-brand-noir hover:text-brand-cream transition-all flex items-center gap-1.5"
           >
             Découvrir le soin
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -68,7 +68,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="p-6 flex-1 flex flex-col justify-between bg-white">
         <div className="space-y-1.5 mb-4">
           <div className="flex justify-between items-start gap-2">
-            <span className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold">
+            <span className="text-[9px] uppercase tracking-widest text-brand-taupe font-bold">
               {product.brand?.name || 'Maison 2M'}
             </span>
             {product.category && (
@@ -78,7 +78,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             )}
           </div>
           
-          <h3 className="font-serif italic text-base text-black/90 group-hover:text-[#9A8C73] transition-colors leading-snug line-clamp-2">
+          <h3 className="font-serif italic text-base text-black/90 group-hover:text-brand-gold transition-colors leading-snug line-clamp-2">
             <Link to={`/produit/${product.slug}`}>{product.name}</Link>
           </h3>
         </div>
@@ -90,7 +90,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           
           <Link
             to={`/produit/${product.slug}`}
-            className="text-[10px] uppercase tracking-widest font-bold text-[#1A1A1A] group-hover:text-[#9A8C73] transition-colors flex items-center gap-1"
+            className="text-[10px] uppercase tracking-widest font-bold text-brand-noir group-hover:text-brand-gold transition-colors flex items-center gap-1"
           >
             Voir
           </Link>

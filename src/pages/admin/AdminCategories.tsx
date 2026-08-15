@@ -204,7 +204,7 @@ export default function AdminCategories() {
       {/* Form Screen */}
       {isEditing ? (
         <div className="max-w-2xl bg-white border border-black/5 rounded-sm shadow-md overflow-hidden">
-          <header className="border-b border-black/5 px-6 py-5 bg-[#FAF9F6] flex items-center justify-between">
+          <header className="border-b border-black/5 px-6 py-5 bg-brand-cream flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setIsEditing(false)}
@@ -242,7 +242,7 @@ export default function AdminCategories() {
                   value={formName}
                   onChange={handleNameChange}
                   placeholder="ex: Crèmes de jour, Sérums"
-                  className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                  className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                 />
               </div>
 
@@ -257,7 +257,7 @@ export default function AdminCategories() {
                   value={formSlug}
                   onChange={(e) => setFormSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
                   placeholder="ex: cremes-de-jour"
-                  className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black font-mono"
+                  className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black font-mono"
                 />
               </div>
             </div>
@@ -270,7 +270,7 @@ export default function AdminCategories() {
               <select
                 value={formParentId || ''}
                 onChange={(e) => setFormParentId(e.target.value || null)}
-                className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
               >
                 <option value="">Aucune (Catégorie racine / Univers principal)</option>
                 {parentCandidates
@@ -297,7 +297,7 @@ export default function AdminCategories() {
                 onChange={(e) => setFormDescription(e.target.value)}
                 placeholder="Rédigez un court texte pour présenter cette gamme de soins aux clientes..."
                 rows={4}
-                className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
+                className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
               />
             </div>
 
@@ -308,7 +308,7 @@ export default function AdminCategories() {
               </label>
               
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <div className="w-16 h-16 rounded-sm bg-[#FAF9F6] border border-black/10 flex items-center justify-center overflow-hidden shrink-0">
+                <div className="w-16 h-16 rounded-sm bg-brand-cream border border-black/10 flex items-center justify-center overflow-hidden shrink-0">
                   {formImageUrl ? (
                     <img 
                       src={formImageUrl} 
@@ -366,7 +366,7 @@ export default function AdminCategories() {
                   value={formImageUrl}
                   onChange={(e) => setFormImageUrl(e.target.value)}
                   placeholder="Ou collez un lien d'image externe (facultatif)"
-                  className="w-full bg-[#FAF9F6] border border-black/5 focus:border-[#9A8C73] focus:outline-hidden text-[10px] px-3.5 py-2 rounded-sm transition-colors text-black/60 font-mono"
+                  className="w-full bg-brand-cream border border-black/5 focus:border-brand-taupe focus:outline-hidden text-[10px] px-3.5 py-2 rounded-sm transition-colors text-black/60 font-mono"
                 />
               </div>
             </div>
@@ -383,7 +383,7 @@ export default function AdminCategories() {
               <button
                 type="submit"
                 disabled={submitting || uploading}
-                className="px-8 py-2.5 bg-[#1A1A1A] hover:bg-[#9A8C73] text-white hover:text-white disabled:bg-black/20 text-xs font-bold uppercase tracking-widest rounded-sm transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                className="px-8 py-2.5 bg-brand-noir hover:bg-brand-taupe text-white hover:text-white disabled:bg-black/20 text-xs font-bold uppercase tracking-widest rounded-sm transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
               >
                 {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 {editingCategory ? "Enregistrer" : "Créer la catégorie"}
@@ -396,7 +396,7 @@ export default function AdminCategories() {
         <div className="space-y-6">
           <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-black/5">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-1">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-brand-taupe font-bold block mb-1">
                 Console d'Administration
               </span>
               <h1 className="text-3xl font-serif italic text-black/90">Gestion des Catégories</h1>
@@ -407,7 +407,7 @@ export default function AdminCategories() {
 
             <button
               onClick={startCreate}
-              className="px-5 py-3 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 shadow-sm"
+              className="px-5 py-3 bg-brand-noir hover:bg-brand-taupe text-brand-cream text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 shadow-sm"
             >
               <Plus className="w-4 h-4" />
               Créer une Catégorie
@@ -434,12 +434,12 @@ export default function AdminCategories() {
           {/* Tree Display */}
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 bg-white border border-black/5 rounded-sm">
-              <Loader2 className="w-8 h-8 text-[#9A8C73] animate-spin mb-3" />
+              <Loader2 className="w-8 h-8 text-brand-taupe animate-spin mb-3" />
               <p className="text-xs text-black/40 font-mono uppercase tracking-widest">Chargement des catégories...</p>
             </div>
           ) : categories.length === 0 ? (
             <div className="border border-dashed border-black/10 rounded-sm bg-white p-12 text-center">
-              <FolderTree className="w-12 h-12 text-[#9A8C73]/30 mx-auto mb-4" />
+              <FolderTree className="w-12 h-12 text-brand-taupe/30 mx-auto mb-4" />
               <h3 className="text-lg font-serif italic text-black/80 mb-2">Aucune catégorie configurée</h3>
               <p className="text-xs text-black/50 font-light max-w-md mx-auto leading-relaxed">
                 Créez une arborescence en ajoutant de grands thèmes de soins (ex: Visage, Corps) et des sous-catégories (ex: Sérums, Hydratants).
@@ -457,11 +457,11 @@ export default function AdminCategories() {
                     {/* Parent Row */}
                     <div className="flex items-start justify-between gap-4 group">
                       <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-sm bg-[#FAF9F6] border border-black/5 overflow-hidden shrink-0">
+                        <div className="w-12 h-12 rounded-sm bg-brand-cream border border-black/5 overflow-hidden shrink-0">
                           {parent.image_url ? (
                             <img src={parent.image_url} alt={parent.name} className="w-full h-full object-cover" />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-[10px] font-serif italic text-[#9A8C73]">2M</div>
+                            <div className="w-full h-full flex items-center justify-center text-[10px] font-serif italic text-brand-taupe">2M</div>
                           )}
                         </div>
                         <div>
@@ -469,7 +469,7 @@ export default function AdminCategories() {
                             <h3 className="font-serif italic font-bold text-lg text-black/90">
                               {parent.name}
                             </h3>
-                            <span className="bg-[#9A8C73]/10 text-[#9A8C73] text-[8px] uppercase tracking-widest px-2 py-0.5 rounded-xs font-bold">
+                            <span className="bg-brand-taupe/10 text-brand-taupe text-[8px] uppercase tracking-widest px-2 py-0.5 rounded-xs font-bold">
                               Univers Principal
                             </span>
                           </div>
@@ -498,13 +498,13 @@ export default function AdminCategories() {
 
                     {/* Children nested list */}
                     {children.length > 0 && (
-                      <div className="ml-8 md:ml-12 pl-4 border-l-2 border-[#9A8C73]/15 space-y-3.5 pt-2">
+                      <div className="ml-8 md:ml-12 pl-4 border-l-2 border-brand-taupe/15 space-y-3.5 pt-2">
                         {children.map((child) => (
                           <div key={child.id} className="flex items-center justify-between gap-4 group/child">
                             <div className="flex items-center gap-3">
-                              <ChevronRight className="w-3.5 h-3.5 text-[#9A8C73]" />
+                              <ChevronRight className="w-3.5 h-3.5 text-brand-taupe" />
                               <div>
-                                <h4 className="font-serif italic text-sm text-black/80 font-medium group-hover/child:text-[#9A8C73] transition-colors">
+                                <h4 className="font-serif italic text-sm text-black/80 font-medium group-hover/child:text-brand-taupe transition-colors">
                                   {child.name}
                                 </h4>
                                 <span className="text-[9px] font-mono text-black/40">/{child.slug}</span>
@@ -514,7 +514,7 @@ export default function AdminCategories() {
                             <div className="flex items-center gap-1 opacity-0 group-hover/child:opacity-100 transition-opacity shrink-0">
                               <button
                                 onClick={() => startEdit(child)}
-                                className="p-1.5 hover:bg-[#FAF9F6] rounded text-black/60 hover:text-black transition-colors cursor-pointer"
+                                className="p-1.5 hover:bg-brand-cream rounded text-black/60 hover:text-black transition-colors cursor-pointer"
                                 title="Modifier"
                               >
                                 <Edit className="w-3 h-3" />
@@ -538,9 +538,9 @@ export default function AdminCategories() {
               {/* Loop through floating child categories whose parent got deleted or filter search doesn't show parent */}
               {rootCategories.length === 0 && filteredCategories.length > 0 && (
                 <div className="p-6 space-y-4">
-                  <h3 className="text-xs uppercase font-mono tracking-wider text-[#9A8C73] mb-4">Sous-catégories trouvées</h3>
+                  <h3 className="text-xs uppercase font-mono tracking-wider text-brand-taupe mb-4">Sous-catégories trouvées</h3>
                   {filteredCategories.map((child) => (
-                    <div key={child.id} className="flex items-center justify-between p-3 bg-[#FAF9F6] border border-black/5 rounded-xs group">
+                    <div key={child.id} className="flex items-center justify-between p-3 bg-brand-cream border border-black/5 rounded-xs group">
                       <div>
                         <h4 className="font-serif italic text-sm text-black/80">{child.name}</h4>
                         <span className="text-[9px] font-mono text-black/40">/{child.slug}</span>

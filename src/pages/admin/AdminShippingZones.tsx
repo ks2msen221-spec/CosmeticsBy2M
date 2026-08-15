@@ -303,7 +303,7 @@ export default function AdminShippingZones() {
       {/* Form Screen */}
       {isEditing ? (
         <div className="max-w-2xl bg-white border border-black/5 rounded-sm shadow-md overflow-hidden">
-          <header className="border-b border-black/5 px-6 py-5 bg-[#FAF9F6] flex items-center justify-between">
+          <header className="border-b border-black/5 px-6 py-5 bg-brand-cream flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setIsEditing(false)}
@@ -341,7 +341,7 @@ export default function AdminShippingZones() {
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   placeholder="ex: Dakar Centre / Plateau, Banlieue, Saint-Louis..."
-                  className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                  className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                 />
               </div>
 
@@ -359,7 +359,7 @@ export default function AdminShippingZones() {
                     value={formFee}
                     onChange={(e) => setFormFee(e.target.value)}
                     placeholder="2000"
-                    className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black pr-16"
+                    className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black pr-16"
                   />
                   <span className="absolute right-3.5 top-2.5 text-xs text-black/40 font-mono font-medium pointer-events-none">
                     FCFA
@@ -401,7 +401,7 @@ export default function AdminShippingZones() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="px-6 py-2 bg-[#1A1A1A] hover:bg-[#9A8C73] text-white text-xs font-medium rounded-sm transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                className="px-6 py-2 bg-brand-noir hover:bg-brand-taupe text-white text-xs font-medium rounded-sm transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {submitting ? (
                   <>
@@ -424,11 +424,11 @@ export default function AdminShippingZones() {
           {/* Header */}
           <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-black/5 pb-5">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-1">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-brand-taupe font-bold block mb-1">
                 Console d'Administration
               </span>
               <h1 className="text-2xl font-serif italic text-black/90 flex items-center gap-2">
-                <Truck className="w-6 h-6 text-[#9A8C73]" />
+                <Truck className="w-6 h-6 text-brand-taupe" />
                 <span>Zones de livraison</span>
               </h1>
               <p className="text-xs text-black/50 font-light mt-1">
@@ -438,7 +438,7 @@ export default function AdminShippingZones() {
 
             <button
               onClick={startCreate}
-              className="inline-flex items-center gap-2 bg-[#1A1A1A] hover:bg-[#9A8C73] text-white text-xs font-medium px-4 py-2.5 rounded-sm transition-colors cursor-pointer shadow-xs self-start md:self-auto"
+              className="inline-flex items-center gap-2 bg-brand-noir hover:bg-brand-taupe text-white text-xs font-medium px-4 py-2.5 rounded-sm transition-colors cursor-pointer shadow-xs self-start md:self-auto"
             >
               <Plus className="w-4 h-4" />
               <span>Nouvelle Zone</span>
@@ -454,7 +454,7 @@ export default function AdminShippingZones() {
                 placeholder="Rechercher une zone..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs pl-9 pr-3 py-2 rounded-sm text-black"
+                className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs pl-9 pr-3 py-2 rounded-sm text-black"
               />
               {searchTerm && (
                 <button 
@@ -474,7 +474,7 @@ export default function AdminShippingZones() {
           {/* Zones Table */}
           {loading ? (
             <div className="bg-white border border-black/5 p-12 text-center rounded-sm">
-              <Loader2 className="w-6 h-6 text-[#9A8C73] animate-spin mx-auto mb-3" />
+              <Loader2 className="w-6 h-6 text-brand-taupe animate-spin mx-auto mb-3" />
               <p className="text-xs text-black/50 font-mono">Chargement des zones de livraison...</p>
             </div>
           ) : filteredZones.length === 0 ? (
@@ -489,7 +489,7 @@ export default function AdminShippingZones() {
               {!searchTerm && (
                 <button
                   onClick={startCreate}
-                  className="inline-flex items-center gap-1.5 text-xs text-[#9A8C73] font-medium hover:underline cursor-pointer"
+                  className="inline-flex items-center gap-1.5 text-xs text-brand-taupe font-medium hover:underline cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Ajouter une zone</span>
@@ -500,7 +500,7 @@ export default function AdminShippingZones() {
             <div className="bg-white border border-black/5 rounded-sm shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-[#FAF9F6] border-b border-black/5 text-[10px] uppercase font-mono tracking-wider text-black/50">
+                  <thead className="bg-brand-cream border-b border-black/5 text-[10px] uppercase font-mono tracking-wider text-black/50">
                     <tr>
                       <th className="py-3 px-4 font-semibold">Zone / Emplacement</th>
                       <th className="py-3 px-4 font-semibold">Frais de livraison</th>
@@ -510,12 +510,12 @@ export default function AdminShippingZones() {
                   </thead>
                   <tbody className="divide-y divide-black/5">
                     {filteredZones.map((zone) => (
-                      <tr key={zone.id} className="hover:bg-[#FAF9F6]/50 transition-colors">
+                      <tr key={zone.id} className="hover:bg-brand-cream/50 transition-colors">
                         {/* Name & ID */}
                         <td className="py-3.5 px-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-[#FAF9F6] border border-black/5 flex items-center justify-center shrink-0">
-                              <MapPin className="w-4 h-4 text-[#9A8C73]" />
+                            <div className="w-8 h-8 rounded-full bg-brand-cream border border-black/5 flex items-center justify-center shrink-0">
+                              <MapPin className="w-4 h-4 text-brand-taupe" />
                             </div>
                             <div>
                               <span className="font-medium text-black/90 block">{zone.name}</span>

@@ -10,8 +10,10 @@ import {
   Newspaper, 
   ArrowRight,
   BookOpen,
-  Tag
+  Tag,
+  Sparkles
 } from 'lucide-react';
+import { usePageSEO } from '../utils/seo';
 
 export default function Blog() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -19,6 +21,11 @@ export default function Blog() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [errorMessage, setErrorMessage] = useState('');
+
+  usePageSEO(
+    "Conseils Beauté & Rituels Cosmétiques Dakar | Le Journal Maison 2M",
+    "Découvrez les articles, guides de soins et rituels dermo-cosmétiques rédigés pour vous par notre équipe à Dakar."
+  );
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -42,7 +49,7 @@ export default function Blog() {
       } catch (err: any) {
         const msg = err.message || JSON.stringify(err);
         console.error("Erreur de chargement depuis Supabase :", err);
-        setErrorMessage(`Erreur de chargement depuis Supabase : ${msg}`);
+        setPosts(SEED_BLOG_POSTS);
       } finally {
         setLoading(false);
       }
@@ -75,24 +82,25 @@ export default function Blog() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16 selection:bg-[#9A8C73]/20" id="public-blog-page">
+    <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16 selection:bg-brand-taupe/20" id="public-blog-page">
       
       {/* Editorial Header */}
       <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-        <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-extrabold block">
-          La Gazette de Maison 2M
+        <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-extrabold flex items-center justify-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-brand-gold" />
+          Le Journal de Soins Maison 2M
         </span>
-        <h2 className="text-4xl lg:text-5xl font-serif text-black/90 font-light leading-tight">
-          Rituels, Science &amp; Conseils
-        </h2>
-        <div className="h-[2px] w-12 bg-[#9A8C73] mx-auto"></div>
-        <p className="text-xs text-black/50 font-light leading-relaxed max-w-lg mx-auto">
-          Découvrez les diagnostics, rituels dermatologiques et secrets formulatoires de nos experts pour sublimer la clarté naturelle de votre visage.
+        <h1 className="text-4xl lg:text-5xl font-serif text-black/90 font-light leading-tight">
+          Conseils, Rituels &amp; Éclat au Quotidien
+        </h1>
+        <div className="h-[2px] w-12 bg-brand-gold mx-auto"></div>
+        <p className="text-xs text-black/60 font-light leading-relaxed max-w-lg mx-auto">
+          Retrouvez les conseils bienveillants et les routines de nos conseillères beauté de Dakar pour prendre soin de votre peau, la protéger du soleil et révéler toute sa beauté naturelle.
         </p>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="max-w-4xl mx-auto mb-12 flex flex-col md:flex-row gap-4 justify-between items-center bg-[#FAF9F6] border border-black/5 p-4 rounded-sm">
+      <div className="max-w-4xl mx-auto mb-12 flex flex-col md:flex-row gap-4 justify-between items-center bg-brand-cream border border-black/5 p-4 rounded-sm">
         {/* Search */}
         <div className="relative w-full md:max-w-xs">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-black/30" />
@@ -101,7 +109,7 @@ export default function Blog() {
             placeholder="Rechercher un article..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 border border-black/10 text-xs rounded-sm focus:outline-hidden focus:border-[#9A8C73] bg-white font-light"
+            className="w-full pl-9 pr-4 py-2 border border-black/10 text-xs rounded-sm focus:outline-hidden focus:border-brand-gold bg-white font-light"
           />
         </div>
 
@@ -113,7 +121,7 @@ export default function Blog() {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1.5 text-[9px] uppercase tracking-wider font-bold rounded-xs border transition-all ${
                 selectedCategory === cat
-                  ? 'bg-[#1A1A1A] text-[#FAF9F6] border-[#1A1A1A]'
+                  ? 'bg-brand-noir text-brand-cream border-brand-noir'
                   : 'bg-white text-black/60 border-black/5 hover:border-black/25'
               }`}
             >
@@ -132,12 +140,12 @@ export default function Blog() {
       {/* Main Blog Grid */}
       {loading ? (
         <div className="py-24 text-center">
-          <div className="w-8 h-8 border-2 border-[#9A8C73] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-8 h-8 border-2 border-brand-gold border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <span className="text-[10px] uppercase tracking-widest text-black/40 font-mono">Chargement des articles...</span>
         </div>
       ) : filteredPosts.length === 0 ? (
-        <div className="border border-black/5 bg-[#FAF9F6]/30 p-16 text-center max-w-xl mx-auto rounded-sm">
-          <Newspaper className="w-10 h-10 text-[#9A8C73]/30 mx-auto mb-3" />
+        <div className="border border-black/5 bg-brand-cream/30 p-16 text-center max-w-xl mx-auto rounded-sm">
+          <Newspaper className="w-10 h-10 text-brand-taupe/30 mx-auto mb-3" />
           <h4 className="text-sm font-serif italic text-black/70 mb-1">Aucun conseil répertorié</h4>
           <p className="text-xs text-black/40 max-w-xs mx-auto font-light leading-relaxed">
             Nous n'avons trouvé aucun article correspondant à vos critères de recherche pour le moment.
@@ -156,7 +164,7 @@ export default function Blog() {
                 }`}
               >
                 {/* Image Cover */}
-                <div className={`relative bg-[#FAF9F6] overflow-hidden shrink-0 ${
+                <div className={`relative bg-brand-cream overflow-hidden shrink-0 ${
                   isFeatured 
                     ? 'h-64 sm:h-80 lg:h-auto lg:w-3/5' 
                     : 'h-52'
@@ -190,18 +198,18 @@ export default function Blog() {
                     {/* Date and Reading Time */}
                     <div className="flex items-center gap-3 text-[10px] text-black/40 font-mono font-light">
                       <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5 text-[#9A8C73]" />
+                        <Calendar className="w-3.5 h-3.5 text-brand-taupe" />
                         {formatFrenchDate(post.created_at)}
                       </span>
                       {post.reading_time && (
                         <span className="flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-[#9A8C73]" />
+                          <Clock className="w-3.5 h-3.5 text-brand-taupe" />
                           {post.reading_time}
                         </span>
                       )}
                     </div>
 
-                    <h3 className={`font-serif italic text-black/85 group-hover:text-[#9A8C73] transition-colors leading-tight ${
+                    <h3 className={`font-serif italic text-black/85 group-hover:text-brand-gold transition-colors leading-tight ${
                       isFeatured ? 'text-2xl sm:text-3xl' : 'text-xl'
                     }`}>
                       {post.title}
@@ -213,13 +221,13 @@ export default function Blog() {
                   </div>
 
                   <div className="border-t border-black/5 mt-6 pt-4 flex items-center justify-between">
-                    <span className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold">
+                    <span className="text-[9px] uppercase tracking-widest text-brand-gold font-bold">
                       Par l'Expert 2M
                     </span>
 
                     <Link 
                       to={`/blog/${post.slug}`} 
-                      className="text-[10px] uppercase tracking-widest font-extrabold text-[#1A1A1A] group-hover:text-[#9A8C73] transition-colors inline-flex items-center gap-1"
+                      className="text-[10px] uppercase tracking-widest font-extrabold text-brand-noir group-hover:text-brand-gold transition-colors inline-flex items-center gap-1"
                     >
                       Lire l'article
                       <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />

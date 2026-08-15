@@ -12,15 +12,23 @@ import {
   Info, 
   Sparkles,
   HelpCircle,
-  AlertTriangle
+  AlertTriangle,
+  Truck,
+  HeartHandshake
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { CONTACT_CONFIG } from '../config/contact';
+import { usePageSEO } from '../utils/seo';
 
 export default function Cart() {
   const { cartItems, loading, subtotal, totalQuantity, updateQuantity, removeFromCart, clearCart } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  usePageSEO(
+    "Mon Panier de Soins | Maison 2M Cosmetics Dakar",
+    "Consultez vos soins et cosmétiques sélectionnés chez Maison 2M Cosmetics Dakar. Expédition rapide et sécurisée partout au Sénégal."
+  );
 
   const [liveStocks, setLiveStocks] = useState<Record<string, number>>({});
 
@@ -94,12 +102,12 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pb-24 selection:bg-[#9A8C73]/20">
+    <div className="min-h-screen bg-brand-cream pb-24 selection:bg-brand-taupe/20">
       
       {/* Breadcrumb Navigation */}
       <div className="border-b border-black/5 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
-          <Link to="/" className="hover:text-[#9A8C73] transition-colors">Accueil</Link>
+          <Link to="/" className="hover:text-brand-gold transition-colors">Accueil</Link>
           <ChevronRight className="w-3 h-3 text-black/20" />
           <span className="text-black/80">Mon Panier</span>
         </div>
@@ -107,12 +115,12 @@ export default function Cart() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
         <header className="mb-12">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-2">
-            Maison 2M Cosmetics — Sénégal
+          <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold block mb-2">
+            Maison 2M Cosmetics — Dakar
           </span>
           <h1 className="text-4xl font-serif italic text-black/90">Votre Panier de Soins</h1>
-          <p className="text-xs text-black/50 font-light mt-2">
-            Récapitulatif de vos intentions d'achat avant validation par notre service dermatologique de Dakar.
+          <p className="text-xs text-black/60 font-light mt-2 max-w-xl">
+            Vérifiez votre sélection de soins avant de passer commande. Notre équipe prépare chaque colis avec le plus grand soin à Dakar.
           </p>
         </header>
 
@@ -120,17 +128,17 @@ export default function Cart() {
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="border border-black/5 bg-white p-16 text-center max-w-2xl mx-auto shadow-sm"
+            className="border border-black/5 bg-white p-16 text-center max-w-2xl mx-auto shadow-sm rounded-sm"
           >
-            <ShoppingBag className="w-12 h-12 text-[#9A8C73]/30 mx-auto mb-6" />
-            <h2 className="text-2xl font-serif italic mb-3">Votre panier est vide</h2>
-            <p className="text-xs text-black/50 font-light leading-relaxed max-w-md mx-auto mb-8">
-              Vous n'avez pas encore sélectionné de formulation. Explorez nos collections d'exceptions et nos soins hautement concentrés pour révéler la beauté de votre peau.
+            <ShoppingBag className="w-12 h-12 text-brand-gold/40 mx-auto mb-6" />
+            <h2 className="text-2xl font-serif italic mb-3 text-black/90">Votre panier est encore vide</h2>
+            <p className="text-xs text-black/60 font-light leading-relaxed max-w-md mx-auto mb-8">
+              Vous n'avez pas encore choisi vos soins. Laissez-vous guider par nos rituels botaniques et cosmétiques pensés pour choyer votre peau.
             </p>
-            <div className="h-[1px] w-12 bg-black/10 mx-auto mb-8"></div>
+            <div className="h-[1px] w-12 bg-brand-gold/40 mx-auto mb-8"></div>
             <Link 
-              to="/" 
-              className="inline-block px-10 py-4 bg-[#1A1A1A] text-[#FAF9F6] text-[10px] uppercase tracking-widest font-bold hover:bg-[#9A8C73] hover:text-[#1A1A1A] transition-all duration-300 shadow-md"
+              to="/catalogue/nouveautes" 
+              className="inline-block px-10 py-4 bg-brand-noir text-brand-cream text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-all duration-300 shadow-md rounded-sm"
             >
               Découvrir nos soins
             </Link>
@@ -166,10 +174,10 @@ export default function Cart() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="bg-white border border-black/5 p-4 md:p-6 shadow-sm flex flex-col sm:flex-row gap-6 relative group"
+                      className="bg-white border border-black/5 p-4 md:p-6 shadow-sm flex flex-col sm:flex-row gap-6 relative group rounded-sm"
                     >
                       {/* Product Image */}
-                      <div className="w-24 h-30 bg-[#FAF9F6] border border-black/5 overflow-hidden flex items-center justify-center shrink-0 self-center sm:self-start">
+                      <div className="w-24 h-30 bg-brand-cream border border-black/5 overflow-hidden flex items-center justify-center shrink-0 self-center sm:self-start rounded-sm">
                         {product?.images && product.images.length > 0 ? (
                           <img 
                             src={product.images[0]} 
@@ -188,11 +196,11 @@ export default function Cart() {
                           <div className="flex justify-between items-start gap-4">
                             <div>
                               {product?.brand && (
-                                <span className="text-[9px] uppercase tracking-wider text-[#9A8C73] font-bold">
+                                <span className="text-[9px] uppercase tracking-wider text-brand-taupe font-bold">
                                   {product.brand.name}
                                 </span>
                               )}
-                              <h3 className="font-serif italic text-base md:text-lg text-black/90 hover:text-[#9A8C73] transition-colors leading-tight">
+                              <h3 className="font-serif italic text-base md:text-lg text-black/90 hover:text-brand-gold transition-colors leading-tight">
                                 {product ? (
                                   <Link to={`/produit/${product.slug}`}>{product.name}</Link>
                                 ) : (
@@ -216,7 +224,7 @@ export default function Cart() {
 
                           {/* Stock limited warning banner under article */}
                           {availableStock < item.quantity && (
-                            <div className="mt-3 p-3 bg-amber-50/90 border border-amber-200 rounded-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-[#7C4A03]">
+                            <div className="mt-3 p-3 bg-amber-50/90 border border-amber-200 rounded-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-amber-800">
                               <div className="flex items-center gap-2 text-xs">
                                 <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
                                 <span>
@@ -236,7 +244,7 @@ export default function Cart() {
                         {/* Quantity and Line Total actions */}
                         <div className="flex justify-between items-center pt-4 border-t border-black/5 mt-4">
                           {/* Quantity Selector */}
-                          <div className="flex items-center border border-black/10 rounded-sm bg-[#FAF9F6]">
+                          <div className="flex items-center border border-black/10 rounded-sm bg-brand-cream">
                             <button 
                               onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
                               className="px-2.5 py-1 text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none text-xs disabled:opacity-30 disabled:cursor-not-allowed"
@@ -271,7 +279,7 @@ export default function Cart() {
 
               {/* Secure Checkout and Local Notes */}
               <div className="flex items-center gap-2.5 text-black/50 font-mono text-[9px] pt-4">
-                <ShieldCheck className="w-4 h-4 text-[#9A8C73]" />
+                <ShieldCheck className="w-4 h-4 text-brand-taupe" />
                 <span>Base de données cryptée Supabase • Authentification RLS de bout en bout.</span>
               </div>
             </div>
@@ -279,8 +287,8 @@ export default function Cart() {
             {/* Right Column: Order Summary Card */}
             <div className="space-y-6">
               
-              <div className="bg-white border border-black/5 p-6 md:p-8 shadow-sm relative">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-[#9A8C73]"></div>
+              <div className="bg-white border border-black/5 p-6 md:p-8 shadow-sm relative rounded-sm">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-brand-gold"></div>
 
                 <h3 className="text-xs uppercase tracking-widest text-black/40 font-bold border-b border-black/5 pb-3 mb-6">
                   Synthèse de Commande
@@ -327,8 +335,8 @@ export default function Cart() {
 
                 {/* Authentication Warning / Context */}
                 {!user && (
-                  <div className="mt-6 p-4 bg-[#FAF9F6] border border-black/5 text-black/60 text-[10px] flex gap-2.5 leading-relaxed rounded-sm">
-                    <Info className="w-4 h-4 text-[#9A8C73] shrink-0 mt-0.5" />
+                  <div className="mt-6 p-4 bg-brand-cream border border-black/5 text-black/60 text-[10px] flex gap-2.5 leading-relaxed rounded-sm">
+                    <Info className="w-4 h-4 text-brand-taupe shrink-0 mt-0.5" />
                     <span>
                       Vous commandez en tant que <strong>Visiteur</strong>. Votre panier sera fusionné en toute sécurité avec votre compte dès que vous vous connecterez.
                     </span>
@@ -339,14 +347,14 @@ export default function Cart() {
                 <div className="space-y-3 mt-8">
                   <button
                     onClick={handleCheckoutClick}
-                    className="w-full py-4 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                    className="w-full py-4 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98 rounded-sm"
                   >
                     Passer la Commande
                   </button>
 
                   <Link 
                     to="/" 
-                    className="w-full py-3.5 border border-black/15 text-[10px] uppercase tracking-widest font-bold hover:bg-black/[0.02] transition-all flex items-center justify-center gap-2 bg-white"
+                    className="w-full py-3.5 border border-black/15 text-[10px] uppercase tracking-widest font-bold hover:bg-black/[0.02] transition-all flex items-center justify-center gap-2 bg-white rounded-sm"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     Continuer mes Achats
@@ -358,9 +366,9 @@ export default function Cart() {
               <div className="border border-black/5 bg-white p-6 rounded-sm text-xs space-y-4">
                 <h4 className="font-serif italic font-bold text-black/80 border-b border-black/5 pb-2">Des questions sur vos formulations ?</h4>
                 <div className="flex items-start gap-2.5 text-black/60 leading-relaxed text-[11px]">
-                  <HelpCircle className="w-4 h-4 text-[#9A8C73] shrink-0 mt-0.5" />
+                  <HelpCircle className="w-4 h-4 text-brand-taupe shrink-0 mt-0.5" />
                   <p>
-                    Nos pharmaciens-dermatologues sont disponibles à nos comptoirs à Dakar pour adapter chaque routine à votre épiderme. Appelez-nous au <a href={`tel:${CONTACT_CONFIG.phoneRaw}`} className="font-semibold text-black hover:text-[#9A8C73] transition-colors">{CONTACT_CONFIG.phone}</a>.
+                    Nos pharmaciens-dermatologues sont disponibles à nos comptoirs à Dakar pour adapter chaque routine à votre épiderme. Appelez-nous au <a href={`tel:${CONTACT_CONFIG.phoneRaw}`} className="font-semibold text-black hover:text-brand-gold transition-colors">{CONTACT_CONFIG.phone}</a>.
                   </p>
                 </div>
               </div>

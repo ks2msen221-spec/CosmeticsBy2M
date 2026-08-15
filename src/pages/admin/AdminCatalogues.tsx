@@ -462,7 +462,7 @@ export default function AdminCatalogues() {
       {/* VIEW 1: FORM / EDITOR MODE */}
       {activeView === 'form' && (
         <div className="max-w-2xl bg-white border border-black/5 rounded-sm shadow-md overflow-hidden">
-          <header className="border-b border-black/5 px-6 py-5 bg-[#FAF9F6] flex items-center justify-between">
+          <header className="border-b border-black/5 px-6 py-5 bg-brand-cream flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setActiveView('list')}
@@ -501,7 +501,7 @@ export default function AdminCatalogues() {
                   value={formName}
                   onChange={handleNameChange}
                   placeholder="ex: Sélection Botanique"
-                  className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                  className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                 />
               </div>
 
@@ -516,7 +516,7 @@ export default function AdminCatalogues() {
                   value={formSlug}
                   onChange={(e) => setFormSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
                   placeholder="ex: selection-botanique"
-                  className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black font-mono"
+                  className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black font-mono"
                 />
               </div>
             </div>
@@ -531,12 +531,12 @@ export default function AdminCatalogues() {
                 onChange={(e) => setFormDescription(e.target.value)}
                 placeholder="Rédigez la présentation ou la ligne thématique de ce catalogue..."
                 rows={4}
-                className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
+                className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
               />
             </div>
 
             {/* Active Status Toggle */}
-            <div className="flex items-center justify-between p-4 bg-[#FAF9F6] border border-black/5 rounded-sm">
+            <div className="flex items-center justify-between p-4 bg-brand-cream border border-black/5 rounded-sm">
               <div>
                 <label className="text-xs font-bold text-black/80 block">
                   Statut d'affichage
@@ -576,7 +576,7 @@ export default function AdminCatalogues() {
               </label>
               
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <div className="w-24 h-24 rounded-sm bg-[#FAF9F6] border border-black/10 flex items-center justify-center overflow-hidden shrink-0 relative">
+                <div className="w-24 h-24 rounded-sm bg-brand-cream border border-black/10 flex items-center justify-center overflow-hidden shrink-0 relative">
                   {formCoverImageUrl ? (
                     <img 
                       src={formCoverImageUrl} 
@@ -634,7 +634,7 @@ export default function AdminCatalogues() {
                   value={formCoverImageUrl}
                   onChange={(e) => setFormCoverImageUrl(e.target.value)}
                   placeholder="Ou collez un lien d'image externe (facultatif)"
-                  className="w-full bg-[#FAF9F6] border border-black/5 focus:border-[#9A8C73] focus:outline-hidden text-[10px] px-3.5 py-2 rounded-sm transition-colors text-black/60 font-mono"
+                  className="w-full bg-brand-cream border border-black/5 focus:border-brand-taupe focus:outline-hidden text-[10px] px-3.5 py-2 rounded-sm transition-colors text-black/60 font-mono"
                 />
               </div>
             </div>
@@ -651,7 +651,7 @@ export default function AdminCatalogues() {
               <button
                 type="submit"
                 disabled={submitting || uploading}
-                className="px-8 py-2.5 bg-[#1A1A1A] hover:bg-[#9A8C73] text-white hover:text-white disabled:bg-black/20 text-xs font-bold uppercase tracking-widest rounded-sm transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                className="px-8 py-2.5 bg-brand-noir hover:bg-brand-taupe text-white hover:text-white disabled:bg-black/20 text-xs font-bold uppercase tracking-widest rounded-sm transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
               >
                 {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 {editingCatalogue ? "Enregistrer les modifications" : "Créer le catalogue"}
@@ -674,7 +674,7 @@ export default function AdminCatalogues() {
                 <ArrowLeft className="w-5 h-5 text-black/60" />
               </button>
               <div>
-                <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-1">
+                <span className="text-[10px] uppercase tracking-[0.3em] text-brand-taupe font-bold block mb-1">
                   Gestion des associations
                 </span>
                 <h1 className="text-2xl font-serif italic text-black/90">
@@ -686,8 +686,8 @@ export default function AdminCatalogues() {
               </div>
             </div>
 
-            <div className="px-4 py-2.5 bg-[#FAF9F6] border border-[#9A8C73]/30 rounded-sm shrink-0 flex items-center gap-2">
-              <Package className="w-4 h-4 text-[#9A8C73]" />
+            <div className="px-4 py-2.5 bg-brand-cream border border-brand-taupe/30 rounded-sm shrink-0 flex items-center gap-2">
+              <Package className="w-4 h-4 text-brand-taupe" />
               <span className="text-xs font-bold text-black/80 font-mono">
                 {currentAssociatedSet.size} produit(s) sélectionné(s)
               </span>
@@ -717,7 +717,7 @@ export default function AdminCatalogues() {
           {/* Product List */}
           {filteredProducts.length === 0 ? (
             <div className="border border-dashed border-black/10 rounded-sm bg-white p-12 text-center">
-              <Package className="w-12 h-12 text-[#9A8C73]/30 mx-auto mb-4" />
+              <Package className="w-12 h-12 text-brand-taupe/30 mx-auto mb-4" />
               <h3 className="text-lg font-serif italic text-black/80 mb-2">Aucun produit trouvé</h3>
               <p className="text-xs text-black/50 font-light max-w-md mx-auto leading-relaxed">
                 {productSearchTerm ? "Aucun produit actif ne correspond à votre filtre." : "Aucun produit actif n'est enregistré dans la boutique."}
@@ -735,7 +735,7 @@ export default function AdminCatalogues() {
                     onClick={() => !isUpdating && toggleProductAssociation(product.id)}
                     className={`bg-white border rounded-sm p-4 flex items-center gap-4 transition-all cursor-pointer select-none ${
                       isChecked 
-                        ? 'border-[#9A8C73] bg-[#FAF9F6]/80 shadow-xs' 
+                        ? 'border-brand-taupe bg-brand-cream/80 shadow-xs' 
                         : 'border-black/5 hover:border-black/20 opacity-80 hover:opacity-100'
                     }`}
                   >
@@ -745,11 +745,11 @@ export default function AdminCatalogues() {
                         type="checkbox"
                         checked={isChecked}
                         onChange={() => {}} // Handled by card click
-                        className="w-5 h-5 accent-[#9A8C73] rounded-xs cursor-pointer"
+                        className="w-5 h-5 accent-brand-taupe rounded-xs cursor-pointer"
                       />
                       {isUpdating && (
                         <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
-                          <Loader2 className="w-3.5 h-3.5 text-[#9A8C73] animate-spin" />
+                          <Loader2 className="w-3.5 h-3.5 text-brand-taupe animate-spin" />
                         </div>
                       )}
                     </div>
@@ -776,14 +776,14 @@ export default function AdminCatalogues() {
                       <p className="text-[10px] text-black/50 font-mono mt-0.5">
                         {product.brand?.name || 'Marque partenaire'}
                       </p>
-                      <p className="text-[11px] font-bold text-[#9A8C73] mt-1 font-serif">
+                      <p className="text-[11px] font-bold text-brand-taupe mt-1 font-serif">
                         {product.price.toLocaleString('fr-FR')} FCFA
                       </p>
                     </div>
 
                     {/* Check Badge indicator */}
                     {isChecked && (
-                      <div className="p-1 bg-[#9A8C73] text-white rounded-full shrink-0">
+                      <div className="p-1 bg-brand-taupe text-white rounded-full shrink-0">
                         <Check className="w-3 h-3" />
                       </div>
                     )}
@@ -800,7 +800,7 @@ export default function AdminCatalogues() {
         <div className="space-y-6">
           <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-black/5">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-1">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-brand-taupe font-bold block mb-1">
                 Console d'Administration
               </span>
               <h1 className="text-3xl font-serif italic text-black/90">Gestion des Catalogues</h1>
@@ -811,7 +811,7 @@ export default function AdminCatalogues() {
 
             <button
               onClick={startCreate}
-              className="px-5 py-3 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 shadow-sm"
+              className="px-5 py-3 bg-brand-noir hover:bg-brand-taupe text-brand-cream text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 shadow-sm"
             >
               <Plus className="w-4 h-4" />
               Nouveau Catalogue
@@ -841,12 +841,12 @@ export default function AdminCatalogues() {
           {/* Catalogues Cards Grid */}
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 bg-white border border-black/5 rounded-sm">
-              <Loader2 className="w-8 h-8 text-[#9A8C73] animate-spin mb-3" />
+              <Loader2 className="w-8 h-8 text-brand-taupe animate-spin mb-3" />
               <p className="text-xs text-black/40 font-mono uppercase tracking-widest">Chargement des catalogues...</p>
             </div>
           ) : filteredCatalogues.length === 0 ? (
             <div className="border border-dashed border-black/10 rounded-sm bg-white p-12 text-center">
-              <BookOpen className="w-12 h-12 text-[#9A8C73]/30 mx-auto mb-4" />
+              <BookOpen className="w-12 h-12 text-brand-taupe/30 mx-auto mb-4" />
               <h3 className="text-lg font-serif italic text-black/80 mb-2">Aucun catalogue trouvé</h3>
               <p className="text-xs text-black/50 font-light max-w-md mx-auto leading-relaxed">
                 {searchTerm ? "Aucun catalogue ne correspond à votre recherche actuelle." : "Commencez par créer votre premier catalogue thématique."}
@@ -863,7 +863,7 @@ export default function AdminCatalogues() {
                     className="bg-white border border-black/5 rounded-sm overflow-hidden flex flex-col shadow-xs hover:shadow-md transition-all group"
                   >
                     {/* Cover Header */}
-                    <div className="h-36 bg-[#FAF9F6] border-b border-black/5 relative overflow-hidden flex items-center justify-center">
+                    <div className="h-36 bg-brand-cream border-b border-black/5 relative overflow-hidden flex items-center justify-center">
                       {cat.cover_image_url ? (
                         <img 
                           src={cat.cover_image_url} 
@@ -872,7 +872,7 @@ export default function AdminCatalogues() {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
-                        <BookOpen className="w-10 h-10 text-[#9A8C73]/20" />
+                        <BookOpen className="w-10 h-10 text-brand-taupe/20" />
                       )}
 
                       {/* Active Status Badge */}
@@ -892,7 +892,7 @@ export default function AdminCatalogues() {
                       {/* Associated Products Badge */}
                       <div className="absolute bottom-3 left-3">
                         <span className="text-[9px] font-bold font-mono px-2.5 py-1 rounded-sm bg-black/80 text-white backdrop-blur-xs flex items-center gap-1">
-                          <Package className="w-3 h-3 text-[#9A8C73]" />
+                          <Package className="w-3 h-3 text-brand-taupe" />
                           {productCount} produit(s)
                         </span>
                       </div>
@@ -904,7 +904,7 @@ export default function AdminCatalogues() {
                         <span className="text-[9px] font-mono text-black/40 uppercase block mb-1">
                           /{cat.slug}
                         </span>
-                        <h3 className="font-serif italic text-xl text-black/90 group-hover:text-[#9A8C73] transition-colors">
+                        <h3 className="font-serif italic text-xl text-black/90 group-hover:text-brand-taupe transition-colors">
                           {cat.name}
                         </h3>
                         <p className="text-xs text-black/60 font-light mt-2 line-clamp-2 leading-relaxed">
@@ -916,7 +916,7 @@ export default function AdminCatalogues() {
                       <div className="pt-3 border-t border-black/5 flex items-center justify-between gap-2">
                         <button
                           onClick={() => startManageProducts(cat)}
-                          className="px-3 py-1.5 bg-[#FAF9F6] hover:bg-[#9A8C73] text-black/80 hover:text-white border border-black/10 text-[10px] uppercase tracking-wider font-bold rounded-sm transition-all flex items-center gap-1.5 cursor-pointer"
+                          className="px-3 py-1.5 bg-brand-cream hover:bg-brand-taupe text-black/80 hover:text-white border border-black/10 text-[10px] uppercase tracking-wider font-bold rounded-sm transition-all flex items-center gap-1.5 cursor-pointer"
                         >
                           <Package className="w-3.5 h-3.5" />
                           Gérer les produits

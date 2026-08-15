@@ -189,7 +189,7 @@ export default function AdminPaymentMethods() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 text-[#9A8C73] animate-spin mb-3" />
+        <Loader2 className="w-8 h-8 text-brand-taupe animate-spin mb-3" />
         <span className="text-[10px] uppercase tracking-widest font-mono text-black/40">Chargement des modes de paiement...</span>
       </div>
     );
@@ -199,7 +199,7 @@ export default function AdminPaymentMethods() {
     <div className="space-y-8 pb-12">
       <header className="border-b border-black/5 pb-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-2">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-brand-taupe font-bold block mb-2">
             Console d'Administration
           </span>
           <h1 className="text-3xl font-serif italic text-black/90">Modes de paiement</h1>
@@ -256,7 +256,7 @@ export default function AdminPaymentMethods() {
                 {/* Header Row */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/5">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-sm bg-[#FAF9F6] border border-black/5 flex items-center justify-center text-[#9A8C73]">
+                    <div className="w-10 h-10 rounded-sm bg-brand-cream border border-black/5 flex items-center justify-center text-brand-taupe">
                       <CreditCard className="w-5 h-5" />
                     </div>
                     <div>
@@ -282,11 +282,11 @@ export default function AdminPaymentMethods() {
                     <button
                       type="button"
                       onClick={() => handleToggleActive(method)}
-                      className="text-[#9A8C73] hover:text-black transition-colors cursor-pointer"
+                      className="text-brand-taupe hover:text-black transition-colors cursor-pointer"
                       title={isActive ? 'Désactiver' : 'Activer'}
                     >
                       {isActive ? (
-                        <ToggleRight className="w-8 h-8 text-[#9A8C73]" />
+                        <ToggleRight className="w-8 h-8 text-brand-taupe" />
                       ) : (
                         <ToggleLeft className="w-8 h-8 text-black/30" />
                       )}
@@ -307,7 +307,7 @@ export default function AdminPaymentMethods() {
                         type="text"
                         value={currentLabel}
                         onChange={(e) => setEditedLabels(prev => ({ ...prev, [method.code]: e.target.value }))}
-                        className="w-full text-xs font-serif italic bg-white border border-black/15 p-3 outline-none focus:border-[#9A8C73] transition-colors rounded-sm"
+                        className="w-full text-xs font-serif italic bg-white border border-black/15 p-3 outline-none focus:border-brand-taupe transition-colors rounded-sm"
                         placeholder="Intitulé du mode de paiement"
                       />
                     </div>
@@ -317,7 +317,7 @@ export default function AdminPaymentMethods() {
                         type="button"
                         disabled={isSaving}
                         onClick={() => saveMethodChanges(method)}
-                        className="px-5 py-2.5 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] text-[9px] uppercase tracking-widest font-bold transition-colors cursor-pointer flex items-center gap-2 rounded-sm disabled:opacity-50"
+                        className="px-5 py-2.5 bg-brand-noir text-white hover:bg-brand-taupe text-[9px] uppercase tracking-widest font-bold transition-colors cursor-pointer flex items-center gap-2 rounded-sm disabled:opacity-50"
                       >
                         {isSaving ? (
                           <>
@@ -336,9 +336,9 @@ export default function AdminPaymentMethods() {
 
                   {/* Right Column: QR Code Upload for Wave & OM */}
                   {method.code !== 'cod' && (
-                    <div className="lg:col-span-5 bg-[#FAF9F6] border border-black/5 p-5 rounded-sm space-y-4">
+                    <div className="lg:col-span-5 bg-brand-cream border border-black/5 p-5 rounded-sm space-y-4">
                       <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/60 font-bold">
-                        <QrCode className="w-4 h-4 text-[#9A8C73]" />
+                        <QrCode className="w-4 h-4 text-brand-taupe" />
                         <span>QR Code de Transfert ({method.code.toUpperCase()})</span>
                       </div>
 
@@ -368,12 +368,12 @@ export default function AdminPaymentMethods() {
                           <label className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-black/15 text-black hover:bg-black/5 text-[9px] uppercase tracking-widest font-bold transition-colors cursor-pointer rounded-sm shadow-2xs">
                             {isUploading ? (
                               <>
-                                <Loader2 className="w-3 h-3 animate-spin text-[#9A8C73]" />
+                                <Loader2 className="w-3 h-3 animate-spin text-brand-taupe" />
                                 Envoi...
                               </>
                             ) : (
                               <>
-                                <Upload className="w-3 h-3 text-[#9A8C73]" />
+                                <Upload className="w-3 h-3 text-brand-taupe" />
                                 Changer l'image QR
                               </>
                             )}
@@ -394,7 +394,7 @@ export default function AdminPaymentMethods() {
                   )}
 
                   {method.code === 'cod' && (
-                    <div className="lg:col-span-5 bg-[#FAF9F6] border border-black/5 p-5 rounded-sm">
+                    <div className="lg:col-span-5 bg-brand-cream border border-black/5 p-5 rounded-sm">
                       <span className="text-[10px] uppercase tracking-widest text-black/40 font-bold block mb-1">
                         Remarque
                       </span>

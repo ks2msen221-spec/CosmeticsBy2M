@@ -16,10 +16,12 @@ import {
   Package, 
   ArrowLeft,
   Loader2,
-  HelpCircle
+  HelpCircle,
+  ShoppingBag
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CONTACT_CONFIG } from '../config/contact';
+import { usePageSEO } from '../utils/seo';
 
 interface OrderItem {
   id: string;
@@ -54,6 +56,12 @@ interface Order {
 
 export default function AccountOrders() {
   const { user, isMocked } = useAuth();
+
+  usePageSEO(
+    "Mes Commandes de Soins | Maison 2M Cosmetics Dakar",
+    "Suivez l'historique et l'acheminement de vos commandes de cosmétiques Maison 2M Cosmetics à Dakar et au Sénégal."
+  );
+
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -219,20 +227,20 @@ export default function AccountOrders() {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24 flex flex-col items-center justify-center min-h-[50vh]">
-        <Loader2 className="w-10 h-10 text-[#9A8C73] animate-spin mb-4" />
+        <Loader2 className="w-10 h-10 text-brand-taupe animate-spin mb-4" />
         <span className="text-[10px] uppercase tracking-widest font-mono text-black/40">Génération de l'historique d'achats...</span>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pb-24 selection:bg-[#9A8C73]/20">
+    <div className="min-h-screen bg-brand-cream pb-24 selection:bg-brand-taupe/20">
       
       {/* Header Area */}
       <div className="border-b border-black/5 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
-            <Link to="/compte" className="hover:text-[#9A8C73] transition-colors flex items-center gap-1">
+            <Link to="/compte" className="hover:text-brand-gold transition-colors flex items-center gap-1">
               <ArrowLeft className="w-3.5 h-3.5" />
               Mon Compte
             </Link>
@@ -244,7 +252,7 @@ export default function AccountOrders() {
 
       <div className="max-w-4xl mx-auto px-6 py-12">
         <header className="mb-10">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-2">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold block mb-2">
             Espace Privé Client 2M
           </span>
           <h1 className="text-4xl font-serif italic text-black/90">Mes Commandes Récentes</h1>
@@ -261,7 +269,7 @@ export default function AccountOrders() {
 
         {orders.length === 0 ? (
           <div className="border border-black/5 bg-white p-12 text-center rounded-sm shadow-sm">
-            <ClipboardList className="w-12 h-12 text-[#9A8C73]/30 mx-auto mb-4" />
+            <ClipboardList className="w-12 h-12 text-brand-taupe/30 mx-auto mb-4" />
             <span className="text-[10px] uppercase tracking-widest text-black/40 font-bold block mb-2">Historique vide</span>
             <h3 className="text-xl font-serif italic mb-4 text-black/80">Aucune commande enregistrée</h3>
             <p className="text-xs text-black/50 font-light leading-relaxed max-w-sm mx-auto mb-6">
@@ -269,7 +277,7 @@ export default function AccountOrders() {
             </p>
             <Link 
               to="/" 
-              className="inline-block px-8 py-3.5 bg-[#1A1A1A] text-white text-[10px] uppercase tracking-widest font-bold hover:bg-[#9A8C73] hover:text-[#1A1A1A] transition-colors rounded-sm"
+              className="inline-block px-8 py-3.5 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors rounded-sm"
             >
               Découvrir les Soins
             </Link>
@@ -298,7 +306,7 @@ export default function AccountOrders() {
                   {/* Collapsed Header Card */}
                   <div 
                     onClick={() => toggleExpand(order.id)}
-                    className="p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:bg-[#FAF9F6]/50 transition-colors"
+                    className="p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:bg-brand-cream/50 transition-colors"
                   >
                     <div className="space-y-2">
                       <div className="flex flex-wrap items-center gap-3">
@@ -307,7 +315,7 @@ export default function AccountOrders() {
                       </div>
                       
                       <div className="flex items-center gap-1.5 text-black/40 text-[10px] font-mono">
-                        <Calendar className="w-3.5 h-3.5 text-[#9A8C73]" />
+                        <Calendar className="w-3.5 h-3.5 text-brand-taupe" />
                         <span>Sénégal • {dateString}</span>
                       </div>
                     </div>
@@ -333,7 +341,7 @@ export default function AccountOrders() {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="border-t border-black/5 bg-[#FAF9F6]/30 overflow-hidden"
+                        className="border-t border-black/5 bg-brand-cream/30 overflow-hidden"
                       >
                         <div className="p-5 md:p-6 space-y-6">
                           
@@ -342,7 +350,7 @@ export default function AccountOrders() {
                             
                             {/* Address details */}
                             <div className="bg-white p-4 border border-black/5 rounded-sm text-xs space-y-2">
-                              <h4 className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold flex items-center gap-1.5 border-b border-black/5 pb-1.5 mb-2">
+                              <h4 className="text-[9px] uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5 border-b border-black/5 pb-1.5 mb-2">
                                 <MapPin className="w-3.5 h-3.5" />
                                 Adresse d'expédition
                               </h4>
@@ -359,7 +367,7 @@ export default function AccountOrders() {
 
                             {/* Payment details */}
                             <div className="bg-white p-4 border border-black/5 rounded-sm text-xs space-y-2">
-                              <h4 className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold flex items-center gap-1.5 border-b border-black/5 pb-1.5 mb-2">
+                              <h4 className="text-[9px] uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5 border-b border-black/5 pb-1.5 mb-2">
                                 <CreditCard className="w-3.5 h-3.5" />
                                 Informations de règlement
                               </h4>
@@ -367,7 +375,7 @@ export default function AccountOrders() {
                                 Mode : <span className="font-semibold">{order.payment_method_code === 'cod' ? 'Paiement à la livraison' : order.payment_method_code === 'wave' ? 'Wave Sénégal' : 'Orange Money'}</span>
                               </p>
                               {order.payment_method_code !== 'cod' && (
-                                <div className="mt-2 p-2 bg-[#FAF9F6] border border-black/5 text-[10px] font-mono leading-relaxed text-black/50">
+                                <div className="mt-2 p-2 bg-brand-cream border border-black/5 text-[10px] font-mono leading-relaxed text-black/50">
                                   <span>Vérification du transfert : </span>
                                   <strong className="text-black/80 font-semibold block pt-0.5">En cours par notre pôle financier de Dakar.</strong>
                                 </div>
@@ -383,7 +391,7 @@ export default function AccountOrders() {
 
                           {/* 2. Items Ordered List */}
                           <div className="space-y-3">
-                            <h4 className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold border-b border-black/5 pb-1">
+                            <h4 className="text-[9px] uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
                               Articles de l'ordre
                             </h4>
 
@@ -394,7 +402,7 @@ export default function AccountOrders() {
 
                                 return (
                                   <div key={item.id} className="flex gap-4 py-3.5 items-center text-xs">
-                                    <div className="w-10 h-12 bg-[#FAF9F6] border border-black/5 overflow-hidden flex items-center justify-center shrink-0">
+                                    <div className="w-10 h-12 bg-brand-cream border border-black/5 overflow-hidden flex items-center justify-center shrink-0">
                                       {prodImg ? (
                                         <img 
                                           src={prodImg} 
@@ -460,7 +468,7 @@ export default function AccountOrders() {
         <div className="mt-12 p-6 bg-white border border-black/5 text-xs flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center rounded-sm shadow-sm">
           <div className="space-y-1">
             <h4 className="font-serif italic font-bold text-black/80 flex items-center gap-1.5">
-              <HelpCircle className="w-4 h-4 text-[#9A8C73]" />
+              <HelpCircle className="w-4 h-4 text-brand-gold" />
               Une interrogation sur vos expéditions ?
             </h4>
             <p className="text-black/50 leading-relaxed text-[11px]">
@@ -469,7 +477,7 @@ export default function AccountOrders() {
           </div>
           <a 
             href={`tel:${CONTACT_CONFIG.phoneRaw}`} 
-            className="px-5 py-2.5 border border-black/15 text-black text-[10px] uppercase tracking-widest font-bold hover:bg-[#FAF9F6] transition-colors rounded-sm shrink-0 font-mono"
+            className="px-5 py-2.5 border border-black/15 text-black text-[10px] uppercase tracking-widest font-bold hover:bg-brand-cream transition-colors rounded-sm shrink-0 font-mono"
           >
             {CONTACT_CONFIG.phone}
           </a>

@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom';
 import { catalogService } from '../lib/catalogService';
 import { Category, Product, Brand, Catalogue } from '../types/catalog';
 import ProductCard from '../components/ProductCard';
-import { Sparkles, Award, ArrowRight, ShieldCheck, Heart } from 'lucide-react';
+import { Sparkles, Award, ArrowRight, ShieldCheck, Heart, Truck, Sparkle, CheckCircle2 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { usePageSEO } from '../utils/seo';
 
 export default function Home() {
+  usePageSEO(
+    "Maison 2M Cosmetics — Cosmétiques Naturels & Soins d'Exception à Dakar",
+    "Découvrez Maison 2M Cosmetics à Dakar : soins visage, sérums botaniques et rituels corps aux précieux actifs africains (Moringa, Baobab, Karité). Livraison rapide au Sénégal."
+  );
+
   const [categories, setCategories] = useState<Category[]>([]);
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [brands, setBrands] = useState<Brand[]>([]);
@@ -19,12 +25,11 @@ export default function Home() {
       try {
         const [cats, prods, brs, catsList] = await Promise.all([
           catalogService.getCategories(),
-          catalogService.getProducts(), // Default fetches all
+          catalogService.getProducts(),
           catalogService.getBrands(),
           catalogService.getCatalogues()
         ]);
         setCategories(cats);
-        // Let's feature 3-4 premium products on home page
         setFeaturedProducts(prods.slice(0, 4));
         setBrands(brs);
         setCatalogues(catsList);
@@ -38,77 +43,140 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full bg-[#FAF9F6] min-h-screen">
+    <div className="w-full bg-brand-cream min-h-screen">
       {/* Premium Hero Section */}
       <section className="border-b border-black/5 flex flex-col lg:flex-row overflow-hidden bg-white">
         {/* Left Content */}
-        <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col justify-center relative min-h-[500px]">
-          <div className="absolute top-8 left-8 right-8 flex justify-between items-center lg:static lg:mb-6">
-            <div className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold flex items-center gap-1.5">
+        <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col justify-center relative min-h-[520px]">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-cream text-brand-gold text-[10px] uppercase tracking-[0.25em] font-extrabold rounded-full border border-brand-gold/20">
               <Sparkles className="w-3 h-3 animate-pulse" />
-              Édition Limitée 2026
-            </div>
+              Bienvenue chez Maison 2M Cosmetics
+            </span>
           </div>
           
-          <h2 className="text-5xl md:text-7xl lg:text-[100px] font-serif leading-[0.85] tracking-tighter mb-8 mt-12 lg:mt-0">
-            L'Éclat <br/>
-            <span className="italic ml-8 md:ml-12 text-[#9A8C73]">Naturel</span>
-          </h2>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-serif leading-[0.95] tracking-tight mb-6 text-black/90">
+            Révélez l'Éclat <br/>
+            <span className="italic ml-4 sm:ml-8 text-brand-gold">Naturel</span> de votre Peau
+          </h1>
           
-          <p className="max-w-md text-sm leading-relaxed text-black/70 mb-10">
-            Découvrez une sélection d'exception de formulations dermatologiques et de cosmétiques bio à Dakar. Une approche moderne de la dermo-cosmétique, validée par nos experts pour magnifier votre peau sous le soleil du Sénégal.
+          <p className="max-w-xl text-sm sm:text-base leading-relaxed text-black/75 mb-8 font-light">
+            Prenez soin de vous avec nos rituels dermo-cosmétiques d'exception à Dakar. Des formulations saines, douces et enrichies en trésors botaniques ouest-africains (Moringa, Baobab, Karité) pour sublimer votre beauté sous le soleil du Sénégal, en toute sérénité.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8 md:gap-12">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mb-8">
             <Link 
               to="/catalogue/nouveautes" 
-              className="px-10 py-4 bg-[#1A1A1A] text-[#FAF9F6] text-[11px] uppercase tracking-widest font-bold hover:bg-[#9A8C73] hover:text-[#1A1A1A] transition-all inline-block text-center shadow-sm"
+              className="px-8 py-4 bg-brand-noir text-brand-cream text-[11px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-all inline-flex items-center justify-center gap-2 shadow-sm rounded-sm"
             >
-              Explorer les Nouveautés
+              Découvrir nos Soins
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
-            <div className="flex flex-col">
-              <span className="text-[10px] uppercase tracking-widest font-bold text-black/40">Livraison Dakar</span>
-              <span className="text-[11px] text-black/80 font-serif italic">Sous 24h à 48h à votre porte</span>
+            <Link 
+              to="/collections" 
+              className="px-6 py-4 border border-black/15 text-black/80 hover:bg-brand-cream text-[11px] uppercase tracking-widest font-bold transition-all text-center rounded-sm"
+            >
+              Nos Rituels Beauté
+            </Link>
+          </div>
+
+          <div className="pt-6 border-t border-black/5 flex flex-wrap items-center gap-6 text-xs text-black/60">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-brand-gold shrink-0" />
+              <span>Livraison soignée à Dakar en 24h</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-brand-gold shrink-0" />
+              <span>Paiement à la livraison ou Wave / OM</span>
             </div>
           </div>
         </div>
 
         {/* Right Content Visual */}
-        <div className="w-full lg:w-1/2 relative bg-[#F2F1ED] p-8 md:p-16 flex items-center justify-center min-h-[450px]">
-          <div className="w-full max-w-[420px] aspect-[4/5] bg-[#D6D3CB] shadow-2xl relative overflow-hidden group">
+        <div className="w-full lg:w-1/2 relative bg-brand-cream/80 p-8 md:p-16 flex items-center justify-center min-h-[450px]">
+          <div className="w-full max-w-[420px] aspect-[4/5] bg-black/5 shadow-2xl relative overflow-hidden group rounded-sm">
             <img 
               src="https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&q=80&w=800"
-              alt="Maison 2M Cosmetics Hero"
+              alt="Soins d'exception Maison 2M Cosmetics Dakar"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent"></div>
             <div className="absolute bottom-8 left-8 right-8 text-white">
-              <p className="text-[10px] uppercase tracking-widest font-bold mb-1 text-[#FAF9F6]/80">Formule Ciblée</p>
-              <p className="text-2xl font-serif italic">Sérums de Haute Précision</p>
-              <div className="h-[1px] w-8 bg-[#9A8C73] mt-2 group-hover:w-16 transition-all duration-500"></div>
+              <p className="text-[10px] uppercase tracking-widest font-bold mb-1 text-brand-cream/90">Conseil de Conseillère</p>
+              <p className="text-2xl font-serif italic">Des Sérums Purs & Équilibrants</p>
+              <p className="text-xs text-brand-cream/80 font-light mt-1">Conçus pour régénérer la peau sans effet gras.</p>
+              <div className="h-[1px] w-12 bg-brand-gold mt-3 group-hover:w-20 transition-all duration-500"></div>
             </div>
           </div>
           
           {/* Secondary Floating Premium Seal */}
-          <div className="absolute -bottom-6 -left-6 md:-left-20 w-44 md:w-48 h-64 bg-white border border-black/5 p-5 shadow-xl hidden sm:block">
-            <div className="w-full h-2/3 bg-[#FAF9F6] mb-4 flex flex-col items-center justify-center text-center p-2">
-              <Award className="w-8 h-8 text-[#9A8C73] mb-2" />
-              <span className="text-[10px] uppercase tracking-widest font-bold text-[#1A1A1A]">Validation</span>
-              <span className="text-[9px] text-[#9A8C73] font-serif italic">Dermatologique</span>
+          <div className="absolute -bottom-6 -left-6 md:-left-16 w-48 h-60 bg-white border border-black/5 p-5 shadow-xl hidden sm:block rounded-sm">
+            <div className="w-full h-2/3 bg-brand-cream mb-3 flex flex-col items-center justify-center text-center p-2 rounded-xs">
+              <Award className="w-7 h-7 text-brand-gold mb-1.5" />
+              <span className="text-[10px] uppercase tracking-widest font-bold text-brand-noir">Formules Testées</span>
+              <span className="text-xs text-brand-gold font-script italic">Haute Tolérance</span>
             </div>
-            <p className="text-[9px] uppercase tracking-widest leading-tight font-extrabold text-black/80">Bio-Actifs Purs</p>
-            <p className="text-[8px] text-black/50">Moringa, Baobab & Karité</p>
+            <p className="text-[10px] uppercase tracking-widest leading-tight font-extrabold text-black/80">Actifs Botaniques Purs</p>
+            <p className="text-[9px] text-black/50 mt-0.5">Moringa, Baobab, Nébédaye & Karité</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Reassurance Bar */}
+      <section className="bg-white border-b border-black/5 py-8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex items-center gap-3.5 p-3">
+            <div className="w-10 h-10 rounded-full bg-brand-cream flex items-center justify-center text-brand-gold shrink-0 border border-black/5">
+              <Truck className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs uppercase tracking-wider font-bold text-black/85">Livraison Rapide Dakar</h3>
+              <p className="text-[11px] text-black/55">À votre domicile ou bureau sous 24h à 48h</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3.5 p-3">
+            <div className="w-10 h-10 rounded-full bg-brand-cream flex items-center justify-center text-brand-gold shrink-0 border border-black/5">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs uppercase tracking-wider font-bold text-black/85">Paiement Simple & Serein</h3>
+              <p className="text-[11px] text-black/55">En espèces à la réception, Wave ou OM</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3.5 p-3">
+            <div className="w-10 h-10 rounded-full bg-brand-cream flex items-center justify-center text-brand-gold shrink-0 border border-black/5">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs uppercase tracking-wider font-bold text-black/85">100% Actifs Authentiques</h3>
+              <p className="text-[11px] text-black/55">Ingrédients nobles et traçabilité garantie</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3.5 p-3">
+            <div className="w-10 h-10 rounded-full bg-brand-cream flex items-center justify-center text-brand-gold shrink-0 border border-black/5">
+              <Heart className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs uppercase tracking-wider font-bold text-black/85">Conseils Personnalisés</h3>
+              <p className="text-[11px] text-black/55">Votre conseillère beauté à votre écoute</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Categories & Universes Section */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
-        <div className="text-center mb-16">
-          <span className="text-[10px] uppercase tracking-[0.25em] text-[#9A8C73] font-bold block mb-2">Collections Officielles</span>
-          <h2 className="text-3xl md:text-4xl font-serif">Parcourir par Univers</h2>
-          <div className="h-[1px] w-12 bg-[#9A8C73] mx-auto mt-4"></div>
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <span className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold block mb-2">Nos Univers de Beauté</span>
+          <h2 className="text-3xl md:text-4xl font-serif text-black/90">Trouvez le soin parfait pour votre peau</h2>
+          <div className="h-[2px] w-12 bg-brand-gold mx-auto mt-4 mb-4"></div>
+          <p className="text-xs sm:text-sm text-black/60 font-light leading-relaxed">
+            Que vous cherchiez à hydrater, unifier ou protéger votre épiderme, chaque rituel est pensé pour répondre avec douceur à vos besoins spécifiques.
+          </p>
         </div>
 
         {loading ? (
@@ -128,9 +196,9 @@ export default function Home() {
                 key={category.id}
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.3 }}
-                className="border border-black/5 bg-white p-0 overflow-hidden shadow-sm flex flex-col hover:border-[#9A8C73] transition-all group"
+                className="border border-black/5 bg-white overflow-hidden shadow-sm flex flex-col hover:border-brand-gold/50 transition-all group rounded-sm"
               >
-                <div className="h-48 relative overflow-hidden bg-gray-100">
+                <div className="h-52 relative overflow-hidden bg-gray-100">
                   {category.image_url ? (
                     <img 
                       src={category.image_url} 
@@ -139,7 +207,7 @@ export default function Home() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-[#9A8C73]/40 text-sm font-serif italic">
+                    <div className="w-full h-full flex items-center justify-center text-brand-taupe/40 text-sm font-serif italic">
                       Maison 2M
                     </div>
                   )}
@@ -147,15 +215,15 @@ export default function Home() {
                 </div>
                 <div className="p-8 flex-1 flex flex-col justify-between">
                   <div>
-                    <span className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold block mb-1">Catégorie</span>
-                    <h3 className="text-xl font-serif italic mb-3 group-hover:text-[#9A8C73] transition-colors">{category.name}</h3>
-                    <p className="text-xs text-black/60 leading-relaxed mb-6 line-clamp-2">{category.description}</p>
+                    <span className="text-[9px] uppercase tracking-widest text-brand-gold font-bold block mb-1">Rituel Beauté</span>
+                    <h3 className="text-xl font-serif italic mb-3 group-hover:text-brand-gold transition-colors text-black/90">{category.name}</h3>
+                    <p className="text-xs text-black/60 leading-relaxed mb-6 line-clamp-2 font-light">{category.description}</p>
                   </div>
                   <Link 
                     to={`/categorie/${category.slug}`} 
-                    className="text-[10px] uppercase tracking-widest font-bold text-black group-hover:text-[#9A8C73] transition-colors flex items-center gap-1 mt-auto"
+                    className="text-[10px] uppercase tracking-widest font-bold text-brand-noir group-hover:text-brand-gold transition-colors flex items-center gap-1.5 mt-auto pt-4 border-t border-black/5"
                   >
-                    Voir la collection <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    Explorer la sélection <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </motion.div>
@@ -168,13 +236,16 @@ export default function Home() {
       <section className="bg-white border-y border-black/5 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
-            <div>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#9A8C73] font-bold block mb-2">Sélection d'exception</span>
-              <h2 className="text-3xl md:text-4xl font-serif">Les soins recommandés</h2>
+            <div className="max-w-xl">
+              <span className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold block mb-2">Les Incontournables</span>
+              <h2 className="text-3xl md:text-4xl font-serif text-black/90">Les soins chouchous de nos clientes</h2>
+              <p className="text-xs sm:text-sm text-black/60 font-light mt-2">
+                Les soins les plus plébiscités à Dakar pour retrouver une peau radieuse, protégée et soyeuse.
+              </p>
             </div>
             <Link 
               to="/catalogue/nouveautes" 
-              className="text-xs text-[#9A8C73] hover:underline font-bold tracking-widest uppercase flex items-center gap-1.5 mt-4 md:mt-0"
+              className="text-xs text-brand-taupe hover:text-brand-gold font-bold tracking-widest uppercase flex items-center gap-1.5 mt-4 md:mt-0 transition-colors"
             >
               Voir tout le catalogue <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -193,7 +264,7 @@ export default function Home() {
             </div>
           ) : featuredProducts.length === 0 ? (
             <div className="text-center py-12 text-black/50 italic font-serif">
-              Aucun produit à afficher pour le moment.
+              Aucun soin à afficher pour le moment.
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -205,24 +276,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Brands and Values */}
+      {/* Brands and Philosophy Section */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
           
           {/* Brand Info 1 */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-serif italic text-black/90">Savoir-Faire local, Standard International</h3>
-            <p className="text-xs text-black/60 leading-relaxed">
-              Maison 2M Cosmetics s'entoure de formulateurs sénégalais et de dermatologues chevronnés pour valoriser la richesse botanique africaine. Nous garantissons la traçabilité des récoltes et la haute tolérance clinique de chaque élixir.
+            <span className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold block">Notre Philosophie</span>
+            <h3 className="text-2xl sm:text-3xl font-serif italic text-black/90 leading-snug">L'Alliance de la Botanique Africaine & de la Science</h3>
+            <p className="text-xs text-black/65 leading-relaxed font-light">
+              À la Maison 2M Cosmetics, nous croyons qu'une peau en pleine santé mérite ce que la nature a de plus précieux. Nous sélectionnons rigoureusement des ingrédients locaux éco-responsables et testés sous contrôle dermatologique pour vous offrir un confort absolu et des résultats visibles.
             </p>
-            <div className="flex gap-8 pt-4">
+            <div className="flex gap-8 pt-4 border-t border-black/5">
               <div>
-                <span className="block text-2xl font-serif italic text-[#9A8C73]">100%</span>
-                <span className="text-[9px] uppercase tracking-wider font-bold text-black/40">Bio & Naturel</span>
+                <span className="block text-2xl font-serif italic text-brand-gold">100%</span>
+                <span className="text-[9px] uppercase tracking-wider font-bold text-black/40">Actifs Purs</span>
               </div>
               <div>
-                <span className="block text-2xl font-serif italic text-[#9A8C73]">0%</span>
+                <span className="block text-2xl font-serif italic text-brand-gold">0%</span>
                 <span className="text-[9px] uppercase tracking-wider font-bold text-black/40">Traces Blanches</span>
+              </div>
+              <div>
+                <span className="block text-2xl font-serif italic text-brand-gold">24h</span>
+                <span className="text-[9px] uppercase tracking-wider font-bold text-black/40">Livraison Dakar</span>
               </div>
             </div>
           </div>
@@ -230,17 +306,17 @@ export default function Home() {
           {/* Quick links to Brand Stories */}
           <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
             {brands.map((brand) => (
-              <div key={brand.id} className="border border-black/5 bg-white p-8 shadow-sm flex flex-col justify-between">
+              <div key={brand.id} className="border border-black/5 bg-white p-8 shadow-sm flex flex-col justify-between hover:border-brand-gold/40 transition-colors rounded-sm">
                 <div>
-                  <span className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold block mb-1">Maison d'excellence</span>
-                  <h4 className="text-lg font-serif italic mb-3">{brand.name}</h4>
-                  <p className="text-xs text-black/60 leading-relaxed mb-6 line-clamp-3">{brand.bio}</p>
+                  <span className="text-[9px] uppercase tracking-widest text-brand-gold font-bold block mb-1">Maison Partenaire</span>
+                  <h4 className="text-xl font-serif italic mb-3 text-black/90">{brand.name}</h4>
+                  <p className="text-xs text-black/60 leading-relaxed mb-6 line-clamp-3 font-light">{brand.bio}</p>
                 </div>
                 <Link 
                   to={`/marque/${brand.slug}`} 
-                  className="text-[10px] uppercase tracking-widest font-bold text-black hover:text-[#9A8C73] transition-colors flex items-center gap-1"
+                  className="text-[10px] uppercase tracking-widest font-bold text-brand-noir hover:text-brand-gold transition-colors flex items-center gap-1.5 pt-4 border-t border-black/5"
                 >
-                  Découvrir la marque →
+                  Découvrir son histoire <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             ))}
@@ -249,35 +325,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Safety and Assurance Footer elements */}
-      <section className="border-t border-black/5 bg-[#FAF9F6] py-12">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-          <div className="flex items-start gap-4 flex-col md:flex-row">
-            <div className="w-10 h-10 bg-[#9A8C73]/10 flex items-center justify-center text-[#9A8C73] shrink-0 mx-auto md:mx-0">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <h5 className="text-xs uppercase tracking-wider font-bold text-black/80 mb-1">Formulations Testées</h5>
-              <p className="text-[11px] text-black/50 leading-relaxed">Validation dermatologique stricte de chaque actif pour une tolérance cutanée absolue.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-4 flex-col md:flex-row">
-            <div className="w-10 h-10 bg-[#9A8C73]/10 flex items-center justify-center text-[#9A8C73] shrink-0 mx-auto md:mx-0">
-              <Heart className="w-5 h-5" />
-            </div>
-            <div>
-              <h5 className="text-xs uppercase tracking-wider font-bold text-black/80 mb-1">Engagés pour l'Afrique</h5>
-              <p className="text-[11px] text-black/50 leading-relaxed">Valorisation des filières locales éco-responsables à Dakar et en Casamance.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-4 flex-col md:flex-row">
-            <div className="w-10 h-10 bg-[#9A8C73]/10 flex items-center justify-center text-[#9A8C73] shrink-0 mx-auto md:mx-0">
-              <Award className="w-5 h-5" />
-            </div>
-            <div>
-              <h5 className="text-xs uppercase tracking-wider font-bold text-black/80 mb-1">Rôles RLS & Confidentialité</h5>
-              <p className="text-[11px] text-black/50 leading-relaxed">Transactions et profils sécurisés via la sécurité RLS Supabase de bout en bout.</p>
-            </div>
+      {/* Advisory & Customer Care Callout */}
+      <section className="border-t border-black/5 bg-white py-16">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-4">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold block">
+            Conseil Personnalisé
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-serif italic text-black/90">
+            Un doute sur le soin adapté à votre type de peau ?
+          </h2>
+          <p className="text-xs sm:text-sm text-black/60 max-w-lg mx-auto font-light leading-relaxed">
+            Notre équipe d'expertes beauté est disponible pour vous guider par WhatsApp ou téléphone et composer votre routine idéale.
+          </p>
+          <div className="pt-4 flex flex-wrap justify-center gap-4">
+            <Link 
+              to="/blog" 
+              className="px-6 py-3 bg-brand-cream border border-black/10 hover:border-brand-gold text-black text-[10px] uppercase tracking-widest font-bold transition-all rounded-sm"
+            >
+              Lire la Gazette & Conseils
+            </Link>
+            <Link 
+              to="/recherche" 
+              className="px-6 py-3 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all rounded-sm"
+            >
+              Trouver mon soin
+            </Link>
           </div>
         </div>
       </section>

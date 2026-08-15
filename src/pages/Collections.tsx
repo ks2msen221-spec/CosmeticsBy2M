@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Home, ChevronRight, ArrowRight, Loader2 } from 'lucide-react';
+import { BookOpen, Home, ChevronRight, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { catalogService } from '../lib/catalogService';
+import { usePageSEO } from '../utils/seo';
 
 interface CatalogueItem {
   id: string;
@@ -16,6 +17,11 @@ interface CatalogueItem {
 export default function Collections() {
   const [catalogues, setCatalogues] = useState<CatalogueItem[]>([]);
   const [loading, setLoading] = useState(true);
+
+  usePageSEO(
+    "Collections Thématiques & Rituels | Maison 2M Cosmetics Dakar",
+    "Explorez nos sélections de soins botaniques et rituels dermo-cosmétiques pensés pour le climat sénégalais par Maison 2M Cosmetics à Dakar."
+  );
 
   useEffect(() => {
     async function loadActiveCatalogues() {
@@ -66,30 +72,30 @@ export default function Collections() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pb-24">
+    <div className="min-h-screen bg-brand-cream pb-24">
       {/* Breadcrumb Navigation */}
       <div className="border-b border-black/5 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
-          <Link to="/" className="hover:text-[#9A8C73] flex items-center gap-1">
+          <Link to="/" className="hover:text-brand-gold flex items-center gap-1 transition-colors">
             <Home className="w-3 h-3" /> Accueil
           </Link>
           <ChevronRight className="w-3 h-3" />
-          <span className="text-black/80">Collections</span>
+          <span className="text-black/80">Collections Thématiques</span>
         </div>
       </div>
 
       {/* Hero Header */}
-      <div className="bg-white border-b border-black/5 py-16 md:py-20">
+      <div className="bg-white border-b border-black/5 py-14 md:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center max-w-3xl">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold flex items-center justify-center gap-2 mb-3">
-            <BookOpen className="w-4 h-4 text-[#9A8C73]" />
-            Éditions Spéciales 2M Cosmetics
+          <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold flex items-center justify-center gap-2 mb-3">
+            <Sparkles className="w-4 h-4 text-brand-gold" />
+            Éditions Ciblées & Rituels d'Exception
           </span>
-          <h1 className="text-4xl md:text-5xl font-serif italic text-black/90 mb-6">
-            Nos Collections Thématiques
+          <h1 className="text-4xl md:text-5xl font-serif italic text-black/90 mb-5">
+            Nos Rituels & Sélections Signatures
           </h1>
-          <p className="text-sm text-black/60 leading-relaxed font-light">
-            Explorez nos sélections cosmétiques éditées sur-mesure pour accompagner vos rituels de soins, vos routines de saison et nos sélections exclusives.
+          <p className="text-sm text-black/65 leading-relaxed font-light">
+            Découvrez nos collections éditées avec soin par notre équipe de Dakar. Des rituels harmonieux pensés pour sublimer votre peau au quotidien, protéger votre éclat et respecter votre équilibre naturel.
           </p>
         </div>
       </div>
@@ -98,23 +104,23 @@ export default function Collections() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 bg-white border border-black/5 rounded-sm">
-            <Loader2 className="w-8 h-8 text-[#9A8C73] animate-spin mb-3" />
+            <Loader2 className="w-8 h-8 text-brand-gold animate-spin mb-3" />
             <p className="text-xs text-black/40 font-mono uppercase tracking-widest">
-              Chargement des collections...
+              Chargement de nos collections...
             </p>
           </div>
         ) : catalogues.length === 0 ? (
-          <div className="border border-black/5 bg-white p-16 text-center shadow-xs max-w-md mx-auto rounded-sm">
-            <BookOpen className="w-10 h-10 text-[#9A8C73]/40 mx-auto mb-4" />
+          <div className="border border-black/5 bg-white p-14 text-center shadow-xs max-w-md mx-auto rounded-sm">
+            <BookOpen className="w-10 h-10 text-brand-gold/40 mx-auto mb-4" />
             <h3 className="font-serif italic text-xl mb-2 text-black/90">
-              Aucune collection disponible pour le moment
+              Collections en cours de curation
             </h3>
-            <p className="text-xs text-black/50 font-light leading-relaxed mb-6">
-              Nos équipes préparent actuellement de nouvelles sélections thématiques pour la boutique.
+            <p className="text-xs text-black/60 font-light leading-relaxed mb-6">
+              Nos spécialistes préparent de nouvelles harmonies de soins. En attendant, parcourez notre catalogue général.
             </p>
             <Link 
-              to="/" 
-              className="px-6 py-3 bg-[#1A1A1A] hover:bg-[#9A8C73] text-white text-[10px] uppercase tracking-widest font-bold transition-colors inline-block rounded-sm"
+              to="/catalogue/nouveautes" 
+              className="px-6 py-3 bg-brand-noir hover:bg-brand-gold text-white text-[10px] uppercase tracking-widest font-bold transition-colors inline-block rounded-sm hover:text-brand-noir"
             >
               Découvrir tous nos soins
             </Link>
@@ -125,10 +131,10 @@ export default function Collections() {
               <Link
                 key={cat.id}
                 to={`/catalogue/${cat.slug}`}
-                className="group bg-white border border-black/5 rounded-sm overflow-hidden flex flex-col shadow-xs hover:shadow-xl transition-all duration-300"
+                className="group bg-white border border-black/5 rounded-sm overflow-hidden flex flex-col shadow-xs hover:shadow-xl transition-all duration-300 hover:border-brand-gold/40"
               >
                 {/* Cover Image */}
-                <div className="h-56 bg-[#FAF9F6] border-b border-black/5 relative overflow-hidden flex items-center justify-center">
+                <div className="h-56 bg-brand-cream border-b border-black/5 relative overflow-hidden flex items-center justify-center">
                   {cat.cover_image_url ? (
                     <img
                       src={cat.cover_image_url}
@@ -138,33 +144,33 @@ export default function Collections() {
                     />
                   ) : (
                     <div className="flex flex-col items-center gap-2 p-6 text-center">
-                      <BookOpen className="w-12 h-12 text-[#9A8C73]/30 group-hover:text-[#9A8C73]/50 transition-colors" />
-                      <span className="text-[10px] uppercase tracking-widest text-black/30 font-mono">
-                        2M Cosmetics Dakar
+                      <BookOpen className="w-12 h-12 text-brand-gold/40 group-hover:text-brand-gold transition-colors" />
+                      <span className="text-[10px] uppercase tracking-widest text-black/40 font-mono">
+                        Maison 2M Cosmetics
                       </span>
                     </div>
                   )}
-                  <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-xs text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full opacity-90 group-hover:bg-[#9A8C73] transition-colors">
-                    Découvrir
+                  <div className="absolute top-4 right-4 bg-brand-noir/80 backdrop-blur-xs text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full opacity-90 group-hover:bg-brand-gold group-hover:text-brand-noir transition-colors">
+                    Explorer le rituel
                   </div>
                 </div>
 
                 {/* Info Content */}
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#9A8C73] font-bold block mb-1">
-                      Collection Édition
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-brand-gold font-bold block mb-1">
+                      Rituel Signature
                     </span>
-                    <h2 className="text-2xl font-serif italic text-black/90 group-hover:text-[#9A8C73] transition-colors">
+                    <h2 className="text-2xl font-serif italic text-black/90 group-hover:text-brand-gold transition-colors">
                       {cat.name}
                     </h2>
-                    <p className="text-xs text-black/60 font-light mt-2.5 line-clamp-3 leading-relaxed">
-                      {cat.description || "Sélection exclusive de formulations cosmétiques élaborées pour répondre aux exigences dermatologiques les plus pointues."}
+                    <p className="text-xs text-black/65 font-light mt-2.5 line-clamp-3 leading-relaxed">
+                      {cat.description || "Sélection exclusive de formulations cosmétiques élaborées pour magnifier votre peau sous le soleil de Dakar."}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-black/5 flex items-center justify-between text-[10px] uppercase tracking-widest font-bold text-black/80 group-hover:text-[#9A8C73] transition-colors">
-                    <span>Explorer la sélection</span>
+                  <div className="pt-4 border-t border-black/5 flex items-center justify-between text-[10px] uppercase tracking-widest font-bold text-black/80 group-hover:text-brand-gold transition-colors">
+                    <span>Découvrir les soins du rituel</span>
                     <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>

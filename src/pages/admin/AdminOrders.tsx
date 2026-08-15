@@ -503,12 +503,12 @@ export default function AdminOrders() {
   const pendingCount = orders.filter(o => o.status === 'awaiting_verification').length;
 
   return (
-    <div className="space-y-6 selection:bg-[#9A8C73]/20" id="admin-orders-page">
+    <div className="space-y-6 selection:bg-brand-taupe/20" id="admin-orders-page">
       
       {/* Editorial Header */}
       <header className="border-b border-black/5 pb-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-2">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-brand-taupe font-bold block mb-2">
             Console d'Administration • Dakar
           </span>
           <h1 className="text-3xl font-serif italic text-black/90">Gestion des Commandes</h1>
@@ -519,7 +519,7 @@ export default function AdminOrders() {
         
         <button 
           onClick={() => fetchOrders(false)}
-          className="flex items-center gap-1.5 px-4 py-2 border border-black/10 rounded-sm hover:bg-[#FAF9F6] text-xs font-mono text-black/70 hover:text-black transition-all"
+          className="flex items-center gap-1.5 px-4 py-2 border border-black/10 rounded-sm hover:bg-brand-cream text-xs font-mono text-black/70 hover:text-black transition-all"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           Rafraîchir
@@ -555,7 +555,7 @@ export default function AdminOrders() {
               {orders.length}
             </span>
           </div>
-          <TrendingUp className="w-8 h-8 text-[#9A8C73]/20" />
+          <TrendingUp className="w-8 h-8 text-brand-taupe/20" />
         </div>
       </div>
 
@@ -596,7 +596,7 @@ export default function AdminOrders() {
             placeholder="Rechercher par ID, client, numéro, adresse, ou référence Wave/OM..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-black/10 text-xs rounded-sm focus:outline-hidden focus:border-[#9A8C73] bg-[#FAF9F6]/20"
+            className="w-full pl-10 pr-4 py-2 border border-black/10 text-xs rounded-sm focus:outline-hidden focus:border-brand-taupe bg-brand-cream/20"
           />
         </div>
 
@@ -606,7 +606,7 @@ export default function AdminOrders() {
             onClick={() => setActiveTab('all')}
             className={`px-3 py-1.5 text-[10px] uppercase tracking-wider font-bold rounded-t-sm transition-all border-b-2 ${
               activeTab === 'all' 
-                ? 'border-[#9A8C73] text-[#9A8C73] bg-[#FAF9F6]/40' 
+                ? 'border-brand-taupe text-brand-taupe bg-brand-cream/40' 
                 : 'border-transparent text-black/40 hover:text-black/80'
             }`}
           >
@@ -686,12 +686,12 @@ export default function AdminOrders() {
 
       {loading ? (
         <div className="bg-white border border-black/5 p-20 text-center rounded-sm shadow-xs flex flex-col items-center">
-          <div className="w-8 h-8 border-2 border-[#9A8C73] border-t-transparent rounded-full animate-spin mb-3"></div>
+          <div className="w-8 h-8 border-2 border-brand-taupe border-t-transparent rounded-full animate-spin mb-3"></div>
           <span className="text-[10px] uppercase tracking-widest text-black/40 font-mono">Chargement du registre...</span>
         </div>
       ) : filteredOrders.length === 0 ? (
         <div className="bg-white border border-black/5 p-16 text-center rounded-sm shadow-xs">
-          <ClipboardList className="w-10 h-10 text-[#9A8C73]/30 mx-auto mb-3" />
+          <ClipboardList className="w-10 h-10 text-brand-taupe/30 mx-auto mb-3" />
           <h4 className="text-sm font-serif italic text-black/70 mb-1">Aucune commande répertoriée</h4>
           <p className="text-[11px] text-black/40 max-w-sm mx-auto font-light">
             Aucun achat ne correspond à vos filtres ou à votre recherche pour le moment.
@@ -720,7 +720,7 @@ export default function AdminOrders() {
                   onClick={() => setSelectedOrderId(order.id)}
                   className={`p-4 border rounded-sm transition-all cursor-pointer text-left ${
                     isActive 
-                      ? 'bg-[#1A1A1A] text-white border-[#1A1A1A] shadow-md' 
+                      ? 'bg-brand-noir text-white border-brand-noir shadow-md' 
                       : 'bg-white text-black border-black/5 hover:border-black/15 shadow-2xs'
                   }`}
                   id={`order-item-${order.id}`}
@@ -863,7 +863,7 @@ export default function AdminOrders() {
                     <div className="bg-gray-50 border border-black/5 rounded-sm p-4 text-xs space-y-3">
                       <div className="flex justify-between items-center gap-2">
                         <span className="text-[10px] uppercase tracking-wider text-black/50 font-mono">Fulfillment Étape Suivante</span>
-                        <span className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold">Logistique Dakar</span>
+                        <span className="text-[9px] uppercase tracking-widest text-brand-taupe font-bold">Logistique Dakar</span>
                       </div>
 
                       <div className="flex items-center gap-3">
@@ -876,7 +876,7 @@ export default function AdminOrders() {
                           <button
                             disabled={actionLoadingId !== null}
                             onClick={() => handleUpdateStatus(selectedOrder.id, 'processing')}
-                            className="px-4 py-2 text-[9px] uppercase tracking-widest font-bold bg-[#1A1A1A] hover:bg-[#9A8C73] hover:text-[#1A1A1A] text-white rounded-xs transition-colors shadow-xs flex items-center gap-1.5 ml-auto"
+                            className="px-4 py-2 text-[9px] uppercase tracking-widest font-bold bg-brand-noir hover:bg-brand-taupe hover:text-brand-noir text-white rounded-xs transition-colors shadow-xs flex items-center gap-1.5 ml-auto"
                           >
                             <ShoppingBag className="w-3 h-3" />
                             Passer en Préparation (processing)
@@ -887,7 +887,7 @@ export default function AdminOrders() {
                           <button
                             disabled={actionLoadingId !== null}
                             onClick={() => handleUpdateStatus(selectedOrder.id, 'shipped')}
-                            className="px-4 py-2 text-[9px] uppercase tracking-widest font-bold bg-[#1A1A1A] hover:bg-[#9A8C73] hover:text-[#1A1A1A] text-white rounded-xs transition-colors shadow-xs flex items-center gap-1.5 ml-auto"
+                            className="px-4 py-2 text-[9px] uppercase tracking-widest font-bold bg-brand-noir hover:bg-brand-taupe hover:text-brand-noir text-white rounded-xs transition-colors shadow-xs flex items-center gap-1.5 ml-auto"
                           >
                             <Truck className="w-3 h-3" />
                             Expédier la Commande (shipped)
@@ -912,7 +912,7 @@ export default function AdminOrders() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Customer details card */}
                     <div className="border border-black/5 p-4 rounded-sm bg-white space-y-2.5 text-xs">
-                      <h4 className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold flex items-center gap-1 border-b border-black/5 pb-1.5">
+                      <h4 className="text-[9px] uppercase tracking-widest text-brand-taupe font-bold flex items-center gap-1 border-b border-black/5 pb-1.5">
                         <User className="w-3.5 h-3.5" />
                         Informations Client
                       </h4>
@@ -924,17 +924,17 @@ export default function AdminOrders() {
                         <div className="space-y-1 font-mono text-[10px] text-black/50">
                           <a 
                             href={`tel:${selectedOrder.address?.phone || selectedOrder.profile?.phone}`} 
-                            className="flex items-center gap-1.5 hover:text-[#9A8C73] transition-colors"
+                            className="flex items-center gap-1.5 hover:text-brand-taupe transition-colors"
                           >
-                            <Phone className="w-3.5 h-3.5 text-[#9A8C73]/60" />
+                            <Phone className="w-3.5 h-3.5 text-brand-taupe/60" />
                             <span>{selectedOrder.address?.phone || selectedOrder.profile?.phone || 'Pas de numéro'}</span>
                           </a>
 
                           <a 
                             href={`mailto:${selectedOrder.profile?.email}`} 
-                            className="flex items-center gap-1.5 hover:text-[#9A8C73] transition-colors"
+                            className="flex items-center gap-1.5 hover:text-brand-taupe transition-colors"
                           >
-                            <Mail className="w-3.5 h-3.5 text-[#9A8C73]/60" />
+                            <Mail className="w-3.5 h-3.5 text-brand-taupe/60" />
                             <span className="truncate">{selectedOrder.profile?.email || 'Pas d\'e-mail'}</span>
                           </a>
                         </div>
@@ -943,7 +943,7 @@ export default function AdminOrders() {
 
                     {/* Delivery details card */}
                     <div className="border border-black/5 p-4 rounded-sm bg-white space-y-2.5 text-xs">
-                      <h4 className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold flex items-center gap-1 border-b border-black/5 pb-1.5">
+                      <h4 className="text-[9px] uppercase tracking-widest text-brand-taupe font-bold flex items-center gap-1 border-b border-black/5 pb-1.5">
                         <MapPin className="w-3.5 h-3.5" />
                         Adresse de Livraison
                       </h4>
@@ -960,7 +960,7 @@ export default function AdminOrders() {
 
                   {/* LINE ITEMS ORDERED TABLE */}
                   <div className="space-y-2 text-xs">
-                    <h4 className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold border-b border-black/5 pb-1">
+                    <h4 className="text-[9px] uppercase tracking-widest text-brand-taupe font-bold border-b border-black/5 pb-1">
                       Articles Commandés ({ (selectedOrder.items || selectedOrder.order_items || []).length })
                     </h4>
 
@@ -970,8 +970,8 @@ export default function AdminOrders() {
                         const hasImage = product.images && product.images.length > 0;
 
                         return (
-                          <div key={item.id} className="flex gap-4 p-3 bg-white hover:bg-[#FAF9F6]/20 transition-colors items-center">
-                            <div className="w-10 h-12 bg-[#FAF9F6] border border-black/5 rounded-xs overflow-hidden flex items-center justify-center shrink-0">
+                          <div key={item.id} className="flex gap-4 p-3 bg-white hover:bg-brand-cream/20 transition-colors items-center">
+                            <div className="w-10 h-12 bg-brand-cream border border-black/5 rounded-xs overflow-hidden flex items-center justify-center shrink-0">
                               {hasImage ? (
                                 <img 
                                   src={product.images![0]} 
@@ -1022,7 +1022,7 @@ export default function AdminOrders() {
                       </div>
                       <div className="flex justify-between font-mono border-t border-black/5 pt-2 text-sm font-semibold text-black">
                         <span>Montant total d'ordre :</span>
-                        <span className="font-bold text-[#9A8C73]">{formatPrice(selectedOrder.total)}</span>
+                        <span className="font-bold text-brand-taupe">{formatPrice(selectedOrder.total)}</span>
                       </div>
                       <div className="flex justify-between font-mono text-[10px] text-black/40 pt-1 border-t border-dashed border-black/5">
                         <span>Mode de paiement utilisé :</span>
@@ -1032,8 +1032,8 @@ export default function AdminOrders() {
                   </div>
 
                   {/* FULFILLMENT TIMELINE */}
-                  <div className="bg-[#FAF9F6] border border-black/5 p-4 rounded-sm text-xs space-y-3">
-                    <h4 className="text-[9px] uppercase tracking-widest text-[#9A8C73] font-bold flex items-center gap-1.5">
+                  <div className="bg-brand-cream border border-black/5 p-4 rounded-sm text-xs space-y-3">
+                    <h4 className="text-[9px] uppercase tracking-widest text-brand-taupe font-bold flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5" />
                       Chronologie d'Expédition Client
                     </h4>
@@ -1041,7 +1041,7 @@ export default function AdminOrders() {
                     <div className="relative pl-6 space-y-4 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[1px] before:bg-black/5">
                       {/* Step 1: Placed */}
                       <div className="relative">
-                        <div className="absolute -left-6 top-0.5 w-[23px] h-[23px] rounded-full border border-black/5 bg-white flex items-center justify-center font-mono text-[9px] text-[#9A8C73] font-bold">
+                        <div className="absolute -left-6 top-0.5 w-[23px] h-[23px] rounded-full border border-black/5 bg-white flex items-center justify-center font-mono text-[9px] text-brand-taupe font-bold">
                           1
                         </div>
                         <div>

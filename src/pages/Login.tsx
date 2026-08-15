@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
 import { CONTACT_CONFIG } from '../config/contact';
+import { usePageSEO } from '../utils/seo';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,6 +12,11 @@ export default function Login() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   
+  usePageSEO(
+    isLogin ? "Connexion à votre Espace Client | Maison 2M Cosmetics Dakar" : "Créer un Compte Client | Maison 2M Cosmetics Dakar",
+    "Accédez à votre espace client Maison 2M Cosmetics à Dakar pour suivre vos commandes et bénéficier d'une expérience beauté personnalisée."
+  );
+
   const [loadingLocal, setLoadingLocal] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
@@ -55,21 +61,21 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-[#FAF9F6] py-12 px-6 lg:px-12">
-      <div className="w-full max-w-md bg-white border border-black/5 p-8 md:p-10 shadow-sm relative overflow-hidden">
+    <div className="min-h-[80vh] flex items-center justify-center bg-brand-cream py-12 px-6 lg:px-12">
+      <div className="w-full max-w-md bg-white border border-black/5 p-8 md:p-10 shadow-sm relative overflow-hidden rounded-sm">
         
         {/* Decorative thin top line */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-[#9A8C73]"></div>
+        <div className="absolute top-0 left-0 right-0 h-1 bg-brand-gold"></div>
 
         {/* Brand identity */}
         <div className="text-center mb-8">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold mb-2">
+          <div className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold mb-2">
             Maison 2M Cosmetics
           </div>
           <h2 className="text-3xl font-serif italic">
             {isLogin ? 'Connexion' : 'Créer un Compte'}
           </h2>
-          <div className="h-[1px] w-12 bg-[#9A8C73]/40 mx-auto mt-4"></div>
+          <div className="h-[1px] w-12 bg-brand-taupe/40 mx-auto mt-4"></div>
         </div>
 
         {/* Mock mode indicator */}
@@ -83,7 +89,7 @@ export default function Login() {
 
         {/* Global Errors */}
         {(localError || authError) && !signUpSuccess && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs">
+          <div className="mb-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs rounded-sm">
             {localError || authError}
           </div>
         )}
@@ -116,7 +122,7 @@ export default function Login() {
                     placeholder={`ex: ${CONTACT_CONFIG.phone}`}
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-mono"
+                    className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-mono rounded-sm"
                   />
                 </div>
 
@@ -125,7 +131,7 @@ export default function Login() {
                     <label className="block text-[10px] uppercase tracking-widest text-black/50 font-bold" htmlFor="loginPassword">
                       Mot de passe *
                     </label>
-                    <span className="text-[9px] text-[#9A8C73] cursor-not-allowed hover:underline">
+                    <span className="text-[9px] text-brand-taupe cursor-not-allowed hover:underline">
                       Mot de passe oublié ?
                     </span>
                   </div>
@@ -136,7 +142,7 @@ export default function Login() {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                    className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors rounded-sm"
                   />
                 </div>
               </>
@@ -154,7 +160,7 @@ export default function Login() {
                     placeholder="Ex: Fatima Sylla"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic"
+                    className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-serif italic rounded-sm"
                   />
                 </div>
 
@@ -169,7 +175,7 @@ export default function Login() {
                     placeholder={`ex: ${CONTACT_CONFIG.phone}`}
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-mono"
+                    className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-mono rounded-sm"
                   />
                 </div>
 
@@ -183,7 +189,7 @@ export default function Login() {
                     placeholder="votre.email@exemple.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic"
+                    className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-serif italic rounded-sm"
                   />
                   <p className="text-[9px] text-black/40 mt-1 leading-normal">
                     Recommandé pour sécuriser et récupérer votre compte
@@ -201,7 +207,7 @@ export default function Login() {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                    className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors rounded-sm"
                   />
                   <p className="text-[9px] text-black/40 mt-1 leading-normal">
                     Minimum 6 caractères pour garantir la sécurité de votre compte 2M.
@@ -214,7 +220,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loadingLocal}
-              className="w-full py-4 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] hover:text-[#1A1A1A] text-[11px] uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full py-4 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[11px] uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 rounded-sm"
             >
               {loadingLocal ? (
                 <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
@@ -235,7 +241,7 @@ export default function Login() {
               Nouveau chez 2M Cosmetics ?{' '}
               <button
                 onClick={handleToggle}
-                className="text-[#9A8C73] hover:underline font-bold focus:outline-none cursor-pointer"
+                className="text-brand-taupe hover:text-brand-gold hover:underline font-bold focus:outline-none cursor-pointer transition-colors"
               >
                 Créer un compte
               </button>
@@ -245,7 +251,7 @@ export default function Login() {
               Vous possédez déjà un compte ?{' '}
               <button
                 onClick={handleToggle}
-                className="text-[#9A8C73] hover:underline font-bold focus:outline-none cursor-pointer"
+                className="text-brand-taupe hover:text-brand-gold hover:underline font-bold focus:outline-none cursor-pointer transition-colors"
               >
                 Se connecter
               </button>

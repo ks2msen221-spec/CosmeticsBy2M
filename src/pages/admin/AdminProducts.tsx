@@ -320,7 +320,7 @@ export default function AdminProducts() {
       {/* Mode 1: Creating / Editing Form */}
       {isEditing ? (
         <div className="max-w-4xl bg-white border border-black/5 rounded-sm shadow-md overflow-hidden">
-          <header className="border-b border-black/5 px-6 py-5 bg-[#FAF9F6] flex items-center justify-between">
+          <header className="border-b border-black/5 px-6 py-5 bg-brand-cream flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setIsEditing(false)}
@@ -349,7 +349,7 @@ export default function AdminProducts() {
             
             {/* Basic Info */}
             <div className="space-y-4">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-[#9A8C73] font-bold border-b border-black/5 pb-1">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
                 Informations de base
               </h3>
               
@@ -364,7 +364,7 @@ export default function AdminProducts() {
                     value={formName}
                     onChange={handleNameChange}
                     placeholder="ex: Sérum Régénérant au Moringa"
-                    className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                    className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                   />
                 </div>
 
@@ -378,7 +378,7 @@ export default function AdminProducts() {
                     value={formSlug}
                     onChange={(e) => setFormSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
                     placeholder="ex: serum-regenerant-moringa"
-                    className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black font-mono"
+                    className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black font-mono"
                   />
                 </div>
               </div>
@@ -386,7 +386,7 @@ export default function AdminProducts() {
 
             {/* Price, Stock and Expiration */}
             <div className="space-y-4">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-[#9A8C73] font-bold border-b border-black/5 pb-1">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
                 Prix, Inventaire & Validité
               </h3>
               
@@ -402,7 +402,7 @@ export default function AdminProducts() {
                     value={formPrice || ''}
                     onChange={(e) => setFormPrice(Number(e.target.value))}
                     placeholder="ex: 28000"
-                    className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                    className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                   />
                 </div>
 
@@ -417,7 +417,7 @@ export default function AdminProducts() {
                     value={formStock}
                     onChange={(e) => setFormStock(Number(e.target.value))}
                     placeholder="ex: 24"
-                    className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                    className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                   />
                 </div>
 
@@ -429,7 +429,7 @@ export default function AdminProducts() {
                     type="date"
                     value={formExpirationDate}
                     onChange={(e) => setFormExpirationDate(e.target.value)}
-                    className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                    className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                   />
                 </div>
               </div>
@@ -437,7 +437,7 @@ export default function AdminProducts() {
 
             {/* Classifications */}
             <div className="space-y-4">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-[#9A8C73] font-bold border-b border-black/5 pb-1">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
                 Classifications catalogue
               </h3>
 
@@ -450,7 +450,7 @@ export default function AdminProducts() {
                     required
                     value={formCategoryId}
                     onChange={(e) => setFormCategoryId(e.target.value)}
-                    className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                    className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                   >
                     <option value="" disabled>Sélectionner une catégorie</option>
                     {categories.map(c => (
@@ -467,7 +467,7 @@ export default function AdminProducts() {
                     required
                     value={formBrandId}
                     onChange={(e) => setFormBrandId(e.target.value)}
-                    className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                    className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                   >
                     <option value="" disabled>Sélectionner une marque</option>
                     {brands.map(b => (
@@ -480,7 +480,7 @@ export default function AdminProducts() {
 
             {/* Descriptions & Formulations */}
             <div className="space-y-4">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-[#9A8C73] font-bold border-b border-black/5 pb-1">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
                 Descriptions & Formulations Scientifiques
               </h3>
 
@@ -495,7 +495,7 @@ export default function AdminProducts() {
                     value={formDescription}
                     onChange={(e) => setFormDescription(e.target.value)}
                     placeholder="Décrivez les bénéfices, la texture, l'application et les rituels conseillés..."
-                    className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
+                    className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
                   />
                 </div>
 
@@ -509,7 +509,7 @@ export default function AdminProducts() {
                       value={formIngredients}
                       onChange={(e) => setFormIngredients(e.target.value)}
                       placeholder="Aqua, Moringa seed oil, Hyaluronic acid..."
-                      className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
+                      className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
                     />
                   </div>
 
@@ -522,7 +522,7 @@ export default function AdminProducts() {
                       value={formAllergens}
                       onChange={(e) => setFormAllergens(e.target.value)}
                       placeholder="Ex: Contient des traces de noix. Éviter le contour des yeux."
-                      className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
+                      className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
                     />
                   </div>
                 </div>
@@ -531,7 +531,7 @@ export default function AdminProducts() {
 
             {/* Multi Image Manager */}
             <div className="space-y-4">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-[#9A8C73] font-bold border-b border-black/5 pb-1">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
                 Galerie d'Images du Produit
               </h3>
 
@@ -542,7 +542,7 @@ export default function AdminProducts() {
                     {formImages.map((imgUrl, index) => (
                       <div 
                         key={index} 
-                        className="aspect-[4/5] bg-[#FAF9F6] border border-black/10 rounded-sm overflow-hidden relative group/img shadow-xs"
+                        className="aspect-[4/5] bg-brand-cream border border-black/10 rounded-sm overflow-hidden relative group/img shadow-xs"
                       >
                         <img 
                           src={imgUrl} 
@@ -553,7 +553,7 @@ export default function AdminProducts() {
                         
                         {/* Primary Badge */}
                         {index === 0 ? (
-                          <span className="absolute top-2 left-2 bg-[#1A1A1A] text-[#FAF9F6] text-[7px] uppercase tracking-widest px-2 py-0.5 rounded-xs font-extrabold z-10">
+                          <span className="absolute top-2 left-2 bg-brand-noir text-brand-cream text-[7px] uppercase tracking-widest px-2 py-0.5 rounded-xs font-extrabold z-10">
                             Photo Principale
                           </span>
                         ) : (
@@ -581,7 +581,7 @@ export default function AdminProducts() {
                 )}
 
                 {/* File Uploader */}
-                <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center bg-[#FAF9F6] p-5 border border-black/5 rounded-sm">
+                <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center bg-brand-cream p-5 border border-black/5 rounded-sm">
                   <div className="flex-1 space-y-1">
                     <p className="text-xs font-semibold text-black/80">Ajouter des photos dermatologiques</p>
                     <p className="text-[10px] text-black/40">Vous pouvez téléverser plusieurs photos à la fois vers le dossier d'images Supabase.</p>
@@ -591,12 +591,12 @@ export default function AdminProducts() {
                     <label className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-black/5 border border-black/15 rounded-sm cursor-pointer text-xs font-bold text-black/70 transition-all shadow-xs">
                       {uploading ? (
                         <>
-                          <Loader2 className="w-4 h-4 animate-spin text-[#9A8C73]" />
+                          <Loader2 className="w-4 h-4 animate-spin text-brand-gold" />
                           Téléchargement en cours...
                         </>
                       ) : (
                         <>
-                          <Upload className="w-4 h-4 text-[#9A8C73]" />
+                          <Upload className="w-4 h-4 text-brand-gold" />
                           Téléverser des photos
                         </>
                       )}
@@ -619,7 +619,7 @@ export default function AdminProducts() {
                     value={manualImageUrl}
                     onChange={(e) => setManualImageUrl(e.target.value)}
                     placeholder="Ou collez un lien direct d'image externe"
-                    className="flex-grow bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black font-mono"
+                    className="flex-grow bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black font-mono"
                   />
                   <button
                     type="button"
@@ -634,11 +634,11 @@ export default function AdminProducts() {
 
             {/* Visibility Toggle */}
             <div className="space-y-4">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-[#9A8C73] font-bold border-b border-black/5 pb-1">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
                 Statut de visibilité
               </h3>
 
-              <div className="flex items-center gap-4 bg-[#FAF9F6] p-4 border border-black/5 rounded-sm">
+              <div className="flex items-center gap-4 bg-brand-cream p-4 border border-black/5 rounded-sm">
                 <button
                   type="button"
                   onClick={() => setFormActive(!formActive)}
@@ -684,7 +684,7 @@ export default function AdminProducts() {
               <button
                 type="submit"
                 disabled={submitting || uploading}
-                className="px-10 py-3 bg-[#1A1A1A] hover:bg-[#9A8C73] text-white hover:text-white disabled:bg-black/20 text-xs font-bold uppercase tracking-widest rounded-sm transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                className="px-10 py-3 bg-brand-noir hover:bg-brand-gold text-white hover:text-white disabled:bg-black/20 text-xs font-bold uppercase tracking-widest rounded-sm transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
               >
                 {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 {editingProduct ? "Mettre à jour le soin" : "Publier le produit"}
@@ -698,7 +698,7 @@ export default function AdminProducts() {
         <div className="space-y-6">
           <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-black/5">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-1">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold block mb-1">
                 Console d'Administration
               </span>
               <h1 className="text-3xl font-serif italic text-black/90">Gestion des Produits</h1>
@@ -709,7 +709,7 @@ export default function AdminProducts() {
 
             <button
               onClick={startCreate}
-              className="px-6 py-3.5 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 shadow-sm"
+              className="px-6 py-3.5 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 shadow-sm"
             >
               <Plus className="w-4 h-4" />
               Ajouter un Produit
@@ -718,7 +718,7 @@ export default function AdminProducts() {
 
           {/* Filtering Bento Bar */}
           <div className="bg-white border border-black/5 p-5 rounded-sm shadow-xs space-y-4">
-            <div className="flex items-center gap-3 bg-[#FAF9F6] border border-black/10 px-4 py-3 rounded-sm">
+            <div className="flex items-center gap-3 bg-brand-cream border border-black/10 px-4 py-3 rounded-sm">
               <Search className="w-4 h-4 text-black/40 shrink-0" />
               <input
                 type="text"
@@ -741,7 +741,7 @@ export default function AdminProducts() {
                 <select
                   value={filterCategory}
                   onChange={(e) => setFilterCategory(e.target.value)}
-                  className="w-full bg-[#FAF9F6] border border-black/5 focus:border-[#9A8C73] focus:outline-hidden text-xs p-2 rounded-sm text-black"
+                  className="w-full bg-brand-cream border border-black/5 focus:border-brand-gold focus:outline-hidden text-xs p-2 rounded-sm text-black"
                 >
                   <option value="">Toutes les catégories</option>
                   {categories.map(c => (
@@ -756,7 +756,7 @@ export default function AdminProducts() {
                 <select
                   value={filterBrand}
                   onChange={(e) => setFilterBrand(e.target.value)}
-                  className="w-full bg-[#FAF9F6] border border-black/5 focus:border-[#9A8C73] focus:outline-hidden text-xs p-2 rounded-sm text-black"
+                  className="w-full bg-brand-cream border border-black/5 focus:border-brand-gold focus:outline-hidden text-xs p-2 rounded-sm text-black"
                 >
                   <option value="">Toutes les marques</option>
                   {brands.map(b => (
@@ -771,7 +771,7 @@ export default function AdminProducts() {
                 <select
                   value={filterActive}
                   onChange={(e) => setFilterActive(e.target.value)}
-                  className="w-full bg-[#FAF9F6] border border-black/5 focus:border-[#9A8C73] focus:outline-hidden text-xs p-2 rounded-sm text-black"
+                  className="w-full bg-brand-cream border border-black/5 focus:border-brand-gold focus:outline-hidden text-xs p-2 rounded-sm text-black"
                 >
                   <option value="all">Tous les produits</option>
                   <option value="active">Actifs uniquement</option>
@@ -784,12 +784,12 @@ export default function AdminProducts() {
           {/* List display */}
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 bg-white border border-black/5 rounded-sm">
-              <Loader2 className="w-8 h-8 text-[#9A8C73] animate-spin mb-3" />
+              <Loader2 className="w-8 h-8 text-brand-gold animate-spin mb-3" />
               <p className="text-xs text-black/40 font-mono uppercase tracking-widest">Chargement des formulations...</p>
             </div>
           ) : filteredProducts.length === 0 ? (
             <div className="border border-dashed border-black/10 rounded-sm bg-white p-12 text-center shadow-xs">
-              <Package className="w-12 h-12 text-[#9A8C73]/30 mx-auto mb-4" />
+              <Package className="w-12 h-12 text-brand-gold/30 mx-auto mb-4" />
               <h3 className="text-lg font-serif italic text-black/80 mb-2">Aucun soin ne correspond</h3>
               <p className="text-xs text-black/50 font-light max-w-md mx-auto leading-relaxed">
                 Ajustez vos filtres de recherche ou commencez par ajouter de nouveaux soins au catalogue.
@@ -807,11 +807,11 @@ export default function AdminProducts() {
                     key={product.id}
                     className={`
                       bg-white border rounded-sm overflow-hidden flex flex-col justify-between shadow-xs hover:shadow-md transition-all group relative
-                      ${isActive ? 'border-black/5' : 'border-black/5 bg-[#1A1A1A]/2 border-dashed'}
+                      ${isActive ? 'border-black/5' : 'border-black/5 bg-brand-noir/2 border-dashed'}
                     `}
                   >
                     {/* Image Header with status toggle */}
-                    <div className="aspect-[4/3] bg-[#FAF9F6] relative overflow-hidden flex items-center justify-center">
+                    <div className="aspect-[4/3] bg-brand-cream relative overflow-hidden flex items-center justify-center">
                       {product.images && product.images.length > 0 ? (
                         <img 
                           src={product.images[0]} 
@@ -833,7 +833,7 @@ export default function AdminProducts() {
                           absolute top-4 left-4 text-[8px] uppercase tracking-widest font-extrabold px-2.5 py-1 rounded-xs shadow-xs z-10 flex items-center gap-1 transition-all cursor-pointer
                           ${isActive 
                             ? 'bg-emerald-600 hover:bg-emerald-700 text-white' 
-                            : 'bg-black/60 hover:bg-black/80 text-[#FAF9F6]'
+                            : 'bg-black/60 hover:bg-black/80 text-brand-cream'
                           }
                         `}
                         title={isActive ? "Masquer sur le site" : "Rendre visible sur le site"}
@@ -870,20 +870,20 @@ export default function AdminProducts() {
                     {/* Description Details */}
                     <div className="p-5 flex-1 flex flex-col justify-between bg-white space-y-4">
                       <div className="space-y-1.5">
-                        <div className="flex justify-between items-center text-[9px] uppercase tracking-widest font-bold text-[#9A8C73]">
+                        <div className="flex justify-between items-center text-[9px] uppercase tracking-widest font-bold text-brand-gold">
                           <span>{product.brand?.name || brands.find(b => b.id === product.brand_id)?.name || 'Maison 2M'}</span>
                           <span className="text-black/40 normal-case font-serif italic">
                             {product.category?.name || categories.find(c => c.id === product.category_id)?.name || 'Cosmétique'}
                           </span>
                         </div>
 
-                        <h3 className="font-serif italic text-base text-black/90 group-hover:text-[#9A8C73] transition-colors line-clamp-2 leading-snug">
+                        <h3 className="font-serif italic text-base text-black/90 group-hover:text-brand-gold transition-colors line-clamp-2 leading-snug">
                           {product.name}
                         </h3>
 
                         {product.expiration_date && (
                           <div className="flex items-center gap-1 text-[9px] text-black/40 font-mono">
-                            <Calendar className="w-3 h-3 text-[#9A8C73]/60" />
+                            <Calendar className="w-3 h-3 text-brand-gold/60" />
                             <span>Exp: {product.expiration_date}</span>
                           </div>
                         )}

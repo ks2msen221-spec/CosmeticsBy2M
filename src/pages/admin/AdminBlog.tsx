@@ -361,12 +361,12 @@ export default function AdminBlog() {
   });
 
   return (
-    <div className="space-y-6 selection:bg-[#9A8C73]/20" id="admin-blog-manager">
+    <div className="space-y-6 selection:bg-brand-taupe/20" id="admin-blog-manager">
       
       {/* Back Office Header */}
       <header className="border-b border-black/5 pb-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-2">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-brand-taupe font-bold block mb-2">
             Console de Rédaction • Dakar
           </span>
           <h1 className="text-3xl font-serif italic text-black/90">La Gazette 2M — Gestion du Blog</h1>
@@ -378,7 +378,7 @@ export default function AdminBlog() {
         {!isEditing && (
           <button 
             onClick={startCreate}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1A1A1A] hover:bg-[#9A8C73] text-white hover:text-[#1A1A1A] rounded-sm text-xs font-mono font-bold transition-all shadow-xs"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-brand-noir hover:bg-brand-taupe text-white hover:text-brand-noir rounded-sm text-xs font-mono font-bold transition-all shadow-xs"
           >
             <Plus className="w-4 h-4" />
             Nouvel Article
@@ -406,10 +406,10 @@ export default function AdminBlog() {
         <div className="border border-black/5 rounded-sm bg-white overflow-hidden">
           <button 
             onClick={() => setShowSqlHelp(!showSqlHelp)}
-            className="w-full flex items-center justify-between p-4 bg-[#FAF9F6] text-xs font-mono text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors"
+            className="w-full flex items-center justify-between p-4 bg-brand-cream text-xs font-mono text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors"
           >
             <span className="flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-[#9A8C73]" />
+              <HelpCircle className="w-4 h-4 text-brand-taupe" />
               ⚙️ Assistant Base de Données Supabase (Table `blog_posts` et RLS)
             </span>
             <span className="text-[10px] underline">{showSqlHelp ? 'Masquer le script SQL' : 'Afficher le script SQL'}</span>
@@ -417,7 +417,7 @@ export default function AdminBlog() {
 
           {showSqlHelp && (
             <div className="p-4 border-t border-black/5 bg-[#1E1E1E] text-white font-mono text-[10px] space-y-3 leading-relaxed overflow-x-auto">
-              <p className="text-[#9A8C73] font-sans">
+              <p className="text-brand-taupe font-sans">
                 Pour assurer une synchronisation transparente en ligne, connectez-vous à votre console Supabase, ouvrez l'éditeur de requêtes SQL (SQL Editor) et exécutez le script ci-dessous :
               </p>
               <pre className="p-3 bg-black/40 rounded border border-white/5 select-all text-green-400">
@@ -467,7 +467,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                 placeholder="Rechercher par titre, résumé ou étiquette..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 border border-black/10 text-xs rounded-sm focus:outline-hidden focus:border-[#9A8C73] bg-[#FAF9F6]/20 font-light"
+                className="w-full pl-9 pr-4 py-2 border border-black/10 text-xs rounded-sm focus:outline-hidden focus:border-brand-taupe bg-brand-cream/20 font-light"
               />
             </div>
 
@@ -476,7 +476,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                 onClick={() => setStatusFilter('all')}
                 className={`px-3 py-1.5 text-[10px] uppercase tracking-wider font-bold rounded-xs transition-colors border ${
                   statusFilter === 'all'
-                    ? 'bg-[#1A1A1A] text-white border-[#1A1A1A]'
+                    ? 'bg-brand-noir text-white border-brand-noir'
                     : 'bg-white text-black/60 border-black/10 hover:border-black/20'
                 }`}
               >
@@ -510,12 +510,12 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
           {/* Table list or fallback empty card */}
           {loading ? (
             <div className="bg-white border border-black/5 p-20 text-center rounded-sm shadow-xs flex flex-col items-center">
-              <Loader2 className="w-8 h-8 text-[#9A8C73] animate-spin mb-3" />
+              <Loader2 className="w-8 h-8 text-brand-taupe animate-spin mb-3" />
               <span className="text-[10px] uppercase tracking-widest text-black/40 font-mono">Chargement du pupitre de rédaction...</span>
             </div>
           ) : filteredPosts.length === 0 ? (
             <div className="bg-white border border-dashed border-black/10 p-16 text-center rounded-sm shadow-xs">
-              <Newspaper className="w-12 h-12 text-[#9A8C73]/20 mx-auto mb-4" />
+              <Newspaper className="w-12 h-12 text-brand-taupe/20 mx-auto mb-4" />
               <h3 className="text-sm font-serif italic text-black/70 mb-1">Aucun article trouvé</h3>
               <p className="text-xs text-black/40 max-w-sm mx-auto font-light leading-relaxed">
                 Votre recherche ou filtre n'a retourné aucun article de blog pour le moment. Créez votre premier diagnostic de beauté !
@@ -529,7 +529,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                   className="bg-white border border-black/5 hover:border-black/15 transition-all duration-300 flex flex-col rounded-sm overflow-hidden shadow-2xs group"
                 >
                   {/* Cover block */}
-                  <div className="relative h-44 bg-[#FAF9F6] border-b border-black/5 overflow-hidden shrink-0">
+                  <div className="relative h-44 bg-brand-cream border-b border-black/5 overflow-hidden shrink-0">
                     {post.cover_image ? (
                       <img 
                         src={post.cover_image} 
@@ -566,7 +566,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                     <div className="space-y-2">
                       <div className="flex items-center gap-3 text-[10px] text-black/40 font-mono font-light">
                         <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3 text-[#9A8C73]" />
+                          <Calendar className="w-3 h-3 text-brand-taupe" />
                           {new Date(post.created_at).toLocaleDateString('fr-FR', {
                             day: 'numeric',
                             month: 'short',
@@ -575,13 +575,13 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                         </span>
                         {post.reading_time && (
                           <span className="flex items-center gap-1">
-                            <Clock className="w-3 h-3 text-[#9A8C73]" />
+                            <Clock className="w-3 h-3 text-brand-taupe" />
                             {post.reading_time}
                           </span>
                         )}
                       </div>
 
-                      <h4 className="text-lg font-serif italic text-black/85 group-hover:text-[#9A8C73] transition-colors line-clamp-2">
+                      <h4 className="text-lg font-serif italic text-black/85 group-hover:text-brand-taupe transition-colors line-clamp-2">
                         {post.title}
                       </h4>
 
@@ -600,7 +600,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                         <div className="flex gap-1.5 shrink-0">
                           <button
                             onClick={() => startEdit(post)}
-                            className="p-1.5 border border-black/5 rounded-xs hover:bg-[#FAF9F6] text-black/60 hover:text-black transition-all"
+                            className="p-1.5 border border-black/5 rounded-xs hover:bg-brand-cream text-black/60 hover:text-black transition-all"
                             title="Modifier l'article"
                           >
                             <Edit className="w-3.5 h-3.5" />
@@ -629,9 +629,9 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
         <form onSubmit={handleSave} className="bg-white border border-black/5 rounded-sm overflow-hidden shadow-xs text-left">
           
           {/* Header toolbar */}
-          <div className="bg-[#FAF9F6] border-b border-black/5 p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="bg-brand-cream border-b border-black/5 p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div className="flex items-center gap-3">
-              <span className="p-2 bg-[#1A1A1A]/5 rounded-xs text-[#9A8C73]">
+              <span className="p-2 bg-brand-noir/5 rounded-xs text-brand-taupe">
                 <FileText className="w-5 h-5" />
               </span>
               <div>
@@ -650,7 +650,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                 type="button"
                 onClick={() => setPreviewTab('edit')}
                 className={`px-2.5 py-1.5 rounded-xs transition-colors ${
-                  previewTab === 'edit' ? 'bg-[#1A1A1A] text-white font-bold' : 'text-black/50 hover:text-black'
+                  previewTab === 'edit' ? 'bg-brand-noir text-white font-bold' : 'text-black/50 hover:text-black'
                 }`}
               >
                 Éditeur
@@ -659,7 +659,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                 type="button"
                 onClick={() => setPreviewTab('split')}
                 className={`hidden md:block px-2.5 py-1.5 rounded-xs transition-colors ${
-                  previewTab === 'split' ? 'bg-[#1A1A1A] text-white font-bold' : 'text-black/50 hover:text-black'
+                  previewTab === 'split' ? 'bg-brand-noir text-white font-bold' : 'text-black/50 hover:text-black'
                 }`}
               >
                 Double Vue (Split)
@@ -668,7 +668,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                 type="button"
                 onClick={() => setPreviewTab('preview')}
                 className={`px-2.5 py-1.5 rounded-xs transition-colors ${
-                  previewTab === 'preview' ? 'bg-[#1A1A1A] text-white font-bold' : 'text-black/50 hover:text-black'
+                  previewTab === 'preview' ? 'bg-brand-noir text-white font-bold' : 'text-black/50 hover:text-black'
                 }`}
               >
                 Aperçu Client
@@ -694,7 +694,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                     value={formTitle}
                     onChange={handleTitleChange}
                     placeholder="Ex: Les secrets de l'Hydratation Peaux Sèches..."
-                    className="w-full px-3.5 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-[#9A8C73]"
+                    className="w-full px-3.5 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-brand-taupe"
                   />
                 </div>
 
@@ -705,7 +705,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                     <button
                       type="button"
                       onClick={toggleSlugLock}
-                      className="text-[#9A8C73] hover:text-black transition-colors"
+                      className="text-brand-taupe hover:text-black transition-colors"
                       title={slugLocked ? "Modifier le slug manuellement" : "Verrouiller le slug"}
                     >
                       {slugLocked ? <Lock className="w-3 h-3" /> : <Unlock className="w-3 h-3 text-amber-500" />}
@@ -722,7 +722,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                       value={formSlug}
                       onChange={handleSlugChange}
                       placeholder="generer-automatiquement-du-titre"
-                      className="w-full pl-14 pr-4 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-[#9A8C73] font-mono disabled:bg-[#FAF9F6] disabled:text-black/40"
+                      className="w-full pl-14 pr-4 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-brand-taupe font-mono disabled:bg-brand-cream disabled:text-black/40"
                     />
                   </div>
                 </div>
@@ -735,7 +735,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                     <select
                       value={formCategory}
                       onChange={(e) => setFormCategory(e.target.value)}
-                      className="w-full px-3.5 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-[#9A8C73] bg-white font-serif italic"
+                      className="w-full px-3.5 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-brand-taupe bg-white font-serif italic"
                     >
                       <option value="Rituels de Soins">Rituels de Soins</option>
                       <option value="Dermatologie">Dermatologie</option>
@@ -753,7 +753,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                       value={formReadingTime}
                       onChange={(e) => setFormReadingTime(e.target.value)}
                       placeholder="Ex: 5 min"
-                      className="w-full px-3.5 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-[#9A8C73] font-mono"
+                      className="w-full px-3.5 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-brand-taupe font-mono"
                     />
                   </div>
 
@@ -764,7 +764,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                     <select
                       value={formStatus}
                       onChange={(e) => setFormStatus(e.target.value as 'draft' | 'published')}
-                      className="w-full px-3.5 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-[#9A8C73] bg-white font-mono font-bold"
+                      className="w-full px-3.5 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-brand-taupe bg-white font-mono font-bold"
                     >
                       <option value="draft">Brouillon (Draft)</option>
                       <option value="published">Publié (Published)</option>
@@ -781,7 +781,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                   </label>
                   
                   {/* Upload box */}
-                  <div className="border border-black/10 rounded-xs overflow-hidden bg-[#FAF9F6] p-4 text-center space-y-3 relative">
+                  <div className="border border-black/10 rounded-xs overflow-hidden bg-brand-cream p-4 text-center space-y-3 relative">
                     {formCoverImage ? (
                       <div className="relative h-28 w-full bg-black/5 rounded-xs overflow-hidden">
                         <img 
@@ -801,7 +801,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                       </div>
                     ) : (
                       <div className="py-6 flex flex-col items-center justify-center">
-                        <ImageIcon className="w-8 h-8 text-[#9A8C73]/40 mb-2" />
+                        <ImageIcon className="w-8 h-8 text-brand-taupe/40 mb-2" />
                         <span className="text-[10px] text-black/40 block font-light">
                           Aucune image sélectionnée
                         </span>
@@ -811,7 +811,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                     <div className="flex gap-2">
                       <label className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 border border-black/10 hover:bg-white text-[10px] font-mono rounded-xs cursor-pointer text-black/70 hover:text-black transition-all">
                         {uploadingImage ? (
-                          <Loader2 className="w-3 h-3 animate-spin text-[#9A8C73]" />
+                          <Loader2 className="w-3 h-3 animate-spin text-brand-taupe" />
                         ) : (
                           <Upload className="w-3 h-3" />
                         )}
@@ -834,7 +834,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                       placeholder="Ou collez un lien d'image externe (Unsplash...)"
                       value={formCoverImage}
                       onChange={(e) => setFormCoverImage(e.target.value)}
-                      className="w-full px-3 py-2 border border-black/10 text-[10px] font-mono rounded-xs focus:outline-hidden focus:border-[#9A8C73]"
+                      className="w-full px-3 py-2 border border-black/10 text-[10px] font-mono rounded-xs focus:outline-hidden focus:border-brand-taupe"
                     />
                   </div>
                 </div>
@@ -851,7 +851,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                 onChange={(e) => setFormExcerpt(e.target.value)}
                 placeholder="Ex: Pourquoi toutes les peaux ont besoin d'un écran protecteur contre les UVA et UVB sous le soleil dakarois..."
                 rows={2}
-                className="w-full px-3.5 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-[#9A8C73] font-light leading-relaxed"
+                className="w-full px-3.5 py-2.5 border border-black/10 text-xs rounded-xs focus:outline-hidden focus:border-brand-taupe font-light leading-relaxed"
               />
             </div>
 
@@ -861,7 +861,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                 <label className="text-[10px] uppercase tracking-wider font-mono font-bold text-black/50 block">
                   Contenu en Markdown *
                 </label>
-                <span className="text-[9px] text-[#9A8C73] font-mono flex items-center gap-1">
+                <span className="text-[9px] text-brand-taupe font-mono flex items-center gap-1">
                   <Code className="w-3 h-3" />
                   Rendu en temps réel activé
                 </span>
@@ -876,7 +876,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                 } ${previewTab === 'split' ? 'md:col-span-6 border-r border-black/10' : 'md:col-span-12'}`}>
                   
                   {/* Toolbar helpers */}
-                  <div className="bg-[#FAF9F6] border-b border-black/5 px-3 py-2 flex flex-wrap gap-1">
+                  <div className="bg-brand-cream border-b border-black/5 px-3 py-2 flex flex-wrap gap-1">
                     <button
                       type="button"
                       onClick={() => insertMarkdown('bold')}
@@ -955,7 +955,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                 } ${previewTab === 'split' ? 'md:col-span-6' : 'md:col-span-12'}`}>
                   
                   {formContent.trim() ? (
-                    <article className="prose prose-sm max-w-none text-black/75 font-serif text-xs text-left selection:bg-[#9A8C73]/20 space-y-4">
+                    <article className="prose prose-sm max-w-none text-black/75 font-serif text-xs text-left selection:bg-brand-taupe/20 space-y-4">
                       {/* Markdown content parser as per layout requirement */}
                       <div className="markdown-body">
                         <Markdown>{formContent}</Markdown>
@@ -981,7 +981,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
                   setIsEditing(false);
                   setEditingPost(null);
                 }}
-                className="px-5 py-2.5 border border-black/10 hover:bg-[#FAF9F6] text-black/70 hover:text-black rounded-sm text-xs font-mono font-bold transition-all"
+                className="px-5 py-2.5 border border-black/10 hover:bg-brand-cream text-black/70 hover:text-black rounded-sm text-xs font-mono font-bold transition-all"
               >
                 Annuler
               </button>
@@ -989,7 +989,7 @@ CREATE POLICY "Acces total anonyme temporaire" ON blog_posts
               <button
                 type="submit"
                 disabled={uploading}
-                className="px-6 py-2.5 bg-[#1A1A1A] hover:bg-[#9A8C73] text-white hover:text-[#1A1A1A] rounded-sm text-xs font-mono font-bold transition-all flex items-center gap-2 shadow-xs disabled:opacity-50"
+                className="px-6 py-2.5 bg-brand-noir hover:bg-brand-taupe text-white hover:text-brand-noir rounded-sm text-xs font-mono font-bold transition-all flex items-center gap-2 shadow-xs disabled:opacity-50"
               >
                 {uploading ? (
                   <>

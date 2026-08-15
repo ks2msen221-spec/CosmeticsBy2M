@@ -27,15 +27,15 @@ export const mockCategories: Category[] = [
     id: UUID_CAT_VISAGE,
     slug: 'soins-visage',
     name: 'Soins du Visage',
-    description: 'Une gamme complète pour purifier, hydrater et régénérer la peau délicate de votre visage.',
+    description: 'Des rituels sur-mesure pour nettoyer en douceur, hydrater intensément et révéler la lumière naturelle de votre teint au quotidien.',
     parent_id: null,
     image_url: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=600'
   },
   {
     id: UUID_CAT_SERUMS,
     slug: 'serums-huiles',
-    name: 'Sérums et Huiles précieuses',
-    description: 'Élixirs hautement concentrés en principes actifs d’origine végétale pour cibler des besoins spécifiques.',
+    name: 'Sérums & Huiles Précieuses',
+    description: 'De véritables concentrés botaniques pressés à froid et gorgés d’antioxydants pour nourrir, réparer et sublimer votre peau en profondeur.',
     parent_id: null,
     image_url: 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&q=80&w=600'
   },
@@ -43,7 +43,7 @@ export const mockCategories: Category[] = [
     id: UUID_CAT_CORPS,
     slug: 'soins-corps',
     name: 'Soins du Corps',
-    description: 'Lait hydratant, gommage et baumes nourrissants formulés pour sublimer l’éclat naturel de votre peau.',
+    description: 'Des textures enveloppantes au beurre de karité et fleurs bienfaisantes pour une peau douce, soyeuse et durablement réconfortée.',
     parent_id: null,
     image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=600'
   }
@@ -54,14 +54,14 @@ export const mockBrands: Brand[] = [
     id: UUID_BRAND_BOTANICS,
     slug: 'm-botanics',
     name: 'M Botanics',
-    bio: 'Pionnier de la cosmétique naturelle au Sénégal, M Botanics extrait le meilleur des plantes ouest-africaines (Moringa, Baobab, Nébédaye) pour créer des soins purs certifiés biologiques.',
+    bio: 'Pionnier de la haute cosmétique naturelle au Sénégal, M Botanics sublime les trésors botaniques d’Afrique de l’Ouest (Moringa, Baobab, Nébédaye) à travers des formules pures, douces et certifiées biologiques pour révéler votre éclat originel.',
     logo_url: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=150'
   },
   {
     id: UUID_BRAND_SYLLA,
     slug: 'sylla-dermatology',
     name: 'Sylla Dermatology',
-    bio: 'Fondé par le Dr. Sylla, dermatologue renommé à Dakar, ce laboratoire allie rigueur scientifique et actifs dakarois pour traiter les hyperpigmentations et protéger des agressions urbaines.',
+    bio: 'Conçue par le Dr. Sylla à Dakar, cette maison dermatologique associe la rigueur scientifique aux actifs protecteurs locaux. Des soins ciblés haute tolérance pour apaiser, prévenir les taches pigmentaires et protéger la barrière cutanée des agressions climatiques.',
     logo_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=150'
   }
 ];
@@ -70,20 +70,20 @@ export const mockCatalogues: Catalogue[] = [
   {
     id: UUID_CAT_NOUVEAUTES,
     slug: 'nouveautes',
-    name: 'Nouveautés Exclusives',
-    description: 'Les dernières formulations dermatologiques de 2026, validées par nos comités scientifiques et disponibles en édition limitée.'
+    name: 'Nouveautés & Éditions Rares',
+    description: 'Découvrez nos toutes dernières pépites formulatoires : des soins innovants et sensoriels fraîchement arrivés pour choyer votre peau.'
   },
   {
     id: UUID_CAT_SELECTION,
     slug: 'selection-botanique',
-    name: 'Sélection Botanique',
-    description: 'Une collection intemporelle de soins formulés à base de plantes locales sacrées d’Afrique de l’Ouest.'
+    name: 'Sélection Botanique Essentielle',
+    description: 'Une sélection de soins incontournables enrichis aux extraits sacrés du terroir ouest-africain, pour bâtir une routine quotidienne bienfaisante.'
   },
   {
     id: UUID_CAT_PROMO,
     slug: 'promo-ete',
-    name: 'Collection Promo Été',
-    description: 'Des soins protecteurs solaires et des sérums éclat pour garder une mine rayonnante tout l’été.'
+    name: 'Rituels Solaires & Éclat d’Été',
+    description: 'Nos indispensables protecteurs SPF et sérums réflecteurs de lumière pour préserver un teint frais, uniforme et radieux sous le soleil.'
   }
 ];
 
@@ -93,7 +93,7 @@ export const mockProducts: Product[] = [
     slug: 'serum-revitalisant-botanique',
     name: 'Sérum Revitalisant au Moringa',
     price: 32000,
-    description: 'Ce sérum précieux recharge la peau en antioxydants puissants. Formulé à base d’huile pure de Moringa et d’acide hyaluronique naturel, il atténue les ridules et apporte un coup d’éclat instantané. Sa texture légère pénètre rapidement sans laisser de film gras.',
+    description: 'Véritable shot d’éclat et de jeunesse, ce sérum précieux infuse votre peau en antioxydants protecteurs. Formulé à base d’huile pure de Moringa et d’acide hyaluronique d’origine végétale, il lisse délicatement les ridules et réveille les teints fatigués. Sa texture soyeuse et aérienne pénètre instantanément sans aucun fini gras, laissant la peau immédiatement rebondie et lumineuse.',
     ingredients: 'Moringa Oleifera Seed Oil, Aqua, Sodium Hyaluronate, Glycerin, Aloe Barbadensis Leaf Juice, Tocopherol (Vitamin E), Benzyl Alcohol, Dehydroacetic Acid.',
     allergens: 'Aucun allergène majeur. Sans parfum synthétique.',
     stock: 24,
@@ -109,7 +109,7 @@ export const mockProducts: Product[] = [
     slug: 'creme-eclat-baobab',
     name: 'Crème Hydratante Éclat Intense au Baobab',
     price: 28500,
-    description: 'Soin quotidien ultra-nourrissant pour peaux sèches et fatiguées. Enrichie en huile de graines de baobab et en beurre de karité bio, elle renforce la barrière cutanée, repulpe l’épiderme et illumine les teints ternes sous le soleil dakarois.',
+    description: 'Une caresse de douceur quotidienne pour nourrir et apaiser les épidermes assoiffés. Enrichie en huile précieuse de graines de baobab et en beurre de karité bio, cette crème onctueuse renforce la barrière cutanée tout en protégeant la peau de la déshydratation et du vent chaud. Votre teint retrouve souplesse, velouté et un éclat chaleureux dès les premières applications.',
     ingredients: 'Adansonia Digitata (Baobab) Seed Oil, Butyrospermum Parkii (Karité), Aqua, Cetearyl Olivate, Sorbitan Olivate, Pentylene Glycol, Xanthan Gum.',
     allergens: 'Contient des noix (Karité).',
     stock: 18,
@@ -125,7 +125,7 @@ export const mockProducts: Product[] = [
     slug: 'ecran-total-anti-taches-spf50',
     name: 'Écran Solaire Anti-Taches Haute Protection SPF 50+',
     price: 24500,
-    description: 'Une protection solaire absolue à large spectre contre les UVA/UVB et la lumière bleue, spécifiquement étudiée pour prévenir les hyperpigmentations sur peaux mélanodermes. Ne laisse aucune trace blanche, fini mat velouté parfait comme base de maquillage.',
+    description: 'Votre bouclier invisible contre le soleil tropical ! Ce soin haute protection SPF 50+ protège efficacement contre les UVA/UVB et la lumière bleue tout en prévenant l’apparition des taches pigmentaires. Spécialement formulé pour les peaux métissées et noires, il fond instantanément sans laisser aucune trace blanche ni sensation collante. Fini mat poudré idéal seul ou sous votre maquillage.',
     ingredients: 'Aqua, Zinc Oxide, Titanium Dioxide, Niacinamide (Vitamin B3), Ethylhexyl Salicylate, Caprylic/Capric Triglycerine, Glyceryl Stearate, Centella Asiatica Extract.',
     allergens: 'Sans parfum. Sans huiles essentielles.',
     stock: 45,
@@ -140,7 +140,7 @@ export const mockProducts: Product[] = [
     slug: 'gel-purifiant-nebedaye',
     name: 'Gel Nettoyant Purifiant au Nébédaye',
     price: 18000,
-    description: 'Gel moussant sans sulfate qui élimine en douceur l’excès de sébum et les impuretés de la pollution urbaine dakaroise. Les extraits de Nébédaye (Moringa) agissent comme un aimant anti-pollution pour purifier la peau en profondeur sans la dessécher.',
+    description: 'Offrez un grand bol d’air pur à votre visage matin et soir. Formulé sans sulfate, ce gel soyeux se transforme en mousse délicate pour déloger impuretés, excès de sébum et particules de pollution urbaine sans jamais tirailler. L’extrait de Nébédaye (Moringa) clarifie et purifie les pores pour une sensation de fraîcheur nette et vivifiante.',
     ingredients: 'Aqua, Cocamidopropyl Betaine, Decyl Glucoside, Moringa Oleifera Leaf Extract, Melaleuca Alternifolia (Tea Tree) Oil, Citric Acid, Potassium Sorbate.',
     allergens: 'Limonene (présent naturellement dans l’huile essentielle d’arbre à thé).',
     stock: 30,
@@ -155,7 +155,7 @@ export const mockProducts: Product[] = [
     slug: 'lait-corps-soyeux-karite',
     name: 'Lait Corps Soyeux au Beurre de Karité & Hibiscus',
     price: 22000,
-    description: 'Un lait fondant qui hydrate la peau pendant 24 heures. L’alliance réparatrice du beurre de karité brut de Casamance et l’action tonifiante des fleurs d’Hibiscus offre une peau douce, satinée et délicatement parfumée aux notes fleuries.',
+    description: 'Une émulsion veloutée d’une infinie douceur qui enlace votre corps pour 24h d’hydratation continue. L’alliance nourrissante du beurre de karité brut de Casamance et l’action tonifiante des fleurs d’Hibiscus satine le grain de peau, apaise les tiraillements et parfume délicatement de notes florales fraîches et solaires.',
     ingredients: 'Aqua, Butyrospermum Parkii, Hibiscus Sabdariffa Flower Extract, Prunus Amygdalus Dulcis (Amande Douce) Oil, Glycerin, Glyceryl Stearate, Fragrance.',
     allergens: 'Contient des noix (Amande Douce, Karité).',
     stock: 12,
@@ -170,7 +170,7 @@ export const mockProducts: Product[] = [
     slug: 'huile-reparatrice-nuit-sylla',
     name: 'Huile Réparatrice de Nuit Haute Tolérance',
     price: 36000,
-    description: 'Un élixir de nuit d’exception pour peaux sensibles et fragilisées. Formulé avec seulement 5 huiles végétales pures pressées à froid, il apaise les irritations, atténue les rougeurs et accélère le renouvellement cellulaire nocturne pour un réveil frais.',
+    description: 'Un trésor régénérant pour bercer votre peau pendant le sommeil. Formulée avec une synergie d’huiles végétales pures pressées à froid (Jojoba, Rosier Sauvage, Marula), cette huile de nuit répare la barrière cutanée, apaise les rougeurs et favorise le renouvellement cellulaire nocturne. Au réveil, la peau est reposée, douce, souple et remarquablement lumineuse.',
     ingredients: 'Simmondsia Chinensis (Jojoba) Seed Oil, Rosa Canina (Rosier Sauvage) Fruit Oil, Squalane, Sclerocarya Birrea (Marula) Seed Oil, Tocopherol.',
     allergens: 'Aucun. Sans parfum.',
     stock: 15,

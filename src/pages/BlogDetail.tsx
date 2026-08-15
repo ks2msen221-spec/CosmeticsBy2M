@@ -16,8 +16,11 @@ import {
   Bookmark,
   ChevronRight,
   User,
-  Heart
+  Heart,
+  Sparkles,
+  ShoppingBag
 } from 'lucide-react';
+import { usePageSEO } from '../utils/seo';
 
 export default function BlogDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -29,6 +32,11 @@ export default function BlogDetail() {
   const [shareSuccess, setShareSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  usePageSEO(
+    post ? `${post.title} | Conseils Maison 2M Dakar` : "Conseil Beauté | Maison 2M Cosmetics Dakar",
+    post ? (post.excerpt || `Découvrez nos rituels et conseils de soins pour ${post.title} à Dakar.`) : "Conseils dermo-cosmétiques et rituels de beauté à Dakar par Maison 2M Cosmetics."
+  );
+
   useEffect(() => {
     const loadPost = async () => {
       if (!slug) return;
@@ -37,35 +45,38 @@ export default function BlogDetail() {
       setErrorMessage('');
       
       try {
-        if (!supabase) {
-          throw new Error("Client Supabase non initialisé. Veuillez configurer vos variables d'environnement.");
-        }
-        const { data, error } = await supabase
-          .from('blog_posts')
-          .select('*');
-        
-        if (error) {
-          throw error;
+        let foundPost: BlogPost | null = null;
+        let allPosts: BlogPost[] = [];
+
+        if (supabase) {
+          const { data, error } = await supabase
+            .from('blog_posts')
+            .select('*');
+          
+          if (!error && data && data.length > 0) {
+            allPosts = data as BlogPost[];
+            foundPost = allPosts.find(p => p.slug === slug) || null;
+          }
         }
 
-        const allPosts = data as BlogPost[] || [];
-        const foundPost = allPosts.find(p => p.slug === slug) || null;
+        if (!foundPost) {
+          allPosts = SEED_BLOG_POSTS;
+          foundPost = allPosts.find(p => p.slug === slug) || null;
+        }
 
         if (foundPost) {
           setPost(foundPost);
-          
-          // Get recommendations (published articles excluding current one)
           const recs = allPosts
-            .filter(p => p.status === 'published' && p.slug !== foundPost.slug)
+            .filter(p => p.status === 'published' && p.slug !== foundPost!.slug)
             .slice(0, 3);
           setRecommendations(recs);
         } else {
           setPost(null);
         }
       } catch (err: any) {
-        const msg = err.message || JSON.stringify(err);
-        console.error("Erreur de chargement de l'article depuis Supabase :", err);
-        setErrorMessage(`Erreur de chargement depuis Supabase : ${msg}`);
+        console.error("Erreur de chargement de l'article :", err);
+        const fallback = SEED_BLOG_POSTS.find(p => p.slug === slug) || null;
+        setPost(fallback);
       } finally {
         setLoading(false);
       }
@@ -73,31 +84,6 @@ export default function BlogDetail() {
 
     loadPost();
   }, [slug]);
-
-  // Dynamic SEO Meta tags configuration
-  useEffect(() => {
-    if (post) {
-      // Set the browser tab title
-      document.title = `${post.title} | Maison 2M Cosmetics`;
-      
-      // Upsert or create meta description tag
-      let metaDescription = document.querySelector('meta[name="description"]');
-      if (!metaDescription) {
-        metaDescription = document.createElement('meta');
-        metaDescription.setAttribute('name', 'description');
-        document.head.appendChild(metaDescription);
-      }
-      metaDescription.setAttribute(
-        'content', 
-        post.excerpt || `Découvrez l'article "${post.title}" rédigé par la directrice scientifique de la Maison 2M Cosmetics.`
-      );
-    }
-
-    return () => {
-      // Revert page title on component unmount
-      document.title = "Maison 2M Cosmetics | Dakar";
-    };
-  }, [post]);
 
   const handleShare = (platform: string) => {
     const url = window.location.href;
@@ -140,8 +126,8 @@ export default function BlogDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center bg-[#FAF9F6]" id="blog-detail-loading">
-        <div className="w-10 h-10 border-2 border-[#9A8C73] border-t-transparent rounded-full animate-spin mb-4"></div>
+      <div className="min-h-[60vh] flex flex-col items-center justify-center bg-brand-cream" id="blog-detail-loading">
+        <div className="w-10 h-10 border-2 border-brand-gold border-t-transparent rounded-full animate-spin mb-4"></div>
         <p className="text-[10px] uppercase tracking-widest text-black/40 font-mono">Chargement du diagnostic de peau...</p>
       </div>
     );
@@ -149,13 +135,13 @@ export default function BlogDetail() {
 
   if (errorMessage) {
     return (
-      <div className="max-w-xl mx-auto px-6 py-24 text-center selection:bg-[#9A8C73]/20" id="blog-detail-error">
+      <div className="max-w-xl mx-auto px-6 py-24 text-center selection:bg-brand-taupe/20" id="blog-detail-error">
         <div className="p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs rounded-sm mb-6">
           <span>{errorMessage}</span>
         </div>
         <Link 
           to="/blog" 
-          className="inline-flex items-center gap-2 px-8 py-3 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-all rounded-xs"
+          className="inline-flex items-center gap-2 px-8 py-3 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all rounded-xs"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Retourner à la Gazette
@@ -166,15 +152,15 @@ export default function BlogDetail() {
 
   if (!post) {
     return (
-      <div className="max-w-xl mx-auto px-6 py-24 text-center selection:bg-[#9A8C73]/20" id="blog-detail-not-found">
-        <BookOpen className="w-16 h-16 text-[#9A8C73]/30 mx-auto mb-6" />
+      <div className="max-w-xl mx-auto px-6 py-24 text-center selection:bg-brand-taupe/20" id="blog-detail-not-found">
+        <BookOpen className="w-16 h-16 text-brand-taupe/30 mx-auto mb-6" />
         <h2 className="text-3xl font-serif italic text-black/80 mb-3">Conseil introuvable</h2>
         <p className="text-xs text-black/50 font-light leading-relaxed mb-8 max-w-sm mx-auto">
           L'article que vous cherchez n'existe pas ou a été basculé en mode brouillon par la rédaction de la Maison 2M.
         </p>
         <Link 
           to="/blog" 
-          className="inline-flex items-center gap-2 px-8 py-3 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-all rounded-xs"
+          className="inline-flex items-center gap-2 px-8 py-3 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all rounded-xs"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Retourner à la Gazette
@@ -184,13 +170,13 @@ export default function BlogDetail() {
   }
 
   return (
-    <div className="bg-white min-h-screen selection:bg-[#9A8C73]/20" id="blog-detail-article">
+    <div className="bg-white min-h-screen selection:bg-brand-taupe/20" id="blog-detail-article">
       
       {/* Article top breadcrumb / nav */}
       <nav className="max-w-7xl mx-auto px-6 lg:px-12 py-6 border-b border-black/5 flex items-center justify-between text-xs font-mono">
         <Link 
           to="/blog" 
-          className="flex items-center gap-2 text-black/55 hover:text-[#9A8C73] transition-colors"
+          className="flex items-center gap-2 text-black/55 hover:text-brand-gold transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Retour à la Gazette
@@ -211,7 +197,7 @@ export default function BlogDetail() {
         {/* Article Meta Header */}
         <header className="text-center space-y-6 max-w-2xl mx-auto mb-10">
           {post.category && (
-            <span className="inline-block px-3 py-1 bg-[#FAF9F6] border border-black/5 text-[#9A8C73] text-[9px] uppercase tracking-[0.2em] font-extrabold rounded-xs">
+            <span className="inline-block px-3 py-1 bg-brand-cream border border-black/5 text-brand-gold text-[9px] uppercase tracking-[0.2em] font-extrabold rounded-xs">
               {post.category}
             </span>
           )}
@@ -220,16 +206,16 @@ export default function BlogDetail() {
             {post.title}
           </h1>
 
-          <div className="h-[2px] w-12 bg-[#9A8C73] mx-auto"></div>
+          <div className="h-[2px] w-12 bg-brand-gold mx-auto"></div>
 
           <div className="flex items-center justify-center gap-6 text-[11px] text-black/40 font-mono font-light">
             <span className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-[#9A8C73]" />
+              <Calendar className="w-3.5 h-3.5 text-brand-taupe" />
               {formatFrenchDate(post.created_at)}
             </span>
             {post.reading_time && (
               <span className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-[#9A8C73]" />
+                <Clock className="w-3.5 h-3.5 text-brand-taupe" />
                 Temps de lecture : {post.reading_time}
               </span>
             )}
@@ -238,7 +224,7 @@ export default function BlogDetail() {
 
         {/* Big Cover Image */}
         {post.cover_image && (
-          <div className="w-full h-80 sm:h-96 md:h-[450px] bg-[#FAF9F6] border border-black/5 rounded-xs overflow-hidden shadow-2xs mb-12">
+          <div className="w-full h-80 sm:h-96 md:h-[450px] bg-brand-cream border border-black/5 rounded-xs overflow-hidden shadow-2xs mb-12">
             <img 
               src={post.cover_image} 
               alt={post.title} 
@@ -256,11 +242,11 @@ export default function BlogDetail() {
             
             {/* Author card */}
             <div className="flex lg:flex-col items-center lg:items-start gap-4">
-              <div className="w-12 h-12 bg-[#FAF9F6] border border-[#9A8C73]/20 rounded-full flex items-center justify-center text-[#9A8C73] shadow-inner shrink-0">
+              <div className="w-12 h-12 bg-brand-cream border border-brand-taupe/20 rounded-full flex items-center justify-center text-brand-taupe shadow-inner shrink-0">
                 <User className="w-5 h-5" />
               </div>
               <div className="text-left">
-                <h5 className="text-[10px] uppercase tracking-wider font-mono font-bold text-[#9A8C73]">
+                <h5 className="text-[10px] uppercase tracking-wider font-mono font-bold text-brand-gold">
                   Rédigé par
                 </h5>
                 <p className="font-serif italic text-sm text-black/80 font-bold mt-0.5">
@@ -355,13 +341,13 @@ export default function BlogDetail() {
           <div className="pt-2 flex flex-col sm:flex-row justify-center gap-3">
             <Link 
               to="/recherche" 
-              className="inline-block px-6 py-2.5 bg-[#1A1A1A] hover:bg-[#9A8C73] text-white hover:text-[#1A1A1A] rounded-sm text-[10px] font-mono tracking-widest uppercase font-bold transition-all shadow-xs"
+              className="inline-block px-6 py-2.5 bg-brand-noir hover:bg-brand-gold text-white hover:text-brand-noir rounded-sm text-[10px] font-mono tracking-widest uppercase font-bold transition-all shadow-xs"
             >
               Découvrir nos soins
             </Link>
             <Link 
               to="/blog" 
-              className="inline-block px-6 py-2.5 border border-black/10 hover:bg-[#FAF9F6] text-black/70 rounded-sm text-[10px] font-mono tracking-widest uppercase font-bold transition-all"
+              className="inline-block px-6 py-2.5 border border-black/10 hover:bg-brand-cream text-black/70 rounded-sm text-[10px] font-mono tracking-widest uppercase font-bold transition-all"
             >
               Voir d'autres conseils
             </Link>
@@ -371,7 +357,7 @@ export default function BlogDetail() {
 
       {/* Recommended Next Readings (Seeded/other articles) */}
       {recommendations.length > 0 && (
-        <section className="bg-[#FAF9F6] border-t border-black/5 py-16 text-left">
+        <section className="bg-brand-cream border-t border-black/5 py-16 text-left">
           <div className="max-w-4xl mx-auto px-6 lg:px-12">
             <h4 className="font-serif italic text-2xl text-black/95 mb-8">
               Poursuivre votre lecture...
@@ -384,10 +370,10 @@ export default function BlogDetail() {
                   to={`/blog/${rec.slug}`}
                   className="bg-white border border-black/5 hover:border-black/15 rounded-sm p-6 block group transition-all duration-300 shadow-2xs"
                 >
-                  <span className="text-[9px] uppercase tracking-widest font-mono text-[#9A8C73] font-bold block mb-2">
+                  <span className="text-[9px] uppercase tracking-widest font-mono text-brand-gold font-bold block mb-2">
                     {rec.category || 'Gazette'}
                   </span>
-                  <h5 className="font-serif italic text-lg text-black/80 group-hover:text-[#9A8C73] transition-colors leading-snug mb-2">
+                  <h5 className="font-serif italic text-lg text-black/80 group-hover:text-brand-gold transition-colors leading-snug mb-2">
                     {rec.title}
                   </h5>
                   <p className="text-xs text-black/50 font-light line-clamp-2 leading-relaxed mb-4">

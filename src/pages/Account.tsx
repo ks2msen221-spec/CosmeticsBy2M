@@ -23,6 +23,7 @@ import {
   Send,
   CheckCircle2
 } from 'lucide-react';
+import { usePageSEO } from '../utils/seo';
 
 interface Address {
   id: string;
@@ -48,6 +49,12 @@ const MOCK_SHIPPING_ZONES = [
 
 export default function Account() {
   const { user, profile, signOut, updateProfile, isMocked } = useAuth();
+
+  usePageSEO(
+    "Mon Espace Privé | Maison 2M Cosmetics Dakar",
+    "Gérez vos informations personnelles, carnets d'adresses et préférences de soins cosmétiques chez Maison 2M Cosmetics Dakar."
+  );
+
   const [isEditing, setIsEditing] = useState(false);
   const [fullName, setFullName] = useState(profile?.full_name || '');
   const [phone, setPhone] = useState(profile?.phone || '');
@@ -519,13 +526,13 @@ export default function Account() {
         
         {/* Left column: Quick Actions & Role */}
         <div className="space-y-6">
-          <div className="border border-black/5 bg-white p-8 shadow-sm">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[#9A8C73] font-bold block mb-2">
+          <div className="border border-black/5 bg-white p-8 shadow-sm rounded-sm">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-brand-gold font-bold block mb-2">
               Statut du Client 2M
             </span>
             
             <div className="flex items-center gap-4 py-4 border-b border-black/5">
-              <div className="w-12 h-12 rounded-full bg-[#9A8C73]/10 flex items-center justify-center text-[#9A8C73]">
+              <div className="w-12 h-12 rounded-full bg-brand-taupe/10 flex items-center justify-center text-brand-taupe">
                 <User className="w-5 h-5" />
               </div>
               <div>
@@ -538,9 +545,9 @@ export default function Account() {
 
             {/* Role indicator (Strictly read-only) */}
             <div className="mt-6 space-y-4">
-              <div className="flex items-center justify-between text-xs font-medium py-1.5 px-3 bg-[#FAF9F6] border border-black/5">
+              <div className="flex items-center justify-between text-xs font-medium py-1.5 px-3 bg-brand-cream border border-black/5 rounded-sm">
                 <span className="text-black/50">Rôle de Sécurité</span>
-                <span className="flex items-center gap-1 font-mono uppercase font-bold text-[10px] text-[#9A8C73]">
+                <span className="flex items-center gap-1 font-mono uppercase font-bold text-[10px] text-brand-gold">
                   <Shield className="w-3 h-3" />
                   {profile?.role === 'admin' ? 'Administrateur' : 'Client Privilégié'}
                 </span>
@@ -553,7 +560,7 @@ export default function Account() {
             <div className="mt-8 pt-6 border-t border-black/5 flex flex-col gap-3">
               <Link 
                 to="/compte/commandes" 
-                className="w-full py-3 bg-[#1A1A1A] text-[#FAF9F6] text-[10px] uppercase tracking-widest font-bold hover:bg-[#9A8C73] hover:text-[#1A1A1A] transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 bg-brand-noir text-brand-cream text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors flex items-center justify-center gap-2 rounded-sm"
               >
                 Suivi de mes commandes
                 <ArrowRight className="w-3 h-3" />
@@ -562,7 +569,7 @@ export default function Account() {
               {profile?.role === 'admin' && (
                 <Link 
                   to="/admin" 
-                  className="w-full py-3 bg-amber-500 text-white text-[10px] uppercase tracking-widest font-bold hover:bg-amber-600 transition-colors flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-amber-500 text-white text-[10px] uppercase tracking-widest font-bold hover:bg-amber-600 transition-colors flex items-center justify-center gap-2 rounded-sm"
                 >
                   Console Administration
                 </Link>
@@ -570,7 +577,7 @@ export default function Account() {
 
               <button 
                 onClick={handleLogout}
-                className="w-full py-3 border border-black/10 text-black/70 hover:bg-red-50 hover:text-red-700 hover:border-red-500/10 text-[10px] uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 border border-black/10 text-black/70 hover:bg-red-50 hover:text-red-700 hover:border-red-500/10 text-[10px] uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 cursor-pointer rounded-sm"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 Déconnexion
@@ -587,19 +594,19 @@ export default function Account() {
 
         {/* Right column: Profile details */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="border border-black/5 bg-white p-8 md:p-10 shadow-sm relative">
+          <div className="border border-black/5 bg-white p-8 md:p-10 shadow-sm relative rounded-sm">
             <h2 className="text-3xl font-serif mb-2">Informations Personnelles</h2>
             <p className="text-xs text-black/50 mb-8">Consultez et éditez vos coordonnées de livraison pour accélérer vos prochaines commandes 2M Cosmetics.</p>
             
             {successMessage && (
-              <div className="mb-6 p-4 bg-green-50 border border-green-500/10 text-green-800 text-xs flex items-center gap-2">
+              <div className="mb-6 p-4 bg-green-50 border border-green-500/10 text-green-800 text-xs flex items-center gap-2 rounded-sm">
                 <Check className="w-4 h-4 text-green-600" />
                 {successMessage}
               </div>
             )}
 
             {localError && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs">
+              <div className="mb-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs rounded-sm">
                 {localError}
               </div>
             )}
@@ -616,7 +623,7 @@ export default function Account() {
                       required
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic"
+                      className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-serif italic rounded-sm"
                     />
                   </div>
                   <div>
@@ -628,7 +635,7 @@ export default function Account() {
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-mono"
+                      className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-mono rounded-sm"
                     />
                   </div>
                 </div>
@@ -655,14 +662,14 @@ export default function Account() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="votre.email@exemple.com"
-                      className="flex-1 text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic"
+                      className="flex-1 text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-serif italic rounded-sm"
                     />
                     {email.trim() !== '' && (
                       <button
                         type="button"
                         onClick={handleSendVerificationCode}
                         disabled={sendingCodeLoading}
-                        className="px-4 py-3 bg-[#9A8C73] text-white hover:bg-[#83755e] text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer rounded-sm shrink-0 flex items-center justify-center gap-1.5 disabled:opacity-50"
+                        className="px-4 py-3 bg-brand-taupe text-white hover:bg-brand-noir text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer rounded-sm shrink-0 flex items-center justify-center gap-1.5 disabled:opacity-50"
                       >
                         {sendingCodeLoading ? (
                           <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -684,7 +691,7 @@ export default function Account() {
                     rows={3}
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic resize-none"
+                    className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-serif italic resize-none rounded-sm"
                   />
                 </div>
 
@@ -692,14 +699,14 @@ export default function Account() {
                   <button
                     type="submit"
                     disabled={loadingLocal}
-                    className="px-6 py-3 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer"
+                    className="px-6 py-3 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer rounded-sm"
                   >
                     {loadingLocal ? 'Mise à jour...' : 'Sauvegarder'}
                   </button>
                   <button
                     type="button"
                     onClick={() => setIsEditing(false)}
-                    className="px-6 py-3 border border-black/10 text-black text-[10px] uppercase tracking-widest font-bold hover:bg-black/5 transition-colors cursor-pointer"
+                    className="px-6 py-3 border border-black/10 text-black text-[10px] uppercase tracking-widest font-bold hover:bg-black/5 transition-colors cursor-pointer rounded-sm"
                   >
                     Annuler
                   </button>
@@ -710,7 +717,7 @@ export default function Account() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-1.5">
                     <span className="text-[9px] uppercase tracking-widest text-black/40 font-bold flex items-center gap-1">
-                      <User className="w-3.5 h-3.5 text-[#9A8C73]" />
+                      <User className="w-3.5 h-3.5 text-brand-taupe" />
                       Nom Complet
                     </span>
                     <p className="text-sm font-serif italic font-semibold text-black/80">
@@ -720,7 +727,7 @@ export default function Account() {
 
                   <div className="space-y-1.5">
                     <span className="text-[9px] uppercase tracking-widest text-black/40 font-bold flex items-center gap-1">
-                      <Phone className="w-3.5 h-3.5 text-[#9A8C73]" />
+                      <Phone className="w-3.5 h-3.5 text-brand-taupe" />
                       Téléphone Sénégal
                     </span>
                     <p className="text-sm font-mono font-semibold text-black/80">
@@ -731,7 +738,7 @@ export default function Account() {
                   <div className="space-y-1.5 md:col-span-2 border-t border-black/5 pt-4">
                     <div className="flex items-center justify-between">
                       <span className="text-[9px] uppercase tracking-widest text-black/40 font-bold flex items-center gap-1">
-                        <Mail className="w-3.5 h-3.5 text-[#9A8C73]" />
+                        <Mail className="w-3.5 h-3.5 text-brand-taupe" />
                         Email
                       </span>
                       {(profile as any)?.email_verified ? (
@@ -752,7 +759,7 @@ export default function Account() {
 
                 <div className="space-y-1.5">
                   <span className="text-[9px] uppercase tracking-widest text-black/40 font-bold flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-[#9A8C73]" />
+                    <MapPin className="w-3.5 h-3.5 text-brand-taupe" />
                     Adresse de livraison
                   </span>
                   <p className="text-sm font-serif italic font-semibold text-black/80 leading-relaxed">
@@ -764,7 +771,7 @@ export default function Account() {
                   <p className="text-[10px] text-black/40">ID unique 2M : <span className="font-mono">{profile?.id}</span></p>
                   <button
                     onClick={startEditing}
-                    className="px-6 py-2.5 border border-[#9A8C73] text-[#9A8C73] hover:bg-[#9A8C73] hover:text-white text-[10px] uppercase tracking-widest font-bold transition-all flex items-center gap-2 cursor-pointer"
+                    className="px-6 py-2.5 border border-brand-taupe text-brand-taupe hover:bg-brand-taupe hover:text-white text-[10px] uppercase tracking-widest font-bold transition-all flex items-center gap-2 cursor-pointer rounded-sm"
                   >
                     <Edit2 className="w-3 h-3" />
                     Modifier mes infos
@@ -801,9 +808,9 @@ export default function Account() {
             )}
 
             {showCodeInput && (
-              <div className="mt-6 p-5 bg-[#FAF9F6] border border-[#9A8C73]/30 rounded-sm space-y-4">
+              <div className="mt-6 p-5 bg-brand-cream border border-brand-gold/30 rounded-sm space-y-4">
                 <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-[#9A8C73]" />
+                  <Mail className="w-4 h-4 text-brand-gold" />
                   <span className="text-xs font-bold text-black/80">Code de vérification</span>
                 </div>
                 <p className="text-[11px] text-black/60 leading-relaxed">
@@ -817,13 +824,13 @@ export default function Account() {
                     value={verificationCode}
                     onChange={(e) => setVerificationCode(e.target.value)}
                     placeholder="123456"
-                    className="w-36 text-center font-mono text-base font-bold bg-white border border-black/10 p-2.5 outline-none focus:border-[#9A8C73] tracking-widest"
+                    className="w-36 text-center font-mono text-base font-bold bg-white border border-black/10 p-2.5 outline-none focus:border-brand-gold tracking-widest rounded-sm"
                   />
                   <button
                     type="button"
                     onClick={handleVerifyCode}
                     disabled={verifyingCodeLoading}
-                    className="px-5 py-2.5 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer rounded-sm flex items-center justify-center gap-1.5 disabled:opacity-50"
+                    className="px-5 py-2.5 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer rounded-sm flex items-center justify-center gap-1.5 disabled:opacity-50"
                   >
                     {verifyingCodeLoading ? (
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -844,7 +851,7 @@ export default function Account() {
                       type="button"
                       onClick={handleSendVerificationCode}
                       disabled={sendingCodeLoading}
-                      className="text-[10px] uppercase tracking-wider text-[#9A8C73] hover:underline font-bold cursor-pointer"
+                      className="text-[10px] uppercase tracking-wider text-brand-taupe hover:text-brand-gold hover:underline font-bold cursor-pointer"
                     >
                       Renvoyer le code
                     </button>
@@ -855,7 +862,7 @@ export default function Account() {
           </div>
 
           {/* NEW SECTION: Changer le mot de passe */}
-          <div className="border border-black/5 bg-white p-8 md:p-10 shadow-sm relative mt-8">
+          <div className="border border-black/5 bg-white p-8 md:p-10 shadow-sm relative mt-8 rounded-sm">
             <div className="pb-4 border-b border-black/5 mb-6">
               <h2 className="text-2xl font-serif">Changer le mot de passe</h2>
               <p className="text-xs text-black/50 mt-1">
@@ -864,14 +871,14 @@ export default function Account() {
             </div>
 
             {passwordSuccess && (
-              <div className="mb-6 p-4 bg-green-50 border border-green-500/10 text-green-800 text-xs flex items-center gap-2">
+              <div className="mb-6 p-4 bg-green-50 border border-green-500/10 text-green-800 text-xs flex items-center gap-2 rounded-sm">
                 <Check className="w-4 h-4 text-green-600 shrink-0" />
                 {passwordSuccess}
               </div>
             )}
 
             {passwordError && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs flex items-center gap-2">
+              <div className="mb-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs flex items-center gap-2 rounded-sm">
                 <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
                 {passwordError}
               </div>
@@ -889,7 +896,7 @@ export default function Account() {
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                  className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors rounded-sm"
                 />
               </div>
 
@@ -905,7 +912,7 @@ export default function Account() {
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                    className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors rounded-sm"
                   />
                   <p className="text-[9px] text-black/40 mt-1">Minimum 6 caractères</p>
                 </div>
@@ -921,7 +928,7 @@ export default function Account() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                    className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors rounded-sm"
                   />
                 </div>
               </div>
@@ -930,7 +937,7 @@ export default function Account() {
                 <button
                   type="submit"
                   disabled={passwordLoading}
-                  className="px-6 py-3 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+                  className="px-6 py-3 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-colors cursor-pointer flex items-center gap-1.5 disabled:opacity-50 rounded-sm"
                 >
                   {passwordLoading ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -944,7 +951,7 @@ export default function Account() {
           </div>
 
           {/* SECOND CARD: Address Management */}
-          <div className="border border-black/5 bg-white p-8 md:p-10 shadow-sm relative mt-8">
+          <div className="border border-black/5 bg-white p-8 md:p-10 shadow-sm relative mt-8 rounded-sm">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-black/5 mb-6">
               <div>
                 <h2 className="text-2xl font-serif">Mes Adresses de Livraison</h2>
@@ -962,7 +969,7 @@ export default function Account() {
                     setAddressError(null);
                     setAddressSuccess(null);
                   }}
-                  className="px-4 py-2 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-all flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
+                  className="px-4 py-2 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all flex items-center gap-1.5 cursor-pointer self-start sm:self-auto rounded-sm"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Nouvelle Adresse
@@ -971,14 +978,14 @@ export default function Account() {
             </div>
 
             {addressSuccess && (
-              <div className="mb-6 p-4 bg-green-50 border border-green-500/10 text-green-800 text-xs flex items-center gap-2">
+              <div className="mb-6 p-4 bg-green-50 border border-green-500/10 text-green-800 text-xs flex items-center gap-2 rounded-sm">
                 <Check className="w-4 h-4 text-green-600" />
                 {addressSuccess}
               </div>
             )}
 
             {addressError && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs flex items-center gap-2">
+              <div className="mb-6 p-4 bg-red-50 border border-red-500/10 text-red-800 text-xs flex items-center gap-2 rounded-sm">
                 <AlertCircle className="w-4 h-4 text-red-600" />
                 {addressError}
               </div>
@@ -986,7 +993,7 @@ export default function Account() {
 
             {isEditingAddress ? (
               <form onSubmit={handleSaveAddress} className="space-y-6">
-                <h3 className="text-sm uppercase tracking-widest font-bold text-[#9A8C73] border-b border-black/5 pb-1.5">
+                <h3 className="text-sm uppercase tracking-widest font-bold text-brand-gold border-b border-black/5 pb-1.5">
                   {editingAddressId ? 'Modifier l\'adresse d\'expédition' : 'Ajouter une adresse d\'expédition'}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1000,7 +1007,7 @@ export default function Account() {
                       placeholder="ex: Mon Domicile Dakar"
                       value={addressFormTitle}
                       onChange={(e) => setAddressFormTitle(e.target.value)}
-                      className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic"
+                      className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-serif italic rounded-sm"
                     />
                   </div>
                   <div>
@@ -1013,7 +1020,7 @@ export default function Account() {
                       placeholder={`ex: ${CONTACT_CONFIG.phone}`}
                       value={addressFormPhone}
                       onChange={(e) => setAddressFormPhone(e.target.value)}
-                      className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors font-mono"
+                      className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-mono rounded-sm"
                     />
                   </div>
                 </div>
@@ -1027,7 +1034,7 @@ export default function Account() {
                       required
                       value={addressFormZoneId}
                       onChange={(e) => setAddressFormZoneId(e.target.value)}
-                      className="w-full text-sm bg-[#FAF9F6] border border-black/5 p-3 outline-none focus:border-[#9A8C73] transition-colors"
+                      className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors rounded-sm"
                     >
                       <option value="" disabled>Sélectionner la zone de livraison</option>
                       {shippingZones.map((zone) => (
@@ -1049,7 +1056,7 @@ export default function Account() {
                     placeholder="ex: Rue 12 x Boulevard de la Gueule Tapée, en face de la pharmacie"
                     value={addressFormFullAddress}
                     onChange={(e) => setAddressFormFullAddress(e.target.value)}
-                    className="w-full text-sm bg-[#FAF9F6] border border-[#9A8C73]/20 p-3 outline-none focus:border-[#9A8C73] transition-colors font-serif italic resize-none"
+                    className="w-full text-sm bg-brand-cream border border-black/5 p-3 outline-none focus:border-brand-gold transition-colors font-serif italic resize-none rounded-sm"
                   />
                 </div>
 
@@ -1057,7 +1064,7 @@ export default function Account() {
                   <button
                     type="submit"
                     disabled={addressActionLoading}
-                    className="px-6 py-3 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
+                    className="px-6 py-3 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-colors flex items-center gap-1.5 cursor-pointer rounded-sm"
                   >
                     {addressActionLoading ? (
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1072,7 +1079,7 @@ export default function Account() {
                       setIsEditingAddress(false);
                       setEditingAddressId(null);
                     }}
-                    className="px-6 py-3 border border-black/10 text-black text-[10px] uppercase tracking-widest font-bold hover:bg-black/5 transition-colors cursor-pointer flex items-center gap-1"
+                    className="px-6 py-3 border border-black/10 text-black text-[10px] uppercase tracking-widest font-bold hover:bg-black/5 transition-colors cursor-pointer flex items-center gap-1 rounded-sm"
                   >
                     <X className="w-3.5 h-3.5" />
                     Annuler
@@ -1081,7 +1088,7 @@ export default function Account() {
               </form>
             ) : addressesLoading ? (
               <div className="py-12 flex flex-col items-center justify-center">
-                <Loader2 className="w-8 h-8 text-[#9A8C73] animate-spin mb-2" />
+                <Loader2 className="w-8 h-8 text-brand-taupe animate-spin mb-2" />
                 <span className="text-[10px] uppercase tracking-widest font-mono text-black/40">Chargement de vos adresses...</span>
               </div>
             ) : addresses.length === 0 ? (
@@ -1098,7 +1105,7 @@ export default function Account() {
                     setAddressFormZoneId(shippingZones[0]?.id || '');
                     setAddressError(null);
                   }}
-                  className="mt-4 px-4 py-2 border border-[#9A8C73] text-[#9A8C73] hover:bg-[#9A8C73] hover:text-white text-[10px] uppercase tracking-widest font-bold transition-all cursor-pointer inline-flex items-center gap-1"
+                  className="mt-4 px-4 py-2 border border-brand-taupe text-brand-taupe hover:bg-brand-taupe hover:text-white text-[10px] uppercase tracking-widest font-bold transition-all cursor-pointer inline-flex items-center gap-1 rounded-sm"
                 >
                   <Plus className="w-3 h-3" />
                   Créer votre première adresse
@@ -1111,15 +1118,15 @@ export default function Account() {
                   return (
                     <div 
                       key={addr.id} 
-                      className="border border-black/5 rounded-sm p-5 hover:border-[#9A8C73]/30 transition-all flex flex-col justify-between bg-white shadow-sm"
+                      className="border border-black/5 rounded-sm p-5 hover:border-brand-taupe/30 transition-all flex flex-col justify-between bg-white shadow-sm"
                     >
                       <div className="space-y-2.5">
                         <div className="flex justify-between items-start">
-                          <span className="font-serif italic font-bold text-sm text-[#1A1A1A]">
+                          <span className="font-serif italic font-bold text-sm text-brand-noir">
                             {addr.title}
                           </span>
                           {zone && (
-                            <span className="text-[9px] uppercase tracking-wider font-mono px-2 py-0.5 bg-[#FAF9F6] border border-black/5 text-black/60 rounded">
+                            <span className="text-[9px] uppercase tracking-wider font-mono px-2 py-0.5 bg-brand-cream border border-black/5 text-black/60 rounded">
                               Livraison: +{zone.fee} FCFA
                             </span>
                           )}
@@ -1128,7 +1135,7 @@ export default function Account() {
                           {addr.full_address}
                         </p>
                         <div className="flex items-center gap-1 text-[10px] font-mono text-black/50">
-                          <Phone className="w-3.5 h-3.5 text-[#9A8C73]" />
+                          <Phone className="w-3.5 h-3.5 text-brand-taupe" />
                           <span>Contact: {addr.phone}</span>
                         </div>
                       </div>
@@ -1136,14 +1143,14 @@ export default function Account() {
                       <div className="flex gap-3 mt-6 pt-4 border-t border-black/5 justify-end">
                         <button
                           onClick={() => handleStartEditAddress(addr)}
-                          className="px-3 py-1.5 border border-black/10 text-black hover:border-[#9A8C73] hover:text-[#9A8C73] text-[9px] uppercase tracking-widest font-bold transition-colors cursor-pointer flex items-center gap-1"
+                          className="px-3 py-1.5 border border-black/10 text-black hover:border-brand-taupe hover:text-brand-taupe text-[9px] uppercase tracking-widest font-bold transition-colors cursor-pointer flex items-center gap-1 rounded-sm"
                         >
                           <Edit2 className="w-3 h-3" />
                           Modifier
                         </button>
                         <button
                           onClick={() => handleDeleteAddress(addr.id)}
-                          className="px-3 py-1.5 border border-transparent text-red-600 hover:bg-red-50 text-[9px] uppercase tracking-widest font-bold transition-colors cursor-pointer flex items-center gap-1"
+                          className="px-3 py-1.5 border border-transparent text-red-600 hover:bg-red-50 text-[9px] uppercase tracking-widest font-bold transition-colors cursor-pointer flex items-center gap-1 rounded-sm"
                         >
                           <Trash2 className="w-3 h-3" />
                           Supprimer

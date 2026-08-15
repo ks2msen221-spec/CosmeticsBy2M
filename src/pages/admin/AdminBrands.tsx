@@ -185,7 +185,7 @@ export default function AdminBrands() {
       {/* Mode 1: Editor/Form screen */}
       {isEditing ? (
         <div className="max-w-2xl bg-white border border-black/5 rounded-sm shadow-md overflow-hidden">
-          <header className="border-b border-black/5 px-6 py-5 bg-[#FAF9F6] flex items-center justify-between">
+          <header className="border-b border-black/5 px-6 py-5 bg-brand-cream flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setIsEditing(false)}
@@ -223,7 +223,7 @@ export default function AdminBrands() {
                   value={formName}
                   onChange={handleNameChange}
                   placeholder="ex: M Botanics"
-                  className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
+                  className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                 />
               </div>
 
@@ -238,7 +238,7 @@ export default function AdminBrands() {
                   value={formSlug}
                   onChange={(e) => setFormSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
                   placeholder="ex: m-botanics"
-                  className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black font-mono"
+                  className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black font-mono"
                 />
               </div>
             </div>
@@ -253,7 +253,7 @@ export default function AdminBrands() {
                 onChange={(e) => setFormBio(e.target.value)}
                 placeholder="Rédigez l'histoire ou l'engagement de la marque..."
                 rows={4}
-                className="w-full bg-[#FAF9F6] border border-black/10 focus:border-[#9A8C73] focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
+                className="w-full bg-brand-cream border border-black/10 focus:border-brand-taupe focus:outline-hidden text-xs p-3.5 rounded-sm transition-colors text-black leading-relaxed"
               />
             </div>
 
@@ -264,7 +264,7 @@ export default function AdminBrands() {
               </label>
               
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <div className="w-16 h-16 rounded-sm bg-[#FAF9F6] border border-black/10 flex items-center justify-center overflow-hidden shrink-0">
+                <div className="w-16 h-16 rounded-sm bg-brand-cream border border-black/10 flex items-center justify-center overflow-hidden shrink-0">
                   {formLogoUrl ? (
                     <img 
                       src={formLogoUrl} 
@@ -322,7 +322,7 @@ export default function AdminBrands() {
                   value={formLogoUrl}
                   onChange={(e) => setFormLogoUrl(e.target.value)}
                   placeholder="Ou collez un lien d'image externe (facultatif)"
-                  className="w-full bg-[#FAF9F6] border border-black/5 focus:border-[#9A8C73] focus:outline-hidden text-[10px] px-3.5 py-2 rounded-sm transition-colors text-black/60 font-mono"
+                  className="w-full bg-brand-cream border border-black/5 focus:border-brand-taupe focus:outline-hidden text-[10px] px-3.5 py-2 rounded-sm transition-colors text-black/60 font-mono"
                 />
               </div>
             </div>
@@ -339,7 +339,7 @@ export default function AdminBrands() {
               <button
                 type="submit"
                 disabled={submitting || uploading}
-                className="px-8 py-2.5 bg-[#1A1A1A] hover:bg-[#9A8C73] text-white hover:text-white disabled:bg-black/20 text-xs font-bold uppercase tracking-widest rounded-sm transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                className="px-8 py-2.5 bg-brand-noir hover:bg-brand-taupe text-white hover:text-white disabled:bg-black/20 text-xs font-bold uppercase tracking-widest rounded-sm transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
               >
                 {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 {editingBrand ? "Enregistrer" : "Créer la marque"}
@@ -352,7 +352,7 @@ export default function AdminBrands() {
         <div className="space-y-6">
           <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-black/5">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-1">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-brand-taupe font-bold block mb-1">
                 Console d'Administration
               </span>
               <h1 className="text-3xl font-serif italic text-black/90">Gestion des Marques</h1>
@@ -363,7 +363,7 @@ export default function AdminBrands() {
 
             <button
               onClick={startCreate}
-              className="px-5 py-3 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 shadow-sm"
+              className="px-5 py-3 bg-brand-noir hover:bg-brand-taupe text-brand-cream text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 shadow-sm"
             >
               <Plus className="w-4 h-4" />
               Ajouter une Marque
@@ -393,12 +393,12 @@ export default function AdminBrands() {
           {/* List display */}
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 bg-white border border-black/5 rounded-sm">
-              <Loader2 className="w-8 h-8 text-[#9A8C73] animate-spin mb-3" />
+              <Loader2 className="w-8 h-8 text-brand-taupe animate-spin mb-3" />
               <p className="text-xs text-black/40 font-mono uppercase tracking-widest">Chargement des marques...</p>
             </div>
           ) : filteredBrands.length === 0 ? (
             <div className="border border-dashed border-black/10 rounded-sm bg-white p-12 text-center">
-              <Tag className="w-12 h-12 text-[#9A8C73]/30 mx-auto mb-4" />
+              <Tag className="w-12 h-12 text-brand-taupe/30 mx-auto mb-4" />
               <h3 className="text-lg font-serif italic text-black/80 mb-2">Aucune marque trouvée</h3>
               <p className="text-xs text-black/50 font-light max-w-md mx-auto leading-relaxed">
                 {searchTerm ? "Aucun laboratoire ou herboristerie ne correspond à votre recherche actuelle." : "Commencez par ajouter votre première marque partenaire ci-dessus."}
@@ -411,7 +411,7 @@ export default function AdminBrands() {
                   key={brand.id}
                   className="bg-white border border-black/5 rounded-sm p-6 flex items-start gap-5 shadow-xs hover:shadow-md transition-all group"
                 >
-                  <div className="w-14 h-14 rounded-sm bg-[#FAF9F6] border border-black/5 flex items-center justify-center overflow-hidden shrink-0">
+                  <div className="w-14 h-14 rounded-sm bg-brand-cream border border-black/5 flex items-center justify-center overflow-hidden shrink-0">
                     {brand.logo_url ? (
                       <img 
                         src={brand.logo_url} 
@@ -420,14 +420,14 @@ export default function AdminBrands() {
                         className="w-full h-full object-contain"
                       />
                     ) : (
-                      <Tag className="w-6 h-6 text-[#9A8C73]/30" />
+                      <Tag className="w-6 h-6 text-brand-taupe/30" />
                     )}
                   </div>
 
                   <div className="flex-1 min-w-0 space-y-2">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h3 className="font-serif italic text-lg leading-tight text-black/90 group-hover:text-[#9A8C73] transition-colors">
+                        <h3 className="font-serif italic text-lg leading-tight text-black/90 group-hover:text-brand-taupe transition-colors">
                           {brand.name}
                         </h3>
                         <span className="text-[10px] font-mono text-black/40 mt-0.5 block">

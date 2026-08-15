@@ -4,10 +4,16 @@ import { catalogService } from '../lib/catalogService';
 import { Product } from '../types/catalog';
 import ProductCard from '../components/ProductCard';
 import { Search as SearchIcon, Home, Sparkles, AlertCircle } from 'lucide-react';
+import { usePageSEO } from '../utils/seo';
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
+
+  usePageSEO(
+    query ? `Recherche : "${query}" | Maison 2M Cosmetics Dakar` : "Rechercher un Soin | Maison 2M Cosmetics Dakar",
+    "Trouvez les soins, sérums et rituels botaniques adaptés à votre peau chez Maison 2M Cosmetics à Dakar."
+  );
   
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -39,11 +45,11 @@ export default function Search() {
   const suggestions = ['Moringa', 'Baobab', 'Solaire', 'Karité', 'Sérum', 'Dakar'];
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pb-24">
+    <div className="min-h-screen bg-brand-cream pb-24">
       {/* Breadcrumb Navigation */}
       <div className="border-b border-black/5 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
-          <Link to="/" className="hover:text-[#9A8C73] flex items-center gap-1">
+          <Link to="/" className="hover:text-brand-gold flex items-center gap-1">
             <Home className="w-3 h-3" /> Accueil
           </Link>
           <span>&gt;</span>
@@ -56,13 +62,13 @@ export default function Search() {
         
         {/* Title & Query Display */}
         <div className="mb-12 border-b border-black/5 pb-8">
-          <span className="text-[10px] uppercase tracking-[0.25em] text-[#9A8C73] font-bold block mb-2">
+          <span className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold block mb-2">
             Résultats de Recherche
           </span>
           <h1 className="text-3xl md:text-4xl font-serif italic text-black/90 flex items-center gap-3">
-            <SearchIcon className="w-6 h-6 text-[#9A8C73]" />
+            <SearchIcon className="w-6 h-6 text-brand-gold" />
             {query.trim() ? (
-              <>Recherche pour : <span className="text-[#9A8C73]">“{query}”</span></>
+              <>Recherche pour : <span className="text-brand-gold">“{query}”</span></>
             ) : (
               "Explorez nos Formulations"
             )}
@@ -75,7 +81,7 @@ export default function Search() {
               <button
                 key={term}
                 onClick={() => handleSuggestionClick(term)}
-                className={`px-3 py-1 text-[11px] font-mono border rounded-full transition-all cursor-pointer ${query.toLowerCase() === term.toLowerCase() ? 'bg-[#9A8C73] text-white border-[#9A8C73]' : 'bg-white border-black/5 text-black/60 hover:border-[#9A8C73]/40 hover:text-black'}`}
+                className={`px-3 py-1 text-[11px] font-mono border rounded-full transition-all cursor-pointer ${query.toLowerCase() === term.toLowerCase() ? 'bg-brand-noir text-brand-cream border-brand-noir' : 'bg-white border-black/5 text-black/60 hover:border-brand-gold/40 hover:text-black'}`}
               >
                 {term}
               </button>
@@ -96,7 +102,7 @@ export default function Search() {
           </div>
         ) : !query.trim() ? (
           <div className="bg-white border border-black/5 p-12 text-center max-w-xl mx-auto shadow-sm">
-            <SearchIcon className="w-8 h-8 text-[#9A8C73]/40 mx-auto mb-4" />
+            <SearchIcon className="w-8 h-8 text-brand-taupe/40 mx-auto mb-4" />
             <h3 className="font-serif italic text-lg mb-2">Rechercher une formulation</h3>
             <p className="text-xs text-black/50 leading-relaxed mb-6">
               Saisissez le nom d'un produit, d'un actif botanique (Moringa, Baobab, etc.) ou une problématique de peau pour découvrir nos soins adaptés.
@@ -112,7 +118,7 @@ export default function Search() {
             <div className="h-[1px] w-12 bg-black/10 mx-auto mb-6"></div>
             <Link 
               to="/" 
-              className="inline-block px-8 py-3 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] hover:text-[#1A1A1A] text-[10px] uppercase tracking-widest font-bold transition-all cursor-pointer"
+              className="inline-block px-8 py-3 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all cursor-pointer"
             >
               Retourner à l'accueil
             </Link>

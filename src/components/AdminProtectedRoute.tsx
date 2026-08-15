@@ -21,9 +21,9 @@ export default function AdminProtectedRoute({ children }: AdminProtectedRoutePro
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FAF9F6]">
-        <div className="w-10 h-10 border-2 border-[#9A8C73] border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-xs uppercase tracking-widest text-[#1A1A1A]/40 font-mono">Vérification des accès administrateur...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-brand-cream">
+        <div className="w-10 h-10 border-2 border-brand-taupe border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-xs uppercase tracking-widest text-brand-noir/40 font-mono">Vérification des accès administrateur...</p>
       </div>
     );
   }

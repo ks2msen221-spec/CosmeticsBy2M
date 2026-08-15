@@ -18,10 +18,13 @@ import {
   CheckCircle2,
   Phone,
   User,
-  Tag
+  Tag,
+  Truck,
+  HeartHandshake
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { CONTACT_CONFIG } from '../config/contact';
+import { usePageSEO } from '../utils/seo';
 
 // Interfaces for our database/mock structures
 interface ShippingZone {
@@ -64,6 +67,11 @@ export default function Checkout() {
   const { cartItems, loading: cartLoading, subtotal, totalQuantity, updateQuantity, clearCart } = useCart();
   const { user, profile, isMocked } = useAuth();
   const navigate = useNavigate();
+
+  usePageSEO(
+    "Finaliser ma Commande | Maison 2M Cosmetics Dakar",
+    "Finalisez votre commande de cosmétiques en toute sécurité avec Maison 2M Cosmetics. Livraison à domicile à Dakar et partout au Sénégal."
+  );
 
   // State arrays loaded from DB or fallback
   const [addresses, setAddresses] = useState<Address[]>([]);
@@ -454,21 +462,21 @@ export default function Checkout() {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24 flex flex-col items-center justify-center min-h-[50vh]">
-        <Loader2 className="w-10 h-10 text-[#9A8C73] animate-spin mb-4" />
+        <Loader2 className="w-10 h-10 text-brand-gold animate-spin mb-4" />
         <span className="text-[10px] uppercase tracking-widest font-mono text-black/40">Préparation de votre dossier dermatologique...</span>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pb-24 selection:bg-[#9A8C73]/20">
+    <div className="min-h-screen bg-brand-cream pb-24 selection:bg-brand-taupe/20">
       
       {/* Breadcrumbs */}
       <div className="border-b border-black/5 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
-          <Link to="/" className="hover:text-[#9A8C73] transition-colors">Accueil</Link>
+          <Link to="/" className="hover:text-brand-gold transition-colors">Accueil</Link>
           <ChevronRight className="w-3 h-3 text-black/20" />
-          <Link to="/panier" className="hover:text-[#9A8C73] transition-colors">Mon Panier</Link>
+          <Link to="/panier" className="hover:text-brand-gold transition-colors">Mon Panier</Link>
           <ChevronRight className="w-3 h-3 text-black/20" />
           <span className="text-black/80">Validation de commande</span>
         </div>
@@ -476,12 +484,12 @@ export default function Checkout() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
         <header className="mb-12">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#9A8C73] font-bold block mb-2">
-            Formulation Clinique Sécurisée • 2M
+          <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold block mb-2">
+            Paiement & Livraison Sécurisés • Dakar
           </span>
           <h1 className="text-4xl font-serif italic text-black/90">Finaliser Votre Commande</h1>
-          <p className="text-xs text-black/50 font-light mt-2 max-w-xl">
-            Veuillez sélectionner votre adresse de livraison au Sénégal et votre mode de règlement. Les prix de nos formulations de prestige sont recalculés de manière sécurisée côté serveur.
+          <p className="text-xs text-black/60 font-light mt-2 max-w-xl leading-relaxed">
+            Renseignez votre adresse de livraison et choisissez votre mode de paiement favori (Wave, Orange Money ou à la livraison). Nous expédions rapidement partout au Sénégal.
           </p>
         </header>
 
@@ -508,7 +516,7 @@ export default function Checkout() {
               <button
                 onClick={handleAdjustAndContinue}
                 disabled={submitting}
-                className="px-6 py-3 bg-[#1A1A1A] hover:bg-[#9A8C73] text-[#FAF9F6] text-[10px] uppercase font-bold tracking-widest transition-all cursor-pointer shadow-sm rounded-sm disabled:opacity-50"
+                className="px-6 py-3 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase font-bold tracking-widest transition-all cursor-pointer shadow-sm rounded-sm disabled:opacity-50"
               >
                 {submitting ? "Ajustement en cours..." : "Ajuster et continuer"}
               </button>
@@ -544,7 +552,7 @@ export default function Checkout() {
             <div className="border border-black/5 bg-white p-6 md:p-8 shadow-sm rounded-sm">
               <div className="flex justify-between items-center pb-4 border-b border-black/5 mb-6">
                 <h3 className="text-sm uppercase tracking-wider text-black font-extrabold flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-[#9A8C73]" />
+                  <MapPin className="w-4 h-4 text-brand-gold" />
                   1. Adresse de Livraison au Sénégal
                 </h3>
                 {!isAddingAddress && (
@@ -553,7 +561,7 @@ export default function Checkout() {
                       setIsAddingAddress(true);
                       setAddressError(null);
                     }}
-                    className="text-[10px] uppercase tracking-widest text-[#9A8C73] hover:text-black transition-colors font-bold flex items-center gap-1 cursor-pointer"
+                    className="text-[10px] uppercase tracking-widest text-brand-gold hover:text-black transition-colors font-bold flex items-center gap-1 cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     Nouvelle Adresse
@@ -563,8 +571,8 @@ export default function Checkout() {
 
               {/* Form to Add New Address */}
               {isAddingAddress ? (
-                <form onSubmit={handleAddAddress} className="space-y-4 bg-[#FAF9F6] p-5 border border-black/5 rounded-sm">
-                  <h4 className="text-[11px] uppercase tracking-widest text-[#9A8C73] font-bold">Ajouter un point de livraison</h4>
+                <form onSubmit={handleAddAddress} className="space-y-4 bg-brand-cream p-5 border border-black/5 rounded-sm">
+                  <h4 className="text-[11px] uppercase tracking-widest text-brand-gold font-bold">Ajouter un point de livraison</h4>
                   
                   {addressError && (
                     <div className="p-3 bg-red-50 text-red-800 text-[11px] rounded-sm border border-red-100">
@@ -583,7 +591,7 @@ export default function Checkout() {
                         placeholder="ex: Mon Domicile"
                         value={newTitle}
                         onChange={(e) => setNewTitle(e.target.value)}
-                        className="w-full text-xs bg-white border border-black/10 p-2.5 outline-none focus:border-[#9A8C73] transition-colors"
+                        className="w-full text-xs bg-white border border-black/10 p-2.5 outline-none focus:border-brand-gold transition-colors"
                       />
                     </div>
 
@@ -597,7 +605,7 @@ export default function Checkout() {
                         placeholder={`ex: ${CONTACT_CONFIG.phone}`}
                         value={newPhone}
                         onChange={(e) => setNewPhone(e.target.value)}
-                        className="w-full text-xs bg-white border border-black/10 p-2.5 outline-none focus:border-[#9A8C73] transition-colors font-mono"
+                        className="w-full text-xs bg-white border border-black/10 p-2.5 outline-none focus:border-brand-gold transition-colors font-mono"
                       />
                     </div>
                   </div>
@@ -609,7 +617,7 @@ export default function Checkout() {
                     <select
                       value={newZoneId}
                       onChange={(e) => setNewZoneId(e.target.value)}
-                      className="w-full text-xs bg-white border border-black/10 p-2.5 outline-none focus:border-[#9A8C73] transition-colors font-sans"
+                      className="w-full text-xs bg-white border border-black/10 p-2.5 outline-none focus:border-brand-gold transition-colors font-sans"
                     >
                       {shippingZones.map(zone => (
                         <option key={zone.id} value={zone.id}>
@@ -629,14 +637,14 @@ export default function Checkout() {
                       placeholder="ex: Sacré-Cœur 3, Immeuble 2M, 2ème étage à droite..."
                       value={newFullAddress}
                       onChange={(e) => setNewFullAddress(e.target.value)}
-                      className="w-full text-xs bg-white border border-black/10 p-2.5 outline-none focus:border-[#9A8C73] transition-colors font-serif italic resize-none"
+                      className="w-full text-xs bg-white border border-black/10 p-2.5 outline-none focus:border-brand-gold transition-colors font-serif italic resize-none"
                     />
                   </div>
 
                   <div className="flex gap-2 pt-2">
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] hover:text-[#1A1A1A] text-[9px] uppercase tracking-widest font-bold transition-colors cursor-pointer"
+                      className="px-4 py-2 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[9px] uppercase tracking-widest font-bold transition-colors cursor-pointer"
                     >
                       Ajouter cette adresse
                     </button>
@@ -653,11 +661,11 @@ export default function Checkout() {
 
               {/* Address List Picker */}
               {!isAddingAddress && addresses.length === 0 ? (
-                <div className="p-6 border border-dashed border-[#9A8C73]/30 bg-[#FAF9F6] text-center rounded-sm">
+                <div className="p-6 border border-dashed border-brand-gold/30 bg-brand-cream text-center rounded-sm">
                   <p className="text-xs text-black/50 mb-3">Aucune adresse de livraison enregistrée.</p>
                   <button
                     onClick={() => setIsAddingAddress(true)}
-                    className="px-4 py-2 bg-[#1A1A1A] text-white hover:bg-[#9A8C73] text-[9px] uppercase tracking-widest font-bold transition-all cursor-pointer"
+                    className="px-4 py-2 bg-brand-noir text-white hover:bg-brand-gold hover:text-brand-noir text-[9px] uppercase tracking-widest font-bold transition-all cursor-pointer"
                   >
                     Créer ma première adresse
                   </button>
@@ -674,7 +682,7 @@ export default function Checkout() {
                         onClick={() => setSelectedAddressId(addr.id)}
                         className={`p-4 border transition-all cursor-pointer relative flex flex-col justify-between ${
                           isSelected 
-                            ? 'border-[#9A8C73] bg-[#FAF9F6] ring-1 ring-[#9A8C73]' 
+                            ? 'border-brand-gold bg-brand-cream ring-1 ring-brand-gold' 
                             : 'border-black/5 hover:border-black/20 bg-white'
                         }`}
                       >
@@ -682,7 +690,7 @@ export default function Checkout() {
                           <div className="flex items-center gap-1.5">
                             <span className="font-serif italic font-bold text-xs text-black/80">{addr.label}</span>
                             {isSelected && (
-                              <span className="px-1.5 py-0.5 bg-[#9A8C73]/10 text-[#9A8C73] text-[8px] uppercase tracking-widest font-extrabold rounded">Sélectionné</span>
+                              <span className="px-1.5 py-0.5 bg-brand-gold/10 text-brand-gold text-[8px] uppercase tracking-widest font-extrabold rounded">Sélectionné</span>
                             )}
                           </div>
                           
@@ -690,8 +698,8 @@ export default function Checkout() {
                         </div>
 
                         <div className="pt-3 border-t border-black/5 mt-3 flex items-center justify-between text-[10px] text-black/40 font-mono">
-                          <span className="flex items-center gap-1"><Phone className="w-3 h-3 text-[#9A8C73]" /> {addr.phone}</span>
-                          <span className="font-bold text-[#9A8C73]">{zone ? zone.name.split(' (')[0] : 'Zone inconnue'}</span>
+                          <span className="flex items-center gap-1"><Phone className="w-3 h-3 text-brand-gold" /> {addr.phone}</span>
+                          <span className="font-bold text-brand-gold">{zone ? zone.name.split(' (')[0] : 'Zone inconnue'}</span>
                         </div>
                       </div>
                     );
@@ -703,7 +711,7 @@ export default function Checkout() {
             {/* Step 2: Payment Methods Section */}
             <div className="border border-black/5 bg-white p-6 md:p-8 shadow-sm rounded-sm">
               <h3 className="text-sm uppercase tracking-wider text-black font-extrabold pb-4 border-b border-black/5 mb-6 flex items-center gap-2">
-                <CreditCard className="w-4 h-4 text-[#9A8C73]" />
+                <CreditCard className="w-4 h-4 text-brand-gold" />
                 2. Mode de Règlement Sécurisé
               </h3>
 
@@ -719,16 +727,16 @@ export default function Checkout() {
                       }}
                       className={`p-4 border text-center transition-all cursor-pointer flex flex-col justify-between items-center ${
                         isSelected 
-                          ? 'border-[#9A8C73] bg-[#FAF9F6] ring-1 ring-[#9A8C73]' 
+                          ? 'border-brand-gold bg-brand-cream ring-1 ring-brand-gold' 
                           : 'border-black/5 hover:border-black/20 bg-white'
                       }`}
                     >
-                      <span className="text-[10px] uppercase tracking-widest text-[#9A8C73] font-bold block mb-1">
+                      <span className="text-[10px] uppercase tracking-widest text-brand-gold font-bold block mb-1">
                         {pm.code === 'cod' ? 'Espèces' : pm.code === 'wave' ? 'Wave' : 'Orange Money'}
                       </span>
                       <span className="font-serif italic font-bold text-xs text-black/80">{pm.label}</span>
                       {isSelected && (
-                        <div className="w-4 h-4 rounded-full bg-[#9A8C73] text-[#FAF9F6] flex items-center justify-center mt-3 scale-90">
+                        <div className="w-4 h-4 rounded-full bg-brand-gold text-brand-cream flex items-center justify-center mt-3 scale-90">
                           <Check className="w-2.5 h-2.5" />
                         </div>
                       )}
@@ -742,7 +750,7 @@ export default function Checkout() {
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-[#FAF9F6] p-6 border border-black/5 rounded-sm space-y-6"
+                  className="bg-brand-cream p-6 border border-black/5 rounded-sm space-y-6"
                 >
                   <div className="flex flex-col sm:flex-row gap-6 items-center">
                     {/* Simulated QR Code Card */}
@@ -755,7 +763,7 @@ export default function Checkout() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <QrCode className="w-20 h-20 text-[#1A1A1A]/30" />
+                        <QrCode className="w-20 h-20 text-brand-noir/30" />
                       )}
                       <div className="absolute inset-0 bg-black/5 select-none pointer-events-none"></div>
                     </div>
@@ -783,7 +791,7 @@ export default function Checkout() {
                       placeholder="ex: Ref. T240723.1528.C90412 ou ID de transfert"
                       value={transactionReference}
                       onChange={(e) => setTransactionReference(e.target.value)}
-                      className="w-full text-xs font-mono bg-white border border-black/10 p-3 outline-none focus:border-[#9A8C73] transition-colors uppercase placeholder:normal-case"
+                      className="w-full text-xs font-mono bg-white border border-black/10 p-3 outline-none focus:border-brand-gold transition-colors uppercase placeholder:normal-case"
                     />
                     <p className="text-[10px] text-black/40 font-light leading-relaxed mt-1.5">
                       * Notre équipe administrative comparera cette référence avec les relevés des opérateurs de Dakar avant de passer votre commande de <span className="font-semibold text-black/60">"awaiting_verification"</span> à <span className="font-semibold text-black/60">"confirmed"</span>.
@@ -795,7 +803,7 @@ export default function Checkout() {
             
             {/* Security Assurance */}
             <div className="flex items-center gap-3 text-black/40 font-mono text-[9px] px-2">
-              <ShieldCheck className="w-5 h-5 text-[#9A8C73] shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-brand-taupe shrink-0" />
               <span>
                 Protocole SSL crypté de bout en bout • Vos coordonnées sont cryptées en base de données de manière étanche sous la charte de confidentialité de 2M Sénégal.
               </span>
@@ -807,7 +815,7 @@ export default function Checkout() {
           <div className="lg:col-span-5 space-y-6">
             
             <div className="bg-white border border-black/5 p-6 md:p-8 shadow-sm relative rounded-sm">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-[#9A8C73]"></div>
+              <div className="absolute top-0 left-0 right-0 h-1 bg-brand-gold"></div>
 
               <h3 className="text-xs uppercase tracking-widest text-black/40 font-bold border-b border-black/5 pb-3 mb-6">
                 Récapitulatif de Commande
@@ -817,7 +825,7 @@ export default function Checkout() {
               <div className="space-y-4 max-h-64 overflow-y-auto pr-2 mb-6 divide-y divide-black/5">
                 {cartItems.map((item) => (
                   <div key={item.product_id} className="flex gap-4 pt-3 first:pt-0 items-center">
-                    <div className="w-12 h-14 bg-[#FAF9F6] border border-black/5 overflow-hidden flex items-center justify-center shrink-0">
+                    <div className="w-12 h-14 bg-brand-cream border border-black/5 overflow-hidden flex items-center justify-center shrink-0">
                       {item.product?.images && item.product.images.length > 0 ? (
                         <img 
                           src={item.product.images[0]} 
@@ -888,12 +896,12 @@ export default function Checkout() {
                   type="button"
                   disabled={submitting || !selectedAddressId}
                   onClick={handleSubmitOrder}
-                  className={`w-full py-4 text-[#FAF9F6] text-[10px] uppercase tracking-widest font-bold transition-all duration-300 shadow-md flex items-center justify-center gap-2.5 cursor-pointer rounded-sm ${
+                  className={`w-full py-4 text-brand-cream text-[10px] uppercase tracking-widest font-bold transition-all duration-300 shadow-md flex items-center justify-center gap-2.5 cursor-pointer rounded-sm ${
                     !selectedAddressId 
                       ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                       : submitting 
-                      ? 'bg-[#1A1A1A]/80 cursor-wait' 
-                      : 'bg-[#1A1A1A] hover:bg-[#9A8C73] hover:text-[#1A1A1A]'
+                      ? 'bg-brand-noir/80 cursor-wait' 
+                      : 'bg-brand-noir hover:bg-brand-gold hover:text-brand-noir'
                   }`}
                 >
                   {submitting ? (
@@ -919,7 +927,7 @@ export default function Checkout() {
             <div className="border border-black/5 bg-white p-6 rounded-sm text-xs">
               <h4 className="font-serif italic font-bold text-black/80 border-b border-black/5 pb-2 mb-3">Service Clientèle Privée 2M</h4>
               <p className="text-black/60 leading-relaxed text-[11px]">
-                Pour toute question sur la compatibilité d'une formulation avec votre diagnostic épidermique, nos praticiens de Dakar vous répondent en direct de 8h à 19h au <a href={`tel:${CONTACT_CONFIG.phoneRaw}`} className="font-semibold text-black hover:text-[#9A8C73] transition-colors">{CONTACT_CONFIG.phone}</a>.
+                Pour toute question sur la compatibilité d'une formulation avec votre diagnostic épidermique, nos praticiens de Dakar vous répondent en direct de 8h à 19h au <a href={`tel:${CONTACT_CONFIG.phoneRaw}`} className="font-semibold text-black hover:text-brand-gold transition-colors">{CONTACT_CONFIG.phone}</a>.
               </p>
             </div>
 
