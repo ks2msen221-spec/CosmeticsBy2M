@@ -82,15 +82,15 @@ export default function Blog() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16 selection:bg-brand-taupe/20" id="public-blog-page">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-16 selection:bg-brand-taupe/20" id="public-blog-page">
       
       {/* Editorial Header */}
-      <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+      <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16 space-y-4">
         <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-extrabold flex items-center justify-center gap-1.5">
           <Sparkles className="w-3.5 h-3.5 text-brand-gold" />
           Le Journal 2M Cosmetics
         </span>
-        <h1 className="text-4xl lg:text-5xl font-serif text-black/90 font-light leading-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-black/90 font-light leading-tight">
           Conseils &amp; Guides Pratiques au Quotidien
         </h1>
         <div className="h-[2px] w-12 bg-brand-gold mx-auto"></div>
@@ -100,7 +100,7 @@ export default function Blog() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="max-w-4xl mx-auto mb-12 flex flex-col md:flex-row gap-4 justify-between items-center bg-brand-cream border border-black/5 p-4 rounded-sm">
+      <div className="max-w-4xl mx-auto mb-8 sm:mb-12 flex flex-col md:flex-row gap-4 justify-between items-center bg-brand-cream border border-black/5 p-3.5 sm:p-4 rounded-sm">
         {/* Search */}
         <div className="relative w-full md:max-w-xs">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-black/30" />
@@ -109,7 +109,7 @@ export default function Blog() {
             placeholder="Rechercher un article..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 border border-black/10 text-xs rounded-sm focus:outline-hidden focus:border-brand-gold bg-white font-light"
+            className="w-full pl-9 pr-4 py-2.5 sm:py-2 border border-black/10 text-xs rounded-sm focus:outline-hidden focus:border-brand-gold bg-white font-light min-h-[44px] md:min-h-0"
           />
         </div>
 
@@ -119,7 +119,7 @@ export default function Blog() {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 text-[9px] uppercase tracking-wider font-bold rounded-xs border transition-all ${
+              className={`px-3 py-2 sm:py-1.5 text-[9px] uppercase tracking-wider font-bold rounded-xs border transition-all min-h-[36px] sm:min-h-0 ${
                 selectedCategory === cat
                   ? 'bg-brand-noir text-brand-cream border-brand-noir'
                   : 'bg-white text-black/60 border-black/5 hover:border-black/25'

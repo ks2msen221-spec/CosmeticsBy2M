@@ -22,6 +22,8 @@ import { useCart } from '../context/CartContext';
 import WhatsAppFloatButton from './WhatsAppFloatButton';
 import { SocialIcons } from './SocialIcons';
 import { CONTACT_CONFIG } from '../config/contact';
+import OfflineBanner from './OfflineBanner';
+import PWAInstallBanner from './PWAInstallBanner';
 
 export default function Layout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -612,6 +614,10 @@ export default function Layout() {
 
       {/* Floating WhatsApp Button (hidden when mobile menu is open) */}
       <WhatsAppFloatButton hidden={isMobileMenuOpen} />
+
+      {/* PWA Banners */}
+      <OfflineBanner />
+      <PWAInstallBanner />
     </div>
   );
 }

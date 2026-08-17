@@ -80,31 +80,31 @@ export default function CatalogueDetail() {
     <div className="min-h-screen bg-brand-cream pb-24">
       {/* Breadcrumb Navigation */}
       <div className="border-b border-black/5 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
-          <Link to="/" className="hover:text-brand-gold flex items-center gap-1 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3.5 sm:py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold overflow-x-auto scrollbar-none whitespace-nowrap">
+          <Link to="/" className="hover:text-brand-gold flex items-center gap-1 transition-colors shrink-0">
             <Home className="w-3 h-3" /> Accueil
           </Link>
-          <ChevronRight className="w-3 h-3" />
-          <Link to="/collections" className="hover:text-brand-gold transition-colors">
+          <ChevronRight className="w-3 h-3 shrink-0" />
+          <Link to="/collections" className="hover:text-brand-gold transition-colors shrink-0">
             Collections
           </Link>
-          <ChevronRight className="w-3 h-3" />
-          <span className="text-black/80">{catalogue.name}</span>
+          <ChevronRight className="w-3 h-3 shrink-0" />
+          <span className="text-black/80 shrink-0">{catalogue.name}</span>
         </div>
       </div>
 
       {/* Catalogue Header Details */}
-      <div className="bg-white border-b border-black/5 py-14 md:py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
+      <div className="bg-white border-b border-black/5 py-10 sm:py-14 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8">
           <div className="max-w-2xl">
             <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold flex items-center gap-1.5 mb-2">
               <BookOpen className="w-4 h-4 text-brand-gold" />
               Sélection thématique
             </span>
-            <h1 className="text-4xl md:text-5xl font-serif italic mb-5 text-black/90">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif italic mb-4 sm:mb-5 text-black/90">
               {catalogue.name}
             </h1>
-            <p className="text-sm text-black/65 leading-relaxed font-light">
+            <p className="text-xs sm:text-sm text-black/65 leading-relaxed font-light">
               {catalogue.description || "Une sélection de soins choisis pour prendre soin de votre peau au quotidien avec simplicité et efficacité."}
             </p>
           </div>
@@ -112,7 +112,7 @@ export default function CatalogueDetail() {
           <div className="shrink-0">
             <Link
               to={`/catalogue/${catalogue.slug}/print`}
-              className="px-6 py-3.5 border border-black/15 text-[10px] uppercase tracking-widest font-bold hover:bg-brand-noir hover:text-brand-cream transition-all flex items-center gap-2.5 shadow-xs bg-white rounded-sm"
+              className="w-full sm:w-auto px-5 sm:px-6 py-3.5 border border-black/15 text-[10px] uppercase tracking-widest font-bold hover:bg-brand-noir hover:text-brand-cream transition-all flex items-center justify-center gap-2.5 shadow-xs bg-white rounded-sm min-h-[44px]"
             >
               <Printer className="w-4 h-4 text-brand-gold" />
               Consulter la version imprimable
@@ -122,25 +122,25 @@ export default function CatalogueDetail() {
       </div>
 
       {/* Catalogue Products Grid */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
-        <div className="flex justify-between items-center mb-8 text-[10px] uppercase tracking-widest text-black/50 font-bold pb-3 border-b border-black/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 sm:py-16">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-8 text-[10px] uppercase tracking-widest text-black/50 font-bold pb-3 border-b border-black/5">
           <span>{products.length} {products.length > 1 ? 'produits disponibles' : 'produit disponible'}</span>
           <span>Disponible à Dakar</span>
         </div>
 
         {products.length === 0 ? (
-          <div className="border border-black/5 bg-white p-14 text-center shadow-sm max-w-xl mx-auto rounded-sm">
+          <div className="border border-black/5 bg-white p-8 sm:p-14 text-center shadow-sm max-w-xl mx-auto rounded-sm">
             <Sparkles className="w-8 h-8 text-brand-gold/60 mx-auto mb-4" />
             <h3 className="font-serif italic text-xl mb-2 text-black/90">Sélection en cours de mise à jour</h3>
             <p className="text-xs text-black/60 max-w-sm mx-auto mb-6 font-light leading-relaxed">
               Nous ajoutons actuellement de nouveaux produits à cette collection. Explorez nos autres gammes en attendant.
             </p>
-            <Link to="/produits" className="px-6 py-3 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors inline-block rounded-sm">
+            <Link to="/produits" className="px-6 py-3.5 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors inline-block rounded-sm min-h-[44px]">
               Je découvre tous les produits
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

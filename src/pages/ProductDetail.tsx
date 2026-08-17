@@ -135,25 +135,25 @@ export default function ProductDetail() {
     <div className="min-h-screen bg-brand-cream pb-24">
       {/* Breadcrumbs */}
       <div className="border-b border-black/5 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
-          <Link to="/" className="hover:text-brand-gold flex items-center gap-1 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3.5 sm:py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold overflow-x-auto scrollbar-none whitespace-nowrap">
+          <Link to="/" className="hover:text-brand-gold flex items-center gap-1 transition-colors shrink-0">
             <Home className="w-3 h-3" /> Accueil
           </Link>
-          <ChevronRight className="w-3 h-3" />
+          <ChevronRight className="w-3 h-3 shrink-0" />
           {product.category && (
             <>
-              <Link to={`/categorie/${product.category.slug}`} className="hover:text-brand-gold transition-colors">
+              <Link to={`/categorie/${product.category.slug}`} className="hover:text-brand-gold transition-colors shrink-0">
                 {product.category.name}
               </Link>
-              <ChevronRight className="w-3 h-3" />
+              <ChevronRight className="w-3 h-3 shrink-0" />
             </>
           )}
-          <span className="text-black/80 truncate max-w-[150px] md:max-w-none">{product.name}</span>
+          <span className="text-black/80 truncate max-w-[150px] sm:max-w-none shrink-0">{product.name}</span>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-start">
           
           {/* Left Column: Visual Image Gallery */}
           <div className="space-y-4">
@@ -178,12 +178,12 @@ export default function ProductDetail() {
 
             {/* Thumbnail Navigation */}
             {product.images && product.images.length > 1 && (
-              <div className="flex gap-3">
+              <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-1 scrollbar-none">
                 {product.images.map((img, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedImage(img)}
-                    className={`w-20 h-20 bg-white border cursor-pointer overflow-hidden transition-all p-1 rounded-sm ${selectedImage === img ? 'border-brand-gold scale-95 shadow-sm' : 'border-black/5 opacity-60 hover:opacity-100'}`}
+                    className={`w-16 h-16 sm:w-20 sm:h-20 bg-white border cursor-pointer overflow-hidden transition-all p-1 rounded-sm shrink-0 ${selectedImage === img ? 'border-brand-gold scale-95 shadow-sm' : 'border-black/5 opacity-60 hover:opacity-100'}`}
                   >
                     <img src={img} alt={`Aperçu ${index + 1} - ${product.name}`} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                   </button>
@@ -192,7 +192,7 @@ export default function ProductDetail() {
             )}
 
             {/* Reassurance Callouts on Mobile/Desktop */}
-            <div className="grid grid-cols-2 gap-3 pt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 sm:pt-4">
               <div className="p-3 bg-white border border-black/5 rounded-sm flex items-start gap-2.5">
                 <Truck className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
                 <div>
@@ -211,7 +211,7 @@ export default function ProductDetail() {
           </div>
 
           {/* Right Column: Product Specifications */}
-          <div className="space-y-8 bg-white border border-black/5 p-8 md:p-10 shadow-sm relative rounded-sm">
+          <div className="space-y-6 sm:space-y-8 bg-white border border-black/5 p-5 sm:p-8 md:p-10 shadow-sm relative rounded-sm">
             <div className="absolute top-0 left-0 right-0 h-1 bg-brand-gold"></div>
 
             {/* Brand and Rating */}
@@ -220,7 +220,7 @@ export default function ProductDetail() {
                 {product.brand ? (
                   <Link 
                     to={`/marque/${product.brand.slug}`}
-                    className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold hover:underline transition-colors"
+                    className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold hover:underline transition-colors min-h-[32px] flex items-center"
                   >
                     {product.brand.name}
                   </Link>
@@ -236,13 +236,13 @@ export default function ProductDetail() {
                 )}
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-serif italic text-black/90 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif italic text-black/90 leading-tight">
                 {product.name}
               </h1>
 
               {/* Price Tag */}
               <div className="pt-2 border-b border-black/5 pb-4">
-                <div className="flex justify-between items-baseline">
+                <div className="flex flex-wrap justify-between items-baseline gap-2">
                   <div className="flex items-center gap-3">
                     <span className="text-2xl sm:text-3xl font-mono font-bold text-brand-noir">
                       {formatPrice(product.price)}
@@ -267,12 +267,14 @@ export default function ProductDetail() {
 
             {/* Availability details & Local note */}
             <div className="space-y-3 font-sans text-xs">
-              <div className="flex items-center gap-2 text-black/80">
-                <Package className="w-4 h-4 text-brand-gold" />
-                <span className="font-semibold">Disponibilité :</span>
+              <div className="flex flex-wrap items-center gap-2 text-black/80">
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <Package className="w-4 h-4 text-brand-gold" />
+                  <span className="font-semibold">Disponibilité :</span>
+                </div>
                 {product.stock > 0 ? (
                   <span className="text-emerald-800 font-bold bg-emerald-50 px-2.5 py-0.5 border border-emerald-200 rounded text-[11px]">
-                    En stock à Dakar ({product.stock} {product.stock > 1 ? 'unités prêtes à être livrées' : 'unité prête à être livrée'})
+                    En stock à Dakar ({product.stock} {product.stock > 1 ? 'unités' : 'unité'})
                   </span>
                 ) : (
                   <span className="text-red-700 font-bold bg-red-50 px-2 py-0.5 border border-red-100 rounded text-[11px]">
@@ -281,10 +283,12 @@ export default function ProductDetail() {
                 )}
               </div>
 
-              <div className="flex items-center gap-2 text-black/80">
-                <HeartHandshake className="w-4 h-4 text-brand-gold" />
-                <span className="font-semibold">Paiement :</span>
-                <span className="text-black/65 text-[11px]">Espèces à la livraison, Wave ou Orange Money en toute simplicité.</span>
+              <div className="flex items-start gap-2 text-black/80">
+                <HeartHandshake className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-semibold">Paiement : </span>
+                  <span className="text-black/65 text-[11px]">Espèces à la livraison, Wave ou Orange Money en toute simplicité.</span>
+                </div>
               </div>
             </div>
 
@@ -292,11 +296,11 @@ export default function ProductDetail() {
             {product.stock > 0 ? (
               <div className="space-y-4 pt-2 border-t border-b border-black/5 pb-6">
                 <span className="text-[10px] uppercase tracking-widest text-brand-gold font-bold block">Choisir la quantité :</span>
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <div className="flex items-center border border-black/10 rounded-sm bg-brand-cream self-start sm:self-auto h-12 shadow-sm">
                     <button 
                       onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
-                      className="px-4 h-full text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none border-r border-black/5 flex items-center justify-center text-sm disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="px-4 h-full text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none border-r border-black/5 flex items-center justify-center text-sm disabled:opacity-30 disabled:cursor-not-allowed min-w-[44px]"
                       disabled={quantity <= 1}
                       aria-label="Diminuer la quantité"
                     >
@@ -322,7 +326,7 @@ export default function ProductDetail() {
 
                     <button 
                       onClick={() => setQuantity(prev => Math.min(product.stock, prev + 1))}
-                      className="px-4 h-full text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none border-l border-black/5 flex items-center justify-center text-sm disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="px-4 h-full text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none border-l border-black/5 flex items-center justify-center text-sm disabled:opacity-30 disabled:cursor-not-allowed min-w-[44px]"
                       disabled={quantity >= product.stock}
                       aria-label="Augmenter la quantité"
                     >
@@ -333,7 +337,7 @@ export default function ProductDetail() {
                   <button
                     onClick={handleAddToCart}
                     disabled={product.stock <= 0}
-                    className="flex-1 h-12 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 rounded-sm"
+                    className="w-full sm:flex-1 h-12 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 rounded-sm min-h-[44px]"
                   >
                     <ShoppingBag className="w-4 h-4" />
                     J'ajoute au panier
@@ -377,24 +381,24 @@ export default function ProductDetail() {
 
             {/* Specs Switchable Tabs */}
             <div className="space-y-4">
-              <div className="flex border-b border-black/5 text-[10px] uppercase tracking-wider font-bold">
+              <div className="flex border-b border-black/5 text-[10px] uppercase tracking-wider font-bold overflow-x-auto scrollbar-none gap-2">
                 <button
                   onClick={() => setActiveTab('desc')}
-                  className={`pb-2.5 px-2 cursor-pointer transition-colors relative ${activeTab === 'desc' ? 'text-black font-extrabold' : 'text-black/40 hover:text-black'}`}
+                  className={`pb-2.5 px-3 cursor-pointer transition-colors relative whitespace-nowrap min-h-[40px] ${activeTab === 'desc' ? 'text-black font-extrabold' : 'text-black/40 hover:text-black'}`}
                 >
                   Description
                   {activeTab === 'desc' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-gold"></div>}
                 </button>
                 <button
                   onClick={() => setActiveTab('ing')}
-                  className={`pb-2.5 px-4 cursor-pointer transition-colors relative ${activeTab === 'ing' ? 'text-black font-extrabold' : 'text-black/40 hover:text-black'}`}
+                  className={`pb-2.5 px-3 cursor-pointer transition-colors relative whitespace-nowrap min-h-[40px] ${activeTab === 'ing' ? 'text-black font-extrabold' : 'text-black/40 hover:text-black'}`}
                 >
                   Ingrédients
                   {activeTab === 'ing' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-gold"></div>}
                 </button>
                 <button
                   onClick={() => setActiveTab('allergens')}
-                  className={`pb-2.5 px-4 cursor-pointer transition-colors relative ${activeTab === 'allergens' ? 'text-black font-extrabold' : 'text-black/40 hover:text-black'}`}
+                  className={`pb-2.5 px-3 cursor-pointer transition-colors relative whitespace-nowrap min-h-[40px] ${activeTab === 'allergens' ? 'text-black font-extrabold' : 'text-black/40 hover:text-black'}`}
                 >
                   Tolérance & Précautions
                   {activeTab === 'allergens' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-gold"></div>}
@@ -419,7 +423,7 @@ export default function ProductDetail() {
                   <div className="space-y-3">
                     <p className="text-black/80 font-light leading-relaxed">{product.allergens || 'Sans parfum synthétique ni agent irritant. Convient aux peaux exposées au climat dakarois.'}</p>
                     <span className="text-[9px] uppercase tracking-widest text-black/40 font-bold flex items-center gap-1.5">
-                      <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+                      <AlertTriangle className="w-3.5 h-3.5 text-amber-500 shrink-0" />
                       Usage cosmétique externe. Conserver à l'abri de la lumière directe et de la forte chaleur.
                     </span>
                   </div>
@@ -431,26 +435,26 @@ export default function ProductDetail() {
         </div>
 
         {/* Customer Reviews Section */}
-        <div className="mt-20 border-t border-black/5 pt-16">
+        <div className="mt-16 sm:mt-20 border-t border-black/5 pt-12 sm:pt-16">
           <div className="max-w-3xl">
             <span className="text-[10px] uppercase tracking-[0.2em] text-brand-gold font-bold block mb-2">Avis clients</span>
-            <h2 className="text-2xl font-serif italic mb-2 text-black/90">Retours d'expérience à Dakar</h2>
-            <p className="text-xs text-black/60 mb-10 font-light">Découvrez les retours de personnes ayant intégré ce produit dans leur routine quotidienne.</p>
+            <h2 className="text-xl sm:text-2xl font-serif italic mb-2 text-black/90">Retours d'expérience à Dakar</h2>
+            <p className="text-xs text-black/60 mb-8 sm:mb-10 font-light">Découvrez les retours de personnes ayant intégré ce produit dans leur routine quotidienne.</p>
 
             {reviews.length === 0 ? (
-              <div className="border border-dashed border-black/10 bg-white p-8 text-center text-xs italic text-black/50 rounded-sm">
+              <div className="border border-dashed border-black/10 bg-white p-6 sm:p-8 text-center text-xs italic text-black/50 rounded-sm">
                 Ce produit n'a pas encore recueilli d'avis. Partagez votre retour d'expérience après votre commande !
               </div>
             ) : (
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {reviews.map((review) => (
-                  <div key={review.id} className="border border-black/5 bg-white p-6 shadow-sm flex gap-4 rounded-sm">
-                    <div className="w-10 h-10 rounded-full bg-brand-cream border border-black/5 flex items-center justify-center text-brand-gold shrink-0">
+                  <div key={review.id} className="border border-black/5 bg-white p-4 sm:p-6 shadow-sm flex gap-3 sm:gap-4 rounded-sm">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-brand-cream border border-black/5 flex items-center justify-center text-brand-gold shrink-0">
                       <User className="w-4 h-4" />
                     </div>
-                    <div className="space-y-2 flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                        <span className="text-xs font-serif italic font-bold text-black/85">{review.user_name}</span>
+                    <div className="space-y-2 flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                        <span className="text-xs font-serif italic font-bold text-black/85 truncate">{review.user_name}</span>
                         <div className="flex items-center gap-2">
                           <div className="flex gap-0.5">{getRatingStars(review.rating)}</div>
                           <span className="text-[9px] text-black/40 font-mono flex items-center gap-1">
@@ -459,7 +463,7 @@ export default function ProductDetail() {
                           </span>
                         </div>
                       </div>
-                      <p className="text-xs text-black/70 leading-relaxed font-light">{review.comment}</p>
+                      <p className="text-xs text-black/70 leading-relaxed font-light break-words">{review.comment}</p>
                     </div>
                   </div>
                 ))}

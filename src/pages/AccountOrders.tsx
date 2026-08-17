@@ -238,8 +238,8 @@ export default function AccountOrders() {
       
       {/* Header Area */}
       <div className="border-b border-black/5 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3.5 sm:py-4 flex items-center justify-between overflow-x-auto scrollbar-none whitespace-nowrap">
+          <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold shrink-0">
             <Link to="/compte" className="hover:text-brand-gold transition-colors flex items-center gap-1">
               <ArrowLeft className="w-3.5 h-3.5" />
               Mon Compte
@@ -250,12 +250,12 @@ export default function AccountOrders() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        <header className="mb-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <header className="mb-8 sm:mb-10">
           <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold block mb-2">
             Espace Client 2M
           </span>
-          <h1 className="text-4xl font-serif italic text-black/90">Mes Commandes Récentes</h1>
+          <h1 className="text-3xl sm:text-4xl font-serif italic text-black/90">Mes Commandes Récentes</h1>
           <p className="text-xs text-black/50 font-light mt-1.5">
             Consultez les détails, le statut d'expédition et le paiement de vos commandes chez 2M Cosmetics.
           </p>

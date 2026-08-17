@@ -1,0 +1,64 @@
+{
+  "name": "2M Cosmetics",
+  "short_name": "2M Cosmetics",
+  "description": "Cosmétiques naturels et transparents à Dakar",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait-primary",
+  "background_color": "#FAF9F6",
+  "theme_color": "#1A1A1A",
+  "lang": "fr-SN",
+  "dir": "ltr",
+  "categories": ["shopping", "beauty", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nos Produits",
+      "short_name": "Produits",
+      "description": "Découvrir tous les soins 2M Cosmetics",
+      "url": "/produits",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mon Panier",
+      "short_name": "Panier",
+      "description": "Voir mon panier d'achats",
+      "url": "/panier",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Collections",
+      "short_name": "Collections",
+      "description": "Sélections thématiques de soins",
+      "url": "/collections",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

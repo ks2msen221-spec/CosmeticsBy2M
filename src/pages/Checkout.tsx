@@ -25,6 +25,7 @@ import {
 import { motion } from 'motion/react';
 import { CONTACT_CONFIG } from '../config/contact';
 import { usePageSEO } from '../utils/seo';
+import { queueOfflineOrder } from '../lib/offlineSync';
 
 // Interfaces for our database/mock structures
 interface ShippingZone {
@@ -394,6 +395,33 @@ export default function Checkout() {
 
       console.log('Sending order request to worker at:', workerUrl, 'with payload:', payload);
 
+      // Offline check
+      if (!navigator.onLine) {
+        if (selectedPaymentMethodCode === 'cod') {
+          const offlineId = await queueOfflineOrder({
+            items: payload.items,
+            address_id: selectedAddressId,
+            payment_method_code: selectedPaymentMethodCode,
+            transaction_reference: transactionReference.trim() || undefined,
+            user_id: user?.id || 'guest',
+            jwt_token: jwtToken
+          });
+
+          await clearCart();
+          navigate('/commande/confirmation', { 
+            state: { 
+              status: 'offline_pending', 
+              orderId: offlineId,
+              total: totalAmount,
+              paymentMethod: selectedPaymentMethodCode
+            } 
+          });
+          return;
+        } else {
+          throw new Error("Vous êtes actuellement hors ligne. La finalisation d'un paiement Wave ou Orange Money nécessite une connexion internet active pour sécuriser la transaction. Vos articles restent précieusement sauvegardés dans votre panier.");
+        }
+      }
+
       let response: Response;
       try {
         response = await fetch(workerUrl, {
@@ -406,6 +434,27 @@ export default function Checkout() {
         });
       } catch (fetchErr: any) {
         console.error("Worker API network call failed:", fetchErr);
+        // If network went down during fetch for COD order, queue it
+        if (!navigator.onLine && selectedPaymentMethodCode === 'cod') {
+          const offlineId = await queueOfflineOrder({
+            items: payload.items,
+            address_id: selectedAddressId,
+            payment_method_code: selectedPaymentMethodCode,
+            transaction_reference: transactionReference.trim() || undefined,
+            user_id: user?.id || 'guest',
+            jwt_token: jwtToken
+          });
+          await clearCart();
+          navigate('/commande/confirmation', { 
+            state: { 
+              status: 'offline_pending', 
+              orderId: offlineId,
+              total: totalAmount,
+              paymentMethod: selectedPaymentMethodCode
+            } 
+          });
+          return;
+        }
         throw new Error("Le service de commande est temporairement indisponible. Veuillez réessayer dans quelques instants ou nous contacter directement.");
       }
 
@@ -469,28 +518,28 @@ export default function Checkout() {
       
       {/* Breadcrumbs */}
       <div className="border-b border-black/5 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
-          <Link to="/" className="hover:text-brand-gold transition-colors">Accueil</Link>
-          <ChevronRight className="w-3 h-3 text-black/20" />
-          <Link to="/panier" className="hover:text-brand-gold transition-colors">Mon Panier</Link>
-          <ChevronRight className="w-3 h-3 text-black/20" />
-          <span className="text-black/80">Validation de commande</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3.5 sm:py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold overflow-x-auto scrollbar-none whitespace-nowrap">
+          <Link to="/" className="hover:text-brand-gold transition-colors shrink-0">Accueil</Link>
+          <ChevronRight className="w-3 h-3 text-black/20 shrink-0" />
+          <Link to="/panier" className="hover:text-brand-gold transition-colors shrink-0">Mon Panier</Link>
+          <ChevronRight className="w-3 h-3 text-black/20 shrink-0" />
+          <span className="text-black/80 shrink-0">Validation de commande</span>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
-        <header className="mb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-12">
+        <header className="mb-8 sm:mb-12">
           <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold block mb-2">
-            Paiement & Livraison Sécurisés • Dakar
+            Paiement &amp; Livraison Sécurisés • Dakar
           </span>
-          <h1 className="text-4xl font-serif italic text-black/90">Finaliser Votre Commande</h1>
+          <h1 className="text-3xl sm:text-4xl font-serif italic text-black/90">Finaliser Votre Commande</h1>
           <p className="text-xs text-black/60 font-light mt-2 max-w-xl leading-relaxed">
             Renseignez votre adresse de livraison et choisissez votre mode de paiement (Wave, Orange Money ou à la livraison). Nous expédions rapidement à Dakar et dans tout le Sénégal.
           </p>
         </header>
 
         {stockMismatchAlert && (
-          <div className="mb-8 p-6 bg-amber-50 border border-amber-300 text-amber-900 rounded-sm shadow-md max-w-4xl space-y-4">
+          <div className="mb-8 p-4 sm:p-6 bg-amber-50 border border-amber-300 text-amber-900 rounded-sm shadow-md max-w-4xl space-y-4">
             <div className="flex items-start gap-3">
               <AlertCircle className="w-6 h-6 text-amber-600 shrink-0 mt-0.5" />
               <div className="space-y-2">
@@ -512,7 +561,7 @@ export default function Checkout() {
               <button
                 onClick={handleAdjustAndContinue}
                 disabled={submitting}
-                className="px-6 py-3 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase font-bold tracking-widest transition-all cursor-pointer shadow-sm rounded-sm disabled:opacity-50"
+                className="px-6 py-3 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase font-bold tracking-widest transition-all cursor-pointer shadow-sm rounded-sm disabled:opacity-50 min-h-[44px]"
               >
                 {submitting ? "Ajustement en cours..." : "Ajuster et continuer"}
               </button>
@@ -521,7 +570,7 @@ export default function Checkout() {
                   setStockMismatchAlert(null);
                   navigate('/panier');
                 }}
-                className="px-5 py-3 border border-amber-900/20 text-amber-900 text-[10px] uppercase font-bold tracking-widest hover:bg-amber-100 transition-all cursor-pointer rounded-sm"
+                className="px-5 py-3 border border-amber-900/20 text-amber-900 text-[10px] uppercase font-bold tracking-widest hover:bg-amber-100 transition-all cursor-pointer rounded-sm min-h-[44px]"
               >
                 Revenir au panier
               </button>
@@ -539,13 +588,13 @@ export default function Checkout() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
           {/* LEFT: Address and Payment Selection (Col 7) */}
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 space-y-6 sm:space-y-8">
             
             {/* Step 1: Shipping Address Section */}
-            <div className="border border-black/5 bg-white p-6 md:p-8 shadow-sm rounded-sm">
+            <div className="border border-black/5 bg-white p-5 sm:p-6 md:p-8 shadow-sm rounded-sm">
               <div className="flex justify-between items-center pb-4 border-b border-black/5 mb-6">
                 <h3 className="text-sm uppercase tracking-wider text-black font-extrabold flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-brand-gold" />
@@ -557,7 +606,7 @@ export default function Checkout() {
                       setIsAddingAddress(true);
                       setAddressError(null);
                     }}
-                    className="text-[10px] uppercase tracking-widest text-brand-gold hover:text-black transition-colors font-bold flex items-center gap-1 cursor-pointer"
+                    className="text-[10px] uppercase tracking-widest text-brand-gold hover:text-black transition-colors font-bold flex items-center gap-1 cursor-pointer min-h-[32px]"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     Nouvelle Adresse

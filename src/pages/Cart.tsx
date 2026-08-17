@@ -106,19 +106,19 @@ export default function Cart() {
       
       {/* Breadcrumb Navigation */}
       <div className="border-b border-black/5 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
-          <Link to="/" className="hover:text-brand-gold transition-colors">Accueil</Link>
-          <ChevronRight className="w-3 h-3 text-black/20" />
-          <span className="text-black/80">Mon Panier</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3.5 sm:py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold overflow-x-auto scrollbar-none whitespace-nowrap">
+          <Link to="/" className="hover:text-brand-gold transition-colors shrink-0">Accueil</Link>
+          <ChevronRight className="w-3 h-3 text-black/20 shrink-0" />
+          <span className="text-black/80 shrink-0">Mon Panier</span>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
-        <header className="mb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-12">
+        <header className="mb-8 sm:mb-12">
           <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold block mb-2">
             2M Cosmetics — Dakar
           </span>
-          <h1 className="text-4xl font-serif italic text-black/90">Votre Panier</h1>
+          <h1 className="text-3xl sm:text-4xl font-serif italic text-black/90">Votre Panier</h1>
           <p className="text-xs text-black/60 font-light mt-2 max-w-xl">
             Vérifiez votre sélection de produits avant de valider votre commande. Notre équipe prépare chaque colis avec soin à Dakar.
           </p>
@@ -128,23 +128,23 @@ export default function Cart() {
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="border border-black/5 bg-white p-16 text-center max-w-2xl mx-auto shadow-sm rounded-sm"
+            className="border border-black/5 bg-white p-8 sm:p-12 md:p-16 text-center max-w-2xl mx-auto shadow-sm rounded-sm"
           >
             <ShoppingBag className="w-12 h-12 text-brand-gold/40 mx-auto mb-6" />
-            <h2 className="text-2xl font-serif italic mb-3 text-black/90">Votre panier est vide</h2>
+            <h2 className="text-xl sm:text-2xl font-serif italic mb-3 text-black/90">Votre panier est vide</h2>
             <p className="text-xs text-black/60 font-light leading-relaxed max-w-md mx-auto mb-8">
               Vous n'avez pas encore sélectionné de produit. Découvrez notre catalogue de soins formulés simplement pour répondre aux besoins de votre peau.
             </p>
             <div className="h-[1px] w-12 bg-brand-gold/40 mx-auto mb-8"></div>
             <Link 
               to="/produits" 
-              className="inline-block px-10 py-4 bg-brand-noir text-brand-cream text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-all duration-300 shadow-md rounded-sm"
+              className="inline-block px-8 sm:px-10 py-3.5 sm:py-4 bg-brand-noir text-brand-cream text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-all duration-300 shadow-md rounded-sm min-h-[44px]"
             >
               Je découvre les soins
             </Link>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
             
             {/* Left Column: Cart Items List */}
             <div className="lg:col-span-2 space-y-6">
@@ -153,7 +153,7 @@ export default function Cart() {
                 <span>Articles sélectionnés ({totalQuantity})</span>
                 <button 
                   onClick={clearCart}
-                  className="hover:text-red-700 transition-colors cursor-pointer flex items-center gap-1.5 font-bold"
+                  className="hover:text-red-700 transition-colors cursor-pointer flex items-center gap-1.5 font-bold min-h-[32px]"
                 >
                   Vider le panier
                 </button>
@@ -174,10 +174,10 @@ export default function Cart() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="bg-white border border-black/5 p-4 md:p-6 shadow-sm flex flex-col sm:flex-row gap-6 relative group rounded-sm"
+                      className="bg-white border border-black/5 p-4 sm:p-6 shadow-sm flex flex-col sm:flex-row gap-4 sm:gap-6 relative group rounded-sm"
                     >
                       {/* Product Image */}
-                      <div className="w-24 h-30 bg-brand-cream border border-black/5 overflow-hidden flex items-center justify-center shrink-0 self-center sm:self-start rounded-sm">
+                      <div className="w-20 h-24 sm:w-24 sm:h-30 bg-brand-cream border border-black/5 overflow-hidden flex items-center justify-center shrink-0 self-center sm:self-start rounded-sm">
                         {product?.images && product.images.length > 0 ? (
                           <img 
                             src={product.images[0]} 
@@ -191,16 +191,16 @@ export default function Cart() {
                       </div>
 
                       {/* Item details */}
-                      <div className="flex-grow flex flex-col justify-between py-1">
+                      <div className="flex-grow flex flex-col justify-between py-1 min-w-0">
                         <div className="space-y-1">
                           <div className="flex justify-between items-start gap-4">
-                            <div>
+                            <div className="min-w-0">
                               {product?.brand && (
-                                <span className="text-[9px] uppercase tracking-wider text-brand-taupe font-bold">
+                                <span className="text-[9px] uppercase tracking-wider text-brand-taupe font-bold block">
                                   {product.brand.name}
                                 </span>
                               )}
-                              <h3 className="font-serif italic text-base md:text-lg text-black/90 hover:text-brand-gold transition-colors leading-tight">
+                              <h3 className="font-serif italic text-base md:text-lg text-black/90 hover:text-brand-gold transition-colors leading-tight truncate">
                                 {product ? (
                                   <Link to={`/produit/${product.slug}`}>{product.name}</Link>
                                 ) : (
@@ -211,8 +211,9 @@ export default function Cart() {
                             
                             <button 
                               onClick={() => removeFromCart(item.product_id)}
-                              className="text-black/30 hover:text-red-700 p-1 transition-colors cursor-pointer"
+                              className="text-black/30 hover:text-red-700 p-2 transition-colors cursor-pointer shrink-0 min-h-[36px] min-w-[36px] flex items-center justify-center"
                               title="Retirer l'article"
+                              aria-label="Supprimer le produit du panier"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -233,7 +234,7 @@ export default function Cart() {
                               </div>
                               <button
                                 onClick={() => updateQuantity(item.product_id, availableStock)}
-                                className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-[10px] font-bold uppercase tracking-wider rounded-sm transition-colors cursor-pointer self-start sm:self-auto shrink-0"
+                                className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-[10px] font-bold uppercase tracking-wider rounded-sm transition-colors cursor-pointer self-start sm:self-auto shrink-0 min-h-[32px]"
                               >
                                 Ajuster à {availableStock}
                               </button>
@@ -244,21 +245,23 @@ export default function Cart() {
                         {/* Quantity and Line Total actions */}
                         <div className="flex justify-between items-center pt-4 border-t border-black/5 mt-4">
                           {/* Quantity Selector */}
-                          <div className="flex items-center border border-black/10 rounded-sm bg-brand-cream">
+                          <div className="flex items-center border border-black/10 rounded-sm bg-brand-cream h-9 sm:h-10">
                             <button 
                               onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
-                              className="px-2.5 py-1 text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none text-xs disabled:opacity-30 disabled:cursor-not-allowed"
+                              className="px-3 h-full text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none text-xs disabled:opacity-30 disabled:cursor-not-allowed min-w-[36px] flex items-center justify-center"
                               disabled={item.quantity <= 1}
+                              aria-label="Diminuer la quantité"
                             >
                               -
                             </button>
-                            <span className="px-3 font-mono text-xs font-bold text-black min-w-[1.5rem] text-center">
+                            <span className="px-2 font-mono text-xs font-bold text-black min-w-[1.5rem] text-center">
                               {item.quantity}
                             </span>
                             <button 
                               onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
-                              className="px-2.5 py-1 text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none text-xs disabled:opacity-30 disabled:cursor-not-allowed"
+                              className="px-3 h-full text-black/60 hover:text-black hover:bg-black/[0.02] transition-colors font-bold cursor-pointer select-none text-xs disabled:opacity-30 disabled:cursor-not-allowed min-w-[36px] flex items-center justify-center"
                               disabled={item.quantity >= availableStock}
+                              aria-label="Augmenter la quantité"
                             >
                               +
                             </button>
@@ -279,7 +282,7 @@ export default function Cart() {
 
               {/* Reassurance Footer */}
               <div className="flex items-center gap-2.5 text-black/50 font-mono text-[9px] pt-4">
-                <ShieldCheck className="w-4 h-4 text-brand-taupe" />
+                <ShieldCheck className="w-4 h-4 text-brand-taupe shrink-0" />
                 <span>Commandes et paiements sécurisés • Service client basé à Dakar.</span>
               </div>
             </div>
@@ -287,7 +290,7 @@ export default function Cart() {
             {/* Right Column: Order Summary Card */}
             <div className="space-y-6">
               
-              <div className="bg-white border border-black/5 p-6 md:p-8 shadow-sm relative rounded-sm">
+              <div className="bg-white border border-black/5 p-5 sm:p-6 md:p-8 shadow-sm relative rounded-sm">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-brand-gold"></div>
 
                 <h3 className="text-xs uppercase tracking-widest text-black/40 font-bold border-b border-black/5 pb-3 mb-6">
@@ -347,14 +350,14 @@ export default function Cart() {
                 <div className="space-y-3 mt-8">
                   <button
                     onClick={handleCheckoutClick}
-                    className="w-full py-4 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98 rounded-sm"
+                    className="w-full py-4 bg-brand-noir hover:bg-brand-gold text-brand-cream hover:text-brand-noir text-[10px] uppercase tracking-widest font-bold transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98 rounded-sm min-h-[44px]"
                   >
                     Je valide ma commande
                   </button>
 
                   <Link 
                     to="/" 
-                    className="w-full py-3.5 border border-black/15 text-[10px] uppercase tracking-widest font-bold hover:bg-black/[0.02] transition-all flex items-center justify-center gap-2 bg-white rounded-sm"
+                    className="w-full py-3.5 border border-black/15 text-[10px] uppercase tracking-widest font-bold hover:bg-black/[0.02] transition-all flex items-center justify-center gap-2 bg-white rounded-sm min-h-[44px]"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     Je continue mes achats
@@ -363,7 +366,7 @@ export default function Cart() {
               </div>
 
               {/* Service Details Callout */}
-              <div className="border border-black/5 bg-white p-6 rounded-sm text-xs space-y-4">
+              <div className="border border-black/5 bg-white p-5 sm:p-6 rounded-sm text-xs space-y-4">
                 <h4 className="font-serif italic font-bold text-black/80 border-b border-black/5 pb-2">Des questions sur nos formules ?</h4>
                 <div className="flex items-start gap-2.5 text-black/60 leading-relaxed text-[11px]">
                   <HelpCircle className="w-4 h-4 text-brand-taupe shrink-0 mt-0.5" />

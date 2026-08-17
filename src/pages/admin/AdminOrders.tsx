@@ -434,6 +434,34 @@ export default function AdminOrders() {
 
       // Update local view state
       setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o));
+
+      // Trigger Push Notification via Worker
+      try {
+        let token = '';
+        if (supabase && !isMocked) {
+          const { data: sessionData } = await supabase.auth.getSession();
+          token = sessionData.session?.access_token || '';
+        }
+
+        const rawApiUrl = (import.meta as any).env?.VITE_ORDERS_API_URL || '';
+        const apiBaseUrl = rawApiUrl.replace(/\/api\/orders\/?$/, '').replace(/\/orders\/?$/, '');
+
+        if (apiBaseUrl && token) {
+          fetch(`${apiBaseUrl}/api/push/notify`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              order_id: orderId,
+              new_status: newStatus
+            })
+          }).catch(e => console.warn('Erreur envoi notification push:', e));
+        }
+      } catch (pushErr) {
+        console.warn('Notification push non envoyée:', pushErr);
+      }
       
       // Determine success feedback message based on action
       if (newStatus === 'confirmed') {

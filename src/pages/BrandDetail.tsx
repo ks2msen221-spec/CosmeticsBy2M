@@ -81,39 +81,39 @@ export default function BrandDetail() {
     <div className="min-h-screen bg-brand-cream pb-24">
       {/* Breadcrumb Navigation */}
       <div className="border-b border-black/5 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold">
-          <Link to="/" className="hover:text-brand-gold flex items-center gap-1 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3.5 sm:py-4 flex items-center gap-2 text-[10px] uppercase tracking-widest text-black/40 font-bold overflow-x-auto scrollbar-none whitespace-nowrap">
+          <Link to="/" className="hover:text-brand-gold flex items-center gap-1 transition-colors shrink-0">
             <Home className="w-3 h-3" /> Accueil
           </Link>
-          <ChevronRight className="w-3 h-3" />
-          <Link to="/collections" className="hover:text-brand-gold transition-colors">
-            Collections & Marques
+          <ChevronRight className="w-3 h-3 shrink-0" />
+          <Link to="/collections" className="hover:text-brand-gold transition-colors shrink-0">
+            Collections &amp; Marques
           </Link>
-          <ChevronRight className="w-3 h-3" />
-          <span className="text-black/80">{brand.name}</span>
+          <ChevronRight className="w-3 h-3 shrink-0" />
+          <span className="text-black/80 shrink-0">{brand.name}</span>
         </div>
       </div>
 
       {/* Brand Profile Showcase */}
-      <div className="bg-white border-b border-black/5 py-14 md:py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
+      <div className="bg-white border-b border-black/5 py-10 sm:py-14 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 items-center">
             
             {/* Brand Title and Bio */}
-            <div className="lg:col-span-2 space-y-5">
+            <div className="lg:col-span-2 space-y-4 sm:space-y-5">
               <span className="text-[10px] uppercase tracking-[0.25em] text-brand-gold font-bold flex items-center gap-2">
                 <Award className="w-4 h-4 text-brand-gold" />
                 Marque Partenaire
               </span>
-              <h1 className="text-4xl md:text-5xl font-serif italic text-black/90">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif italic text-black/90">
                 {brand.name}
               </h1>
               <div className="h-[1px] w-20 bg-brand-gold/40"></div>
-              <p className="text-sm text-black/70 leading-relaxed font-light">
+              <p className="text-xs sm:text-sm text-black/70 leading-relaxed font-light">
                 {brand.bio || "Une marque de cosmétiques qui privilégie la simplicité des formulations et le respect de la peau au quotidien."}
               </p>
 
-              <div className="flex flex-wrap gap-4 pt-2 text-xs text-black/60 font-light">
+              <div className="flex flex-wrap gap-3 sm:gap-4 pt-2 text-xs text-black/60 font-light">
                 <span className="flex items-center gap-1.5 bg-brand-cream border border-black/5 px-3 py-1.5 rounded-sm">
                   <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" /> Formules authentifiées
                 </span>
@@ -125,7 +125,7 @@ export default function BrandDetail() {
 
             {/* Brand Logo / Aesthetic Block */}
             <div className="flex justify-center lg:justify-end">
-              <div className="w-44 h-44 rounded-2xl border border-black/5 bg-brand-cream p-8 flex items-center justify-center shadow-inner relative overflow-hidden group">
+              <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-2xl border border-black/5 bg-brand-cream p-6 sm:p-8 flex items-center justify-center shadow-inner relative overflow-hidden group">
                 {brand.logo_url ? (
                   <img 
                     src={brand.logo_url} 
@@ -144,25 +144,25 @@ export default function BrandDetail() {
       </div>
 
       {/* Brand Products Content Grid */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
-        <div className="flex justify-between items-center mb-8 text-[10px] uppercase tracking-widest text-black/50 font-bold pb-3 border-b border-black/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 sm:py-16">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-8 text-[10px] uppercase tracking-widest text-black/50 font-bold pb-3 border-b border-black/5">
           <span>{products.length} {products.length > 1 ? 'produits disponibles' : 'produit disponible'}</span>
           <span>Disponible à Dakar</span>
         </div>
 
         {products.length === 0 ? (
-          <div className="border border-black/5 bg-white p-14 text-center shadow-sm max-w-2xl mx-auto rounded-sm">
+          <div className="border border-black/5 bg-white p-8 sm:p-14 text-center shadow-sm max-w-2xl mx-auto rounded-sm">
             <Sparkles className="w-8 h-8 text-brand-gold/60 mx-auto mb-4" />
             <h3 className="font-serif italic text-xl mb-2 text-black/90">Produits en cours de réapprovisionnement</h3>
             <p className="text-xs text-black/60 max-w-sm mx-auto mb-6 font-light leading-relaxed">
               Les produits de la marque {brand.name} sont en cours de réapprovisionnement dans nos stocks à Dakar.
             </p>
-            <Link to="/produits" className="px-6 py-3 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors inline-block rounded-sm">
+            <Link to="/produits" className="px-6 py-3.5 bg-brand-noir text-white text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors inline-block rounded-sm min-h-[44px]">
               Je découvre tous les produits
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

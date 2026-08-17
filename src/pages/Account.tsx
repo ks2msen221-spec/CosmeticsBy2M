@@ -24,6 +24,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { usePageSEO } from '../utils/seo';
+import PushNotificationSettings from '../components/PushNotificationSettings';
 
 interface Address {
   id: string;
@@ -521,31 +522,31 @@ export default function Account() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-16">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
         
         {/* Left column: Quick Actions & Role */}
         <div className="space-y-6">
-          <div className="border border-black/5 bg-white p-8 shadow-sm rounded-sm">
+          <div className="border border-black/5 bg-white p-5 sm:p-8 shadow-sm rounded-sm">
             <span className="text-[10px] uppercase tracking-[0.2em] text-brand-gold font-bold block mb-2">
               Statut du Compte
             </span>
             
             <div className="flex items-center gap-4 py-4 border-b border-black/5">
-              <div className="w-12 h-12 rounded-full bg-brand-taupe/10 flex items-center justify-center text-brand-taupe">
+              <div className="w-12 h-12 rounded-full bg-brand-taupe/10 flex items-center justify-center text-brand-taupe shrink-0">
                 <User className="w-5 h-5" />
               </div>
-              <div>
-                <h3 className="font-serif italic text-lg leading-snug">
+              <div className="min-w-0">
+                <h3 className="font-serif italic text-lg leading-snug truncate">
                   {profile?.full_name || 'Client 2M'}
                 </h3>
-                <p className="text-xs text-black/50 font-mono truncate max-w-[180px]">{user?.email}</p>
+                <p className="text-xs text-black/50 font-mono truncate">{user?.email}</p>
               </div>
             </div>
 
             {/* Role indicator (Strictly read-only) */}
             <div className="mt-6 space-y-4">
-              <div className="flex items-center justify-between text-xs font-medium py-1.5 px-3 bg-brand-cream border border-black/5 rounded-sm">
+              <div className="flex items-center justify-between text-xs font-medium py-2 px-3 bg-brand-cream border border-black/5 rounded-sm">
                 <span className="text-black/50">Rôle de Sécurité</span>
                 <span className="flex items-center gap-1 font-mono uppercase font-bold text-[10px] text-brand-gold">
                   <Shield className="w-3 h-3" />
@@ -560,7 +561,7 @@ export default function Account() {
             <div className="mt-8 pt-6 border-t border-black/5 flex flex-col gap-3">
               <Link 
                 to="/compte/commandes" 
-                className="w-full py-3 bg-brand-noir text-brand-cream text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors flex items-center justify-center gap-2 rounded-sm"
+                className="w-full py-3.5 bg-brand-noir text-brand-cream text-[10px] uppercase tracking-widest font-bold hover:bg-brand-gold hover:text-brand-noir transition-colors flex items-center justify-center gap-2 rounded-sm min-h-[44px]"
               >
                 Je consulte mes commandes
                 <ArrowRight className="w-3 h-3" />
@@ -569,7 +570,7 @@ export default function Account() {
               {profile?.role === 'admin' && (
                 <Link 
                   to="/admin" 
-                  className="w-full py-3 bg-amber-500 text-white text-[10px] uppercase tracking-widest font-bold hover:bg-amber-600 transition-colors flex items-center justify-center gap-2 rounded-sm"
+                  className="w-full py-3.5 bg-amber-500 text-white text-[10px] uppercase tracking-widest font-bold hover:bg-amber-600 transition-colors flex items-center justify-center gap-2 rounded-sm min-h-[44px]"
                 >
                   Console Administration
                 </Link>
@@ -577,7 +578,7 @@ export default function Account() {
 
               <button 
                 onClick={handleLogout}
-                className="w-full py-3 border border-black/10 text-black/70 hover:bg-red-50 hover:text-red-700 hover:border-red-500/10 text-[10px] uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 cursor-pointer rounded-sm"
+                className="w-full py-3.5 border border-black/10 text-black/70 hover:bg-red-50 hover:text-red-700 hover:border-red-500/10 text-[10px] uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 cursor-pointer rounded-sm min-h-[44px]"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 Déconnexion
@@ -594,9 +595,9 @@ export default function Account() {
 
         {/* Right column: Profile details */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="border border-black/5 bg-white p-8 md:p-10 shadow-sm relative rounded-sm">
-            <h2 className="text-3xl font-serif mb-2">Informations Personnelles</h2>
-            <p className="text-xs text-black/50 mb-8">Consultez et éditez vos coordonnées de livraison pour accélérer vos prochaines commandes 2M Cosmetics.</p>
+          <div className="border border-black/5 bg-white p-5 sm:p-8 md:p-10 shadow-sm relative rounded-sm">
+            <h2 className="text-2xl sm:text-3xl font-serif mb-2">Informations Personnelles</h2>
+            <p className="text-xs text-black/50 mb-6 sm:mb-8">Consultez et éditez vos coordonnées de livraison pour accélérer vos prochaines commandes 2M Cosmetics.</p>
             
             {successMessage && (
               <div className="mb-6 p-4 bg-green-50 border border-green-500/10 text-green-800 text-xs flex items-center gap-2 rounded-sm">
@@ -1162,6 +1163,9 @@ export default function Account() {
               </div>
             )}
           </div>
+
+          {/* Notifications Push PWA */}
+          <PushNotificationSettings userId={user?.id} isMocked={isMocked} />
         </div>
 
       </div>

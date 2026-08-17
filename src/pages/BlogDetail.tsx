@@ -173,16 +173,16 @@ export default function BlogDetail() {
     <div className="bg-white min-h-screen selection:bg-brand-taupe/20" id="blog-detail-article">
       
       {/* Article top breadcrumb / nav */}
-      <nav className="max-w-7xl mx-auto px-6 lg:px-12 py-6 border-b border-black/5 flex items-center justify-between text-xs font-mono">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-6 border-b border-black/5 flex items-center justify-between text-xs font-mono overflow-x-auto scrollbar-none whitespace-nowrap">
         <Link 
           to="/blog" 
-          className="flex items-center gap-2 text-black/55 hover:text-brand-gold transition-colors"
+          className="flex items-center gap-2 text-black/55 hover:text-brand-gold transition-colors shrink-0"
         >
           <ArrowLeft className="w-4 h-4" />
           Retour aux conseils
         </Link>
 
-        <div className="hidden sm:flex items-center gap-2 text-black/30">
+        <div className="hidden sm:flex items-center gap-2 text-black/30 shrink-0">
           <Link to="/" className="hover:text-black">Accueil</Link>
           <ChevronRight className="w-3 h-3" />
           <Link to="/blog" className="hover:text-black">Conseils</Link>
@@ -192,23 +192,23 @@ export default function BlogDetail() {
       </nav>
 
       {/* Main Container */}
-      <article className="max-w-4xl mx-auto px-6 lg:px-12 py-12 lg:py-16">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-12 lg:py-16">
         
         {/* Article Meta Header */}
-        <header className="text-center space-y-6 max-w-2xl mx-auto mb-10">
+        <header className="text-center space-y-4 sm:space-y-6 max-w-2xl mx-auto mb-8 sm:mb-10">
           {post.category && (
             <span className="inline-block px-3 py-1 bg-brand-cream border border-black/5 text-brand-gold text-[9px] uppercase tracking-[0.2em] font-extrabold rounded-xs">
               {post.category}
             </span>
           )}
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-black/90 leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-serif text-black/90 leading-tight">
             {post.title}
           </h1>
 
           <div className="h-[2px] w-12 bg-brand-gold mx-auto"></div>
 
-          <div className="flex items-center justify-center gap-6 text-[11px] text-black/40 font-mono font-light">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[10px] sm:text-[11px] text-black/40 font-mono font-light">
             <span className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 text-brand-taupe" />
               {formatFrenchDate(post.created_at)}
@@ -224,7 +224,7 @@ export default function BlogDetail() {
 
         {/* Big Cover Image */}
         {post.cover_image && (
-          <div className="w-full h-80 sm:h-96 md:h-[450px] bg-brand-cream border border-black/5 rounded-xs overflow-hidden shadow-2xs mb-12">
+          <div className="w-full h-56 sm:h-80 md:h-[450px] bg-brand-cream border border-black/5 rounded-xs overflow-hidden shadow-2xs mb-8 sm:mb-12">
             <img 
               src={post.cover_image} 
               alt={post.title} 
