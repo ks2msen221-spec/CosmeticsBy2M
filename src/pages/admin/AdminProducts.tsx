@@ -106,8 +106,8 @@ export default function AdminProducts() {
     setFormDescription('');
     setFormIngredients('');
     setFormAllergens('');
-    setFormCategoryId(categories[0]?.id || '');
-    setFormBrandId(brands[0]?.id || '');
+    setFormCategoryId('');
+    setFormBrandId('');
     setFormExpirationDate('');
     setFormImages([]);
     setFormActive(true);
@@ -370,7 +370,7 @@ export default function AdminProducts() {
 
                 <div className="space-y-1.5">
                   <label className="text-[10px] uppercase tracking-wider font-bold text-black/60 block">
-                    Slug d'accès URL <span className="text-red-500">*</span>
+                    Slug (URL) <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -387,7 +387,7 @@ export default function AdminProducts() {
             {/* Price, Stock and Expiration */}
             <div className="space-y-4">
               <h3 className="text-xs font-mono uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
-                Prix, Inventaire & Validité
+                Prix et stock
               </h3>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -408,7 +408,7 @@ export default function AdminProducts() {
 
                 <div className="space-y-1.5">
                   <label className="text-[10px] uppercase tracking-wider font-bold text-black/60 block">
-                    Stock disponible à Dakar <span className="text-red-500">*</span>
+                    Stock disponible <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="number"
@@ -438,21 +438,20 @@ export default function AdminProducts() {
             {/* Classifications */}
             <div className="space-y-4">
               <h3 className="text-xs font-mono uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
-                Classifications catalogue
+                Classification
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-1.5">
                   <label className="text-[10px] uppercase tracking-wider font-bold text-black/60 block">
-                    Catégorie Dermatologique <span className="text-red-500">*</span>
+                    Catégorie
                   </label>
                   <select
-                    required
                     value={formCategoryId}
                     onChange={(e) => setFormCategoryId(e.target.value)}
                     className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                   >
-                    <option value="" disabled>Sélectionner une catégorie</option>
+                    <option value="">Sélectionner une catégorie</option>
                     {categories.map(c => (
                       <option key={c.id} value={c.id}>{c.name}</option>
                     ))}
@@ -461,15 +460,14 @@ export default function AdminProducts() {
 
                 <div className="space-y-1.5">
                   <label className="text-[10px] uppercase tracking-wider font-bold text-black/60 block">
-                    Marque d'Exception <span className="text-red-500">*</span>
+                    Marque
                   </label>
                   <select
-                    required
                     value={formBrandId}
                     onChange={(e) => setFormBrandId(e.target.value)}
                     className="w-full bg-brand-cream border border-black/10 focus:border-brand-gold focus:outline-hidden text-xs px-3.5 py-2.5 rounded-sm transition-colors text-black"
                   >
-                    <option value="" disabled>Sélectionner une marque</option>
+                    <option value="">Sélectionner une marque</option>
                     {brands.map(b => (
                       <option key={b.id} value={b.id}>{b.name}</option>
                     ))}
@@ -481,13 +479,13 @@ export default function AdminProducts() {
             {/* Descriptions & Formulations */}
             <div className="space-y-4">
               <h3 className="text-xs font-mono uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
-                Descriptions & Formulations Scientifiques
+                Description & composition
               </h3>
 
               <div className="space-y-5">
                 <div className="space-y-1.5">
                   <label className="text-[10px] uppercase tracking-wider font-bold text-black/60 block">
-                    Description & Bénéfices cliniques <span className="text-red-500">*</span>
+                    Description <span className="text-red-500">*</span>
                   </label>
                   <textarea
                     required
@@ -502,7 +500,7 @@ export default function AdminProducts() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-1.5">
                     <label className="text-[10px] uppercase tracking-wider font-bold text-black/60 block">
-                      Ingrédients actifs (formulation complète INCI)
+                      Ingrédients
                     </label>
                     <textarea
                       rows={3}
@@ -515,7 +513,7 @@ export default function AdminProducts() {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] uppercase tracking-wider font-bold text-black/60 block">
-                      Allergènes et Précautions d'usage
+                      Allergènes et précautions
                     </label>
                     <textarea
                       rows={3}
@@ -532,7 +530,7 @@ export default function AdminProducts() {
             {/* Multi Image Manager */}
             <div className="space-y-4">
               <h3 className="text-xs font-mono uppercase tracking-widest text-brand-gold font-bold border-b border-black/5 pb-1">
-                Galerie d'Images du Produit
+                Photos du produit
               </h3>
 
               <div className="space-y-4">
@@ -583,7 +581,7 @@ export default function AdminProducts() {
                 {/* File Uploader */}
                 <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center bg-brand-cream p-5 border border-black/5 rounded-sm">
                   <div className="flex-1 space-y-1">
-                    <p className="text-xs font-semibold text-black/80">Ajouter des photos dermatologiques</p>
+                    <p className="text-xs font-semibold text-black/80">Ajouter des photos</p>
                     <p className="text-[10px] text-black/40">Vous pouvez téléverser plusieurs photos à la fois vers le dossier d'images Supabase.</p>
                   </div>
 
