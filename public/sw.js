@@ -41,7 +41,9 @@ function isStaticAsset(url) {
     url.match(/\.(js|css|png|jpg|jpeg|svg|webp|woff|woff2|ttf|eot|ico)($|\?)/i) ||
     url.includes('/assets/') ||
     url.includes('fonts.googleapis.com') ||
-    url.includes('fonts.gstatic.com')
+    url.includes('fonts.gstatic.com') ||
+    url.includes('images.unsplash.com') ||
+    url.includes('unsplash.com')
   );
 }
 
@@ -144,16 +146,20 @@ self.addEventListener('fetch', (event) => {
           return cachedResponse;
         }
 
-        return fetch(request).then((networkResponse) => {
-          if (!networkResponse || networkResponse.status !== 200 || networkResponse.type === 'opaque') {
+        return fetch(request)
+          .then((networkResponse) => {
+            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type === 'opaque') {
+              return networkResponse;
+            }
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseToCache);
+            });
             return networkResponse;
-          }
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, responseToCache);
+          })
+          .catch(() => {
+            return caches.match(request);
           });
-          return networkResponse;
-        });
       })
     );
     return;

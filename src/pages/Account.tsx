@@ -893,6 +893,7 @@ export default function Account() {
                 <input
                   id="currentPassword"
                   type="password"
+                  autoComplete="current-password"
                   required
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
@@ -909,6 +910,7 @@ export default function Account() {
                   <input
                     id="newPassword"
                     type="password"
+                    autoComplete="new-password"
                     required
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
@@ -925,6 +927,7 @@ export default function Account() {
                   <input
                     id="confirmPassword"
                     type="password"
+                    autoComplete="new-password"
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}

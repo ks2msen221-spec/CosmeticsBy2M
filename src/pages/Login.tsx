@@ -138,6 +138,7 @@ export default function Login() {
                   <input
                     id="loginPassword"
                     type="password"
+                    autoComplete="current-password"
                     required
                     placeholder="••••••••"
                     value={password}
@@ -156,6 +157,7 @@ export default function Login() {
                   <input
                     id="signupFullName"
                     type="text"
+                    autoComplete="name"
                     required
                     placeholder="Ex: Fatima Sylla"
                     value={fullName}
@@ -171,6 +173,7 @@ export default function Login() {
                   <input
                     id="signupPhone"
                     type="tel"
+                    autoComplete="tel"
                     required
                     placeholder={`ex: ${CONTACT_CONFIG.phone}`}
                     value={phone}
@@ -186,6 +189,7 @@ export default function Login() {
                   <input
                     id="signupEmail"
                     type="email"
+                    autoComplete="email"
                     placeholder="votre.email@exemple.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -203,6 +207,7 @@ export default function Login() {
                   <input
                     id="signupPassword"
                     type="password"
+                    autoComplete="new-password"
                     required
                     placeholder="••••••••"
                     value={password}

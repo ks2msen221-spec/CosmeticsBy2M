@@ -16,7 +16,9 @@ import {
   Calendar,
   Image as ImageIcon,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Archive,
+  ArchiveRestore
 } from 'lucide-react';
 import { catalogService } from '../../lib/catalogService';
 import { Product, Category, Brand } from '../../types/catalog';
@@ -54,6 +56,7 @@ export default function AdminProducts() {
   const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [conflictProduct, setConflictProduct] = useState<Product | null>(null);
   const [manualImageUrl, setManualImageUrl] = useState('');
 
   // Fetch initial data
@@ -113,6 +116,7 @@ export default function AdminProducts() {
     setFormActive(true);
     setErrorMessage('');
     setSuccessMessage('');
+    setConflictProduct(null);
     setIsEditing(true);
   };
 
@@ -133,6 +137,7 @@ export default function AdminProducts() {
     setFormActive(product.active !== false && product.is_active !== false);
     setErrorMessage('');
     setSuccessMessage('');
+    setConflictProduct(null);
     setIsEditing(true);
   };
 
@@ -257,20 +262,63 @@ export default function AdminProducts() {
     }
   };
 
+  // Quick Deactivate for products in existing orders
+  const handleQuickDeactivate = async (product: Product) => {
+    try {
+      setProducts(prev => prev.map(p => p.id === product.id ? { ...p, active: false, is_active: false } : p));
+      await catalogService.updateProduct(product.id, {
+        active: false,
+        is_active: false
+      });
+      setConflictProduct(null);
+      setErrorMessage('');
+      setSuccessMessage(`Le produit "${product.name}" a été désactivé du catalogue public.`);
+      setTimeout(() => setSuccessMessage(''), 4000);
+    } catch (err) {
+      console.error("Error deactivating product:", err);
+      setErrorMessage("Impossible de désactiver le produit.");
+    }
+  };
+
   // Handle Delete
   const handleDelete = async (id: string, name: string) => {
     if (!window.confirm(`Voulez-vous vraiment supprimer définitivement le produit "${name}" ?`)) {
       return;
     }
 
+    setErrorMessage('');
+    setSuccessMessage('');
+    setConflictProduct(null);
+
     try {
       await catalogService.deleteProduct(id);
       setProducts(products.filter(p => p.id !== id));
       setSuccessMessage(`Le produit "${name}" a été supprimé.`);
       setTimeout(() => setSuccessMessage(''), 3000);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Delete error:", err);
-      setErrorMessage("Une erreur est survenue lors de la suppression.");
+      const targetProduct = products.find(p => p.id === id);
+      const isFkConflict = 
+        err?.code === '23503' || 
+        err?.status === 409 || 
+        err?.statusCode === 409 ||
+        (typeof err?.message === 'string' && (
+          err.message.includes('23503') || 
+          err.message.toLowerCase().includes('foreign key') || 
+          err.message.toLowerCase().includes('order_items') ||
+          err.message.toLowerCase().includes('violates foreign key constraint')
+        )) ||
+        (typeof err?.details === 'string' && (
+          err.details.includes('23503') || 
+          err.details.toLowerCase().includes('foreign key') || 
+          err.details.toLowerCase().includes('order_items')
+        ));
+
+      if (isFkConflict && targetProduct) {
+        setConflictProduct(targetProduct);
+      } else {
+        setErrorMessage("Une erreur est survenue lors de la suppression.");
+      }
     }
   };
 
@@ -314,6 +362,35 @@ export default function AdminProducts() {
       {errorMessage && (
         <div className="bg-rose-50 border border-rose-500/10 text-rose-950 text-xs py-3.5 px-6 rounded-sm shadow-xs">
           <span className="font-medium">⚠️ {errorMessage}</span>
+        </div>
+      )}
+      {conflictProduct && (
+        <div className="bg-amber-50 border border-amber-500/20 text-amber-950 text-xs py-4 px-6 rounded-sm shadow-xs animate-fade-in flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="font-bold flex items-center gap-1.5 text-amber-900">
+              <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+              <span>Suppression impossible : produit associé à des commandes existantes</span>
+            </div>
+            <p className="text-amber-800/90 leading-relaxed max-w-2xl">
+              Ce produit ne peut pas être supprimé car il figure dans au moins une commande existante. Pour le retirer du catalogue, désactivez-le plutôt via le statut de visibilité (bouton toggle dans la fiche produit).
+            </p>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => handleQuickDeactivate(conflictProduct)}
+              className="px-4 py-2 bg-amber-900 hover:bg-amber-800 text-amber-50 text-[10px] uppercase tracking-wider font-bold rounded-sm transition-colors cursor-pointer flex items-center gap-1.5 shadow-xs"
+            >
+              <EyeOff className="w-3.5 h-3.5" />
+              Désactiver ce produit
+            </button>
+            <button
+              onClick={() => setConflictProduct(null)}
+              className="p-1.5 text-amber-800/60 hover:text-amber-950 transition-colors cursor-pointer rounded-xs"
+              title="Fermer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       )}
 
@@ -894,6 +971,21 @@ export default function AdminProducts() {
                         </span>
 
                         <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => toggleProductActive(product)}
+                            className={`p-1.5 rounded transition-colors cursor-pointer ${
+                              isActive 
+                                ? 'hover:bg-amber-50 text-amber-700/70 hover:text-amber-800' 
+                                : 'hover:bg-emerald-50 text-emerald-700/70 hover:text-emerald-800'
+                            }`}
+                            title={isActive ? "Archiver (retirer du catalogue)" : "Désarchiver (rendre visible)"}
+                          >
+                            {isActive ? (
+                              <Archive className="w-3.5 h-3.5" />
+                            ) : (
+                              <ArchiveRestore className="w-3.5 h-3.5" />
+                            )}
+                          </button>
                           <button
                             onClick={() => startEdit(product)}
                             className="p-1.5 hover:bg-black/5 rounded text-black/60 hover:text-black transition-colors cursor-pointer"
